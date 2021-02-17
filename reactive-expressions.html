@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Mastering Shiny Book Club</title>
+  <title>2.6 Reactive expressions | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Mastering Shiny Book Club" />
+  <meta property="og:title" content="2.6 Reactive expressions | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="2.6 Reactive expressions | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="book-club-meetings.html"/>
+<link rel="prev" href="adding-behaviour.html"/>
+<link rel="next" href="visualising-reactive-expressions.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -183,25 +183,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Mastering Shiny Book Club</h1>
-<p class="author"><em>The R4DS Online Learning Community</em></p>
-<p class="date"><em>2021-02-17</em></p>
-</div>
-<div id="welcome" class="section level1 unnumbered">
-<h1>Welcome</h1>
-<p>This is a companion for the book <a href="https://mastering-shiny.org/">Mastering Shiny</a> by Hadley Wickham.
-This companion is available at <a href="r4ds.io/mshiny">r4ds.io/mshiny</a>.</p>
-<p>This website is being developed by the <a href="https://rfordatasci.com">R4DS Online Learning Community</a>. Follow along, and <a href="https://r4ds.io/join">join the community</a> to participate.</p>
-<p>This companion follows the <a href="https://r4ds.io/conduct">R4DS Online Learning Community Code of Conduct</a>.</p>
+<div id="reactive-expressions" class="section level2">
+<h2><span class="header-section-number">2.6</span> Reactive expressions</h2>
+<p>Key part of reducing duplication and ensuring you D-R-Y</p>
+<p><strong>Duplicated code is particularly bad for Shiny apps which can get cumbersome and more difficult to maintain and debug as they grow</strong>
+(Although the latest release of shiny does have some improved debugging tools)</p>
+<p>Reactive expressions combines some of the same logic as variables and functions, but is a bit different as these do not work the same in shiny as normal R programming.</p>
+<p>Create a reactive expression by wrapping a block of code in <code>reactive({...})</code> and assigning it to a variable.</p>
+<p>You can use the reactive expression like a standard function with <strong>one important difference</strong> - it only runs once and caches the result until input changed. So once it is initialised it will return some form of constant until it’s updated again.</p>
+<p>The below code retrieves the dataset once, not twice</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="reactive-expressions.html#cb9-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb9-2"><a href="reactive-expressions.html#cb9-2"></a>  <span class="co"># Create a reactive expression</span></span>
+<span id="cb9-3"><a href="reactive-expressions.html#cb9-3"></a>  dataset &lt;-<span class="st"> </span><span class="kw">reactive</span>({</span>
+<span id="cb9-4"><a href="reactive-expressions.html#cb9-4"></a>    <span class="kw">get</span>(input<span class="op">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
+<span id="cb9-5"><a href="reactive-expressions.html#cb9-5"></a>  })</span>
+<span id="cb9-6"><a href="reactive-expressions.html#cb9-6"></a></span>
+<span id="cb9-7"><a href="reactive-expressions.html#cb9-7"></a>  output<span class="op">$</span>summary &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</span>
+<span id="cb9-8"><a href="reactive-expressions.html#cb9-8"></a>    <span class="co"># Use a reactive expression by calling it like a function</span></span>
+<span id="cb9-9"><a href="reactive-expressions.html#cb9-9"></a>    <span class="kw">summary</span>(<span class="kw">dataset</span>())</span>
+<span id="cb9-10"><a href="reactive-expressions.html#cb9-10"></a>  })</span>
+<span id="cb9-11"><a href="reactive-expressions.html#cb9-11"></a>  </span>
+<span id="cb9-12"><a href="reactive-expressions.html#cb9-12"></a>  output<span class="op">$</span>table &lt;-<span class="st"> </span><span class="kw">renderTable</span>({</span>
+<span id="cb9-13"><a href="reactive-expressions.html#cb9-13"></a>    <span class="kw">dataset</span>()</span>
+<span id="cb9-14"><a href="reactive-expressions.html#cb9-14"></a>  })</span>
+<span id="cb9-15"><a href="reactive-expressions.html#cb9-15"></a>}</span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="book-club-meetings.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="adding-behaviour.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualising-reactive-expressions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -232,7 +245,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/index.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/02-your_first_shiny_app.rmd",
 "text": "Edit"
 },
 "history": {

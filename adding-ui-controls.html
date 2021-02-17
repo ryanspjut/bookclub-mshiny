@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Mastering Shiny Book Club</title>
+  <title>2.4 Adding UI controls | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Mastering Shiny Book Club" />
+  <meta property="og:title" content="2.4 Adding UI controls | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="2.4 Adding UI controls | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="book-club-meetings.html"/>
+<link rel="prev" href="running-and-stopping-the-app.html"/>
+<link rel="next" href="adding-behaviour.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -183,25 +183,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Mastering Shiny Book Club</h1>
-<p class="author"><em>The R4DS Online Learning Community</em></p>
-<p class="date"><em>2021-02-17</em></p>
-</div>
-<div id="welcome" class="section level1 unnumbered">
-<h1>Welcome</h1>
-<p>This is a companion for the book <a href="https://mastering-shiny.org/">Mastering Shiny</a> by Hadley Wickham.
-This companion is available at <a href="r4ds.io/mshiny">r4ds.io/mshiny</a>.</p>
-<p>This website is being developed by the <a href="https://rfordatasci.com">R4DS Online Learning Community</a>. Follow along, and <a href="https://r4ds.io/join">join the community</a> to participate.</p>
-<p>This companion follows the <a href="https://r4ds.io/conduct">R4DS Online Learning Community Code of Conduct</a>.</p>
+<div id="adding-ui-controls" class="section level2">
+<h2><span class="header-section-number">2.4</span> Adding UI controls</h2>
+<p>Replace the <code>ui</code> in your app with this code that shows you all the built-in data frames in the datasets package.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="adding-ui-controls.html#cb7-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb7-2"><a href="adding-ui-controls.html#cb7-2"></a>  <span class="kw">selectInput</span>(<span class="st">&quot;dataset&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Dataset&quot;</span>, <span class="dt">choices =</span> <span class="kw">ls</span>(<span class="st">&quot;package:datasets&quot;</span>)),</span>
+<span id="cb7-3"><a href="adding-ui-controls.html#cb7-3"></a>  <span class="kw">verbatimTextOutput</span>(<span class="st">&quot;summary&quot;</span>),</span>
+<span id="cb7-4"><a href="adding-ui-controls.html#cb7-4"></a>  <span class="kw">tableOutput</span>(<span class="st">&quot;table&quot;</span>)</span>
+<span id="cb7-5"><a href="adding-ui-controls.html#cb7-5"></a>)</span></code></pre></div>
+<p>Four new functions:</p>
+<ol style="list-style-type: decimal">
+<li><code>fluidPage()</code> - layout function to set up visual structure of page</li>
+<li><code>selectInput()</code> - input control for user to interact with</li>
+<li><code>verbatimTextOutput()</code> - output control - shows code result</li>
+<li><code>tableOutput</code> - output control - displays tables</li>
+</ol>
+<p><strong>These are all just ways to generate HTML</strong></p>
+<p><strong>Note:</strong> <code>fluidPage()</code> is just one option available for page setup. <code>navBarPage()</code> is a nice example for creating an app with page tabs.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="book-club-meetings.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="running-and-stopping-the-app.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="adding-behaviour.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -232,7 +238,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/index.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/02-your_first_shiny_app.rmd",
 "text": "Edit"
 },
 "history": {
