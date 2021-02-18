@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-02-17" />
+<meta name="date" content="2021-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,12 +137,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
 <li class="chapter" data-level="" data-path="book-club-meetings.html"><a href="book-club-meetings.html"><i class="fa fa-check"></i>Book club meetings</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="chapter-title.html"><a href="chapter-title.html"><i class="fa fa-check"></i><b>1</b> Chapter title</a><ul>
-<li class="chapter" data-level="1.1" data-path="slide-1-title.html"><a href="slide-1-title.html"><i class="fa fa-check"></i><b>1.1</b> {Slide 1 title}</a></li>
-<li class="chapter" data-level="1.2" data-path="meeting-videos.html"><a href="meeting-videos.html"><i class="fa fa-check"></i><b>1.2</b> Meeting Videos</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="meeting-videos.html"><a href="meeting-videos.html#cohort-1"><i class="fa fa-check"></i><b>1.2.1</b> Cohort 1</a></li>
-</ul></li>
-</ul></li>
+<li class="chapter" data-level="1" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
 <li class="chapter" data-level="2" data-path="your-first-shiny-app.html"><a href="your-first-shiny-app.html"><i class="fa fa-check"></i><b>2</b> Your first Shiny app</a><ul>
 <li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2.1</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="introduction.html"><a href="introduction.html#if-you-havent-installed-shiny-already"><i class="fa fa-check"></i><b>2.1.1</b> If you haven’t installed Shiny already:</a></li>
@@ -159,8 +154,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.8" data-path="shiny-resources.html"><a href="shiny-resources.html"><i class="fa fa-check"></i><b>2.8</b> Shiny resources</a><ul>
 <li class="chapter" data-level="2.8.1" data-path="shiny-resources.html"><a href="shiny-resources.html#other-resources"><i class="fa fa-check"></i><b>2.8.1</b> Other resources</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="meeting-videos-1.html"><a href="meeting-videos-1.html"><i class="fa fa-check"></i><b>2.9</b> Meeting Videos</a><ul>
-<li class="chapter" data-level="2.9.1" data-path="meeting-videos-1.html"><a href="meeting-videos-1.html#cohort-1-1"><i class="fa fa-check"></i><b>2.9.1</b> Cohort 1</a></li>
+<li class="chapter" data-level="2.9" data-path="meeting-videos.html"><a href="meeting-videos.html"><i class="fa fa-check"></i><b>2.9</b> Meeting Videos</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="meeting-videos.html"><a href="meeting-videos.html#cohort-1"><i class="fa fa-check"></i><b>2.9.1</b> Cohort 1</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -188,17 +183,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Need server function to bring the outputs to life</p>
 <p>Reactive programming tells Shiny <strong>how</strong> to perform a function.</p>
 <p>This code tells shiny how to fill in the <code>summary</code> and <code>table</code> outputs we defined in the UI.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="adding-behaviour.html#cb8-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
-<span id="cb8-2"><a href="adding-behaviour.html#cb8-2"></a>  output<span class="op">$</span>summary &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</span>
-<span id="cb8-3"><a href="adding-behaviour.html#cb8-3"></a>    dataset &lt;-<span class="st"> </span><span class="kw">get</span>(input<span class="op">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
-<span id="cb8-4"><a href="adding-behaviour.html#cb8-4"></a>    <span class="kw">summary</span>(dataset)</span>
-<span id="cb8-5"><a href="adding-behaviour.html#cb8-5"></a>  })</span>
-<span id="cb8-6"><a href="adding-behaviour.html#cb8-6"></a>  </span>
-<span id="cb8-7"><a href="adding-behaviour.html#cb8-7"></a>  output<span class="op">$</span>table &lt;-<span class="st"> </span><span class="kw">renderTable</span>({</span>
-<span id="cb8-8"><a href="adding-behaviour.html#cb8-8"></a>    dataset &lt;-<span class="st"> </span><span class="kw">get</span>(input<span class="op">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
-<span id="cb8-9"><a href="adding-behaviour.html#cb8-9"></a>    dataset</span>
-<span id="cb8-10"><a href="adding-behaviour.html#cb8-10"></a>  })</span>
-<span id="cb8-11"><a href="adding-behaviour.html#cb8-11"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="adding-behaviour.html#cb7-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb7-2"><a href="adding-behaviour.html#cb7-2"></a>  output<span class="op">$</span>summary &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</span>
+<span id="cb7-3"><a href="adding-behaviour.html#cb7-3"></a>    dataset &lt;-<span class="st"> </span><span class="kw">get</span>(input<span class="op">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
+<span id="cb7-4"><a href="adding-behaviour.html#cb7-4"></a>    <span class="kw">summary</span>(dataset)</span>
+<span id="cb7-5"><a href="adding-behaviour.html#cb7-5"></a>  })</span>
+<span id="cb7-6"><a href="adding-behaviour.html#cb7-6"></a>  </span>
+<span id="cb7-7"><a href="adding-behaviour.html#cb7-7"></a>  output<span class="op">$</span>table &lt;-<span class="st"> </span><span class="kw">renderTable</span>({</span>
+<span id="cb7-8"><a href="adding-behaviour.html#cb7-8"></a>    dataset &lt;-<span class="st"> </span><span class="kw">get</span>(input<span class="op">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
+<span id="cb7-9"><a href="adding-behaviour.html#cb7-9"></a>    dataset</span>
+<span id="cb7-10"><a href="adding-behaviour.html#cb7-10"></a>  })</span>
+<span id="cb7-11"><a href="adding-behaviour.html#cb7-11"></a>}</span></code></pre></div>
 <p>Each <code>output$out_id</code> is a new shiny output to render where the UI defines it</p>
 <p>There are specific render functions <code>render{Type}</code> for different outputs:</p>
 <ul>
