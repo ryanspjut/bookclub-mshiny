@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Your first Shiny app | Mastering Shiny Book Club</title>
+  <title>3.6 Inputs 2 - Dates, Limited choices, File uploads, Action buttons | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Your first Shiny app | Mastering Shiny Book Club" />
+  <meta property="og:title" content="3.6 Inputs 2 - Dates, Limited choices, File uploads, Action buttons | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Your first Shiny app | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="3.6 Inputs 2 - Dates, Limited choices, File uploads, Action buttons | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="preface.html"/>
-<link rel="next" href="introduction.html"/>
+<link rel="prev" href="input-1-text-numeric.html"/>
+<link rel="next" href="what-can-one-output.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -196,25 +196,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="your-first-shiny-app" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Your first Shiny app</h1>
-<p><strong>Learning objectives:</strong></p>
-<ul>
-<li>Learn how to <strong>create a simple Shiny app</strong></li>
-<li>Define the <strong>leanest version</strong> of an app you can build</li>
-<li>Review different <strong>ways to start and stop</strong> the app</li>
-<li>Identify the <strong>two key components</strong> of every Shiny app</li>
-<li>Understand how the two <strong>components are connected</strong></li>
-<li>Observe how Shiny apps <strong>react to user input</strong></li>
-</ul>
+<div id="inputs-2---dates-limited-choices-file-uploads-action-buttons" class="section level2">
+<h2><span class="header-section-number">3.6</span> Inputs 2 - Dates, Limited choices, File uploads, Action buttons</h2>
+<pre><code>ui &lt;- fluidPage(
+  # DATES
+  dateInput(&quot;dob&quot;, &quot;When were you born?&quot;),
+  dateRangeInput(&quot;holiday&quot;, &quot;Give start and end of Holiday season?&quot;),
+
+  # LIMITED CHOICES
+  animals &lt;- c(&quot;cat&quot;, &quot;dog&quot;, &quot;porpoise&quot;) ## Placed above UI
+  radioButtons(&quot;animal&quot;, &quot;What&#39;s your favourite animal?&quot;, animals)
+  
+  state_name &lt;- c(&quot;AL&quot;, &quot;AK&quot;, ..., &quot;WY&quot;) ## Placed above UI
+  selectInput(&quot;state&quot;, &quot;What&#39;s your favourite state?&quot;, state_name),
+ 
+  # FILE UPLOADS
+  fileInput(&quot;upload&quot;, NULL)
+
+  # ACTION BUTTONS
+  actionButton(&quot;click&quot;, &quot;Click me!&quot;),
+  actionButton(&quot;calc_boolean&quot;, &quot;Calculate!&quot;, icon = icon(&quot;computer&quot;))
+)</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="preface.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="introduction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="input-1-text-numeric.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="what-can-one-output.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -245,7 +255,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/02-your_first_shiny_app.rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/03-basic_ui.Rmd",
 "text": "Edit"
 },
 "history": {

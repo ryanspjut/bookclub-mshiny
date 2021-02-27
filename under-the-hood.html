@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Your first Shiny app | Mastering Shiny Book Club</title>
+  <title>3.11 Under the hood | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Your first Shiny app | Mastering Shiny Book Club" />
+  <meta property="og:title" content="3.11 Under the hood | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Your first Shiny app | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="3.11 Under the hood | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="preface.html"/>
-<link rel="next" href="introduction.html"/>
+<link rel="prev" href="layouts.html"/>
+<link rel="next" href="other-tools-material.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -196,25 +196,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="your-first-shiny-app" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Your first Shiny app</h1>
-<p><strong>Learning objectives:</strong></p>
-<ul>
-<li>Learn how to <strong>create a simple Shiny app</strong></li>
-<li>Define the <strong>leanest version</strong> of an app you can build</li>
-<li>Review different <strong>ways to start and stop</strong> the app</li>
-<li>Identify the <strong>two key components</strong> of every Shiny app</li>
-<li>Understand how the two <strong>components are connected</strong></li>
-<li>Observe how Shiny apps <strong>react to user input</strong></li>
-</ul>
+<div id="under-the-hood" class="section level2">
+<h2><span class="header-section-number">3.11</span> Under the hood</h2>
+<p>Use <strong>HTML</strong> or <strong>CSS</strong> to get the job done!</p>
+<pre><code>&lt;div class=&quot;container-fluid&quot;&gt;
+  &lt;div class=&quot;form-group shiny-input-container&quot;&gt;
+    &lt;label for=&quot;name&quot;&gt;What&#39;s your name?&lt;/label&gt;
+    &lt;input id=&quot;name&quot; type=&quot;text&quot; class=&quot;form-control&quot; value=&quot;&quot;/&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="preface.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="introduction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="layouts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="other-tools-material.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -245,7 +243,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/02-your_first_shiny_app.rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/03-basic_ui.Rmd",
 "text": "Edit"
 },
 "history": {
