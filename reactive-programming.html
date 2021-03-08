@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Your first Shiny app | Mastering Shiny Book Club</title>
+  <title>4.2 Reactive Programming | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Your first Shiny app | Mastering Shiny Book Club" />
+  <meta property="og:title" content="4.2 Reactive Programming | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Your first Shiny app | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="4.2 Reactive Programming | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="preface.html"/>
-<link rel="next" href="introduction.html"/>
+<link rel="prev" href="recap.html"/>
+<link rel="next" href="reactive-expressions-1.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -216,25 +216,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="your-first-shiny-app" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Your first Shiny app</h1>
-<p><strong>Learning objectives:</strong></p>
+<div id="reactive-programming" class="section level2">
+<h2><span class="header-section-number">4.2</span> Reactive Programming</h2>
+<p>Mental Model<br />
+- tell vs inform (providing Shiny with recipes, not giving it commands).</p>
+<div id="imperative-vs-declarative-programming" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Imperative vs declarative programming</h3>
+<p>This difference between commands and recipes is one of the key differences between two important styles of programming:<br />
+- <em>Imperative</em> programming - issue a specific command and it’s carried out immediately.<br />
+- <em>Declarative</em> programming - express higher-level goals or describe important constraints, and rely on someone else to decide how and/or when to translate that into action.</p>
 <ul>
-<li>Learn how to <strong>create a simple Shiny app</strong></li>
-<li>Define the <strong>leanest version</strong> of an app you can build</li>
-<li>Review different <strong>ways to start and stop</strong> the app</li>
-<li>Identify the <strong>two key components</strong> of every Shiny app</li>
-<li>Understand how the two <strong>components are connected</strong></li>
-<li>Observe how Shiny apps <strong>react to user input</strong></li>
+<li>Imperative code is assertive; vs declarative code is passive-aggressive<br />
+</li>
+<li>“Make me a sandwich” vs “Ensure there is a sandwich in the refrigerator whenever I look inside of it”</li>
 </ul>
+<p>In essesnce, you describe your overall goals, and the software figures out how to achieve them without further intervention.</p>
+</div>
+<div id="laziness" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Laziness</h3>
+<p>It allows apps to be extremely lazy. A Shiny app will only ever do the minimal amount of work needed to update the output controls that you can currently see.</p>
+<p><em>CAUTION</em>: If you’re working on a Shiny app and you just can’t figure out why your code never gets run, double check that your UI and server functions are using the same identifiers.</p>
+</div>
+<div id="the-reactive-graph" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> The reactive graph</h3>
+<ul>
+<li>understanding order of execution</li>
+<li>code is only run when needed</li>
+</ul>
+<p><em>reactive graph</em>
+- describes how inputs and outputs are connected
+- describe this relationship (<code>output</code> has a reactive dependency on <code>input</code>)</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="reactive-programming.html#cb20-1"></a><span class="kw">mermaid</span>(<span class="st">&quot;</span></span>
+<span id="cb20-2"><a href="reactive-programming.html#cb20-2"></a><span class="st">graph LR</span></span>
+<span id="cb20-3"><a href="reactive-programming.html#cb20-3"></a><span class="st">A[name] --- B&gt;greeting]</span></span>
+<span id="cb20-4"><a href="reactive-programming.html#cb20-4"></a><span class="st">&quot;</span>)</span></code></pre></div>
+<div id="htmlwidget-20b8ab42a07a62c377af" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-20b8ab42a07a62c377af">{"x":{"diagram":"\ngraph LR\nA[name] --- B>greeting]\n"},"evals":[],"jsHooks":[]}</script>
+<p>reactive graph is a powerful tool for understanding how your app works.<br />
+- Make by hand<br />
+- Use DiagrammeR pkg to make it manually yourself<br />
+- Use <code>reactlog</code> pkg to do it automatically (more in later chapters)</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="preface.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="introduction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="recap.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reactive-expressions-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -265,7 +295,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/01-your_first_shiny_app.rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/03-basic_reactivity.Rmd",
 "text": "Edit"
 },
 "history": {

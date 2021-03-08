@@ -29,3 +29,13 @@ under-the-hood
 other-tools-material
 summary
 thank-you
+basic-reactivity
+recap
+reactive-programming
+imperative-vs-declarative-programming
+laziness
+the-reactive-graph
+reactive-expressions-1
+controlling-timing-of-evaluation
+observers
+execises
