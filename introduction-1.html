@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.3 Reactive expressions | Mastering Shiny Book Club</title>
+  <title>5.1 Introduction | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.3 Reactive expressions | Mastering Shiny Book Club" />
+  <meta property="og:title" content="5.1 Introduction | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.3 Reactive expressions | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="5.1 Introduction | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reactive-programming.html"/>
-<link rel="next" href="controlling-timing-of-evaluation.html"/>
+<link rel="prev" href="case-study-er-injuries.html"/>
+<link rel="next" href="the-data.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -225,40 +225,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reactive-expressions-1" class="section level2">
-<h2><span class="header-section-number">4.3</span> Reactive expressions</h2>
-<p><strong>What</strong> - A tool that <strong>reduces duplication</strong> in your reactive code by introducing additional nodes into the reactive graph<br />
-<strong>How</strong> - using <code>reactive()</code></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="reactive-expressions-1.html#cb21-1"></a><span class="co"># Just for example</span></span>
-<span id="cb21-2"><a href="reactive-expressions-1.html#cb21-2"></a></span>
-<span id="cb21-3"><a href="reactive-expressions-1.html#cb21-3"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
-<span id="cb21-4"><a href="reactive-expressions-1.html#cb21-4"></a>  string &lt;-<span class="st"> </span><span class="kw">reactive</span>(<span class="kw">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="op">$</span>name, <span class="st">&quot;!&quot;</span>))</span>
-<span id="cb21-5"><a href="reactive-expressions-1.html#cb21-5"></a>  output<span class="op">$</span>greeting &lt;-<span class="st"> </span><span class="kw">renderText</span>(<span class="kw">string</span>())</span>
-<span id="cb21-6"><a href="reactive-expressions-1.html#cb21-6"></a>}</span></code></pre></div>
-<div id="htmlwidget-09e1bc763a548f4b717b" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-09e1bc763a548f4b717b">{"x":{"diagram":"\ngraph LR\nA[name] --- B>string]\nB>string] --- C>greeting]\n"},"evals":[],"jsHooks":[]}</script>
-<p>In other words , makes app cleaner &amp; more efficient (by removing redundant codes &amp; recomputation).
-It also simplifies the reactive graph.</p>
-<p>Reactive expressions have a flavour of both inputs and outputs:</p>
-<ul>
-<li>Like inputs, you can use the results of a reactive expression in an output.</li>
-<li>Like outputs, reactive expressions depend on inputs and automatically know when they need updating.</li>
-</ul>
-<p>New vocab:</p>
-<ul>
-<li>producers to refer to reactive inputs and expressions, and</li>
-<li>consumers to refer to reactive expressions and outputs</li>
-</ul>
-<p><strong>Execution order</strong><br />
-- determined solely by the reactive graph (and not the order of lines of code/layout in the <em>server</em> fn unlike normal R scripts)</p>
+<div id="introduction-1" class="section level2">
+<h2><span class="header-section-number">5.1</span> Introduction</h2>
+<p>This Chapter is about building a more complex app with the tools we learned in the previous chapters.</p>
+<p>We’re going to use the following packages:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-1.html#cb24-1"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb24-2"><a href="introduction-1.html#cb24-2"></a><span class="kw">library</span>(vroom)</span>
+<span id="cb24-3"><a href="introduction-1.html#cb24-3"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reactive-programming.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="controlling-timing-of-evaluation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="case-study-er-injuries.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -289,7 +270,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/03-basic_reactivity.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/04-case_study_er_injuries.Rmd",
 "text": "Edit"
 },
 "history": {

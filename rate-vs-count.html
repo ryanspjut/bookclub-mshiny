@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.3 Reactive expressions | Mastering Shiny Book Club</title>
+  <title>5.6 Rate vs count | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.3 Reactive expressions | Mastering Shiny Book Club" />
+  <meta property="og:title" content="5.6 Rate vs count | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.3 Reactive expressions | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="5.6 Rate vs count | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reactive-programming.html"/>
-<link rel="next" href="controlling-timing-of-evaluation.html"/>
+<link rel="prev" href="polish-tables.html"/>
+<link rel="next" href="narrative.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -225,40 +225,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reactive-expressions-1" class="section level2">
-<h2><span class="header-section-number">4.3</span> Reactive expressions</h2>
-<p><strong>What</strong> - A tool that <strong>reduces duplication</strong> in your reactive code by introducing additional nodes into the reactive graph<br />
-<strong>How</strong> - using <code>reactive()</code></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="reactive-expressions-1.html#cb21-1"></a><span class="co"># Just for example</span></span>
-<span id="cb21-2"><a href="reactive-expressions-1.html#cb21-2"></a></span>
-<span id="cb21-3"><a href="reactive-expressions-1.html#cb21-3"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
-<span id="cb21-4"><a href="reactive-expressions-1.html#cb21-4"></a>  string &lt;-<span class="st"> </span><span class="kw">reactive</span>(<span class="kw">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="op">$</span>name, <span class="st">&quot;!&quot;</span>))</span>
-<span id="cb21-5"><a href="reactive-expressions-1.html#cb21-5"></a>  output<span class="op">$</span>greeting &lt;-<span class="st"> </span><span class="kw">renderText</span>(<span class="kw">string</span>())</span>
-<span id="cb21-6"><a href="reactive-expressions-1.html#cb21-6"></a>}</span></code></pre></div>
-<div id="htmlwidget-09e1bc763a548f4b717b" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-09e1bc763a548f4b717b">{"x":{"diagram":"\ngraph LR\nA[name] --- B>string]\nB>string] --- C>greeting]\n"},"evals":[],"jsHooks":[]}</script>
-<p>In other words , makes app cleaner &amp; more efficient (by removing redundant codes &amp; recomputation).
-It also simplifies the reactive graph.</p>
-<p>Reactive expressions have a flavour of both inputs and outputs:</p>
-<ul>
-<li>Like inputs, you can use the results of a reactive expression in an output.</li>
-<li>Like outputs, reactive expressions depend on inputs and automatically know when they need updating.</li>
-</ul>
-<p>New vocab:</p>
-<ul>
-<li>producers to refer to reactive inputs and expressions, and</li>
-<li>consumers to refer to reactive expressions and outputs</li>
-</ul>
-<p><strong>Execution order</strong><br />
-- determined solely by the reactive graph (and not the order of lines of code/layout in the <em>server</em> fn unlike normal R scripts)</p>
+<div id="rate-vs-count" class="section level2">
+<h2><span class="header-section-number">5.6</span> Rate vs count</h2>
+<p>Next step is to give the user the chance to plot the data relative to 10,000 People or in absolute numbers.</p>
+<p>The new ui looks like this:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="rate-vs-count.html#cb45-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb45-2"><a href="rate-vs-count.html#cb45-2"></a>  <span class="kw">fluidRow</span>(</span>
+<span id="cb45-3"><a href="rate-vs-count.html#cb45-3"></a>    <span class="kw">column</span>(</span>
+<span id="cb45-4"><a href="rate-vs-count.html#cb45-4"></a>      <span class="dt">width =</span> <span class="dv">8</span>,</span>
+<span id="cb45-5"><a href="rate-vs-count.html#cb45-5"></a>      <span class="kw">selectInput</span>(</span>
+<span id="cb45-6"><a href="rate-vs-count.html#cb45-6"></a>        <span class="dt">inputId =</span> <span class="st">&quot;code&quot;</span>,</span>
+<span id="cb45-7"><a href="rate-vs-count.html#cb45-7"></a>        <span class="dt">label =</span> <span class="st">&quot;Product&quot;</span>,</span>
+<span id="cb45-8"><a href="rate-vs-count.html#cb45-8"></a>        <span class="dt">choices =</span> prod_codes,</span>
+<span id="cb45-9"><a href="rate-vs-count.html#cb45-9"></a>        <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span></span>
+<span id="cb45-10"><a href="rate-vs-count.html#cb45-10"></a>      )</span>
+<span id="cb45-11"><a href="rate-vs-count.html#cb45-11"></a>    ),</span>
+<span id="cb45-12"><a href="rate-vs-count.html#cb45-12"></a>    <span class="kw">column</span>(</span>
+<span id="cb45-13"><a href="rate-vs-count.html#cb45-13"></a>      <span class="dt">width =</span> <span class="dv">2</span>,</span>
+<span id="cb45-14"><a href="rate-vs-count.html#cb45-14"></a>      <span class="kw">selectInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Y axis&quot;</span>, <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;rate&quot;</span>, <span class="st">&quot;count&quot;</span>))</span>
+<span id="cb45-15"><a href="rate-vs-count.html#cb45-15"></a>    )</span>
+<span id="cb45-16"><a href="rate-vs-count.html#cb45-16"></a>  ),</span>
+<span id="cb45-17"><a href="rate-vs-count.html#cb45-17"></a>  <span class="kw">fluidRow</span>(</span>
+<span id="cb45-18"><a href="rate-vs-count.html#cb45-18"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">4</span>, <span class="kw">tableOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;diag&quot;</span>)),</span>
+<span id="cb45-19"><a href="rate-vs-count.html#cb45-19"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">4</span>, <span class="kw">tableOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;body_part&quot;</span>)),</span>
+<span id="cb45-20"><a href="rate-vs-count.html#cb45-20"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">4</span>, <span class="kw">tableOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;location&quot;</span>))</span>
+<span id="cb45-21"><a href="rate-vs-count.html#cb45-21"></a>  ),</span>
+<span id="cb45-22"><a href="rate-vs-count.html#cb45-22"></a>  <span class="kw">fluidRow</span>(</span>
+<span id="cb45-23"><a href="rate-vs-count.html#cb45-23"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">12</span>, <span class="kw">plotOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;age_sex&quot;</span>))</span>
+<span id="cb45-24"><a href="rate-vs-count.html#cb45-24"></a>  )</span>
+<span id="cb45-25"><a href="rate-vs-count.html#cb45-25"></a>)</span></code></pre></div>
+<p>And plot rendering changes to:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="rate-vs-count.html#cb46-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb46-2"><a href="rate-vs-count.html#cb46-2"></a>  ...</span>
+<span id="cb46-3"><a href="rate-vs-count.html#cb46-3"></a>  </span>
+<span id="cb46-4"><a href="rate-vs-count.html#cb46-4"></a>  output<span class="op">$</span>age_sex &lt;-<span class="st"> </span><span class="kw">renderPlot</span>(</span>
+<span id="cb46-5"><a href="rate-vs-count.html#cb46-5"></a>    <span class="dt">expr =</span> {</span>
+<span id="cb46-6"><a href="rate-vs-count.html#cb46-6"></a>      <span class="cf">if</span> (input<span class="op">$</span>y <span class="op">==</span><span class="st"> &quot;count&quot;</span>) {</span>
+<span id="cb46-7"><a href="rate-vs-count.html#cb46-7"></a>        <span class="kw">summary</span>() <span class="op">%&gt;%</span></span>
+<span id="cb46-8"><a href="rate-vs-count.html#cb46-8"></a><span class="st">          </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> n, <span class="dt">colour =</span> sex)) <span class="op">+</span></span>
+<span id="cb46-9"><a href="rate-vs-count.html#cb46-9"></a><span class="st">          </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb46-10"><a href="rate-vs-count.html#cb46-10"></a><span class="st">          </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Estimated number of injuries&quot;</span>)</span>
+<span id="cb46-11"><a href="rate-vs-count.html#cb46-11"></a>        </span>
+<span id="cb46-12"><a href="rate-vs-count.html#cb46-12"></a>      } <span class="cf">else</span> {</span>
+<span id="cb46-13"><a href="rate-vs-count.html#cb46-13"></a>        <span class="kw">summary</span>() <span class="op">%&gt;%</span></span>
+<span id="cb46-14"><a href="rate-vs-count.html#cb46-14"></a><span class="st">          </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> rate, <span class="dt">colour =</span> sex)) <span class="op">+</span></span>
+<span id="cb46-15"><a href="rate-vs-count.html#cb46-15"></a><span class="st">          </span><span class="kw">geom_line</span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">+</span></span>
+<span id="cb46-16"><a href="rate-vs-count.html#cb46-16"></a><span class="st">          </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Injuries per 10,000 people&quot;</span>)</span>
+<span id="cb46-17"><a href="rate-vs-count.html#cb46-17"></a>      }</span>
+<span id="cb46-18"><a href="rate-vs-count.html#cb46-18"></a>    },</span>
+<span id="cb46-19"><a href="rate-vs-count.html#cb46-19"></a>    <span class="dt">res =</span> <span class="dv">96</span></span>
+<span id="cb46-20"><a href="rate-vs-count.html#cb46-20"></a>  )</span>
+<span id="cb46-21"><a href="rate-vs-count.html#cb46-21"></a>}</span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reactive-programming.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="controlling-timing-of-evaluation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="polish-tables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="narrative.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -289,7 +314,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/03-basic_reactivity.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/04-case_study_er_injuries.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -39,3 +39,11 @@ reactive-expressions-1
 controlling-timing-of-evaluation
 observers
 execises
+case-study-er-injuries
+introduction-1
+the-data
+exploration
+prototype
+polish-tables
+rate-vs-count
+narrative

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.3 Reactive expressions | Mastering Shiny Book Club</title>
+  <title>5.3 Exploration | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.3 Reactive expressions | Mastering Shiny Book Club" />
+  <meta property="og:title" content="5.3 Exploration | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.3 Reactive expressions | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="5.3 Exploration | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reactive-programming.html"/>
-<link rel="next" href="controlling-timing-of-evaluation.html"/>
+<link rel="prev" href="the-data.html"/>
+<link rel="next" href="prototype.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -225,40 +225,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reactive-expressions-1" class="section level2">
-<h2><span class="header-section-number">4.3</span> Reactive expressions</h2>
-<p><strong>What</strong> - A tool that <strong>reduces duplication</strong> in your reactive code by introducing additional nodes into the reactive graph<br />
-<strong>How</strong> - using <code>reactive()</code></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="reactive-expressions-1.html#cb21-1"></a><span class="co"># Just for example</span></span>
-<span id="cb21-2"><a href="reactive-expressions-1.html#cb21-2"></a></span>
-<span id="cb21-3"><a href="reactive-expressions-1.html#cb21-3"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
-<span id="cb21-4"><a href="reactive-expressions-1.html#cb21-4"></a>  string &lt;-<span class="st"> </span><span class="kw">reactive</span>(<span class="kw">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="op">$</span>name, <span class="st">&quot;!&quot;</span>))</span>
-<span id="cb21-5"><a href="reactive-expressions-1.html#cb21-5"></a>  output<span class="op">$</span>greeting &lt;-<span class="st"> </span><span class="kw">renderText</span>(<span class="kw">string</span>())</span>
-<span id="cb21-6"><a href="reactive-expressions-1.html#cb21-6"></a>}</span></code></pre></div>
-<div id="htmlwidget-09e1bc763a548f4b717b" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-09e1bc763a548f4b717b">{"x":{"diagram":"\ngraph LR\nA[name] --- B>string]\nB>string] --- C>greeting]\n"},"evals":[],"jsHooks":[]}</script>
-<p>In other words , makes app cleaner &amp; more efficient (by removing redundant codes &amp; recomputation).
-It also simplifies the reactive graph.</p>
-<p>Reactive expressions have a flavour of both inputs and outputs:</p>
-<ul>
-<li>Like inputs, you can use the results of a reactive expression in an output.</li>
-<li>Like outputs, reactive expressions depend on inputs and automatically know when they need updating.</li>
-</ul>
-<p>New vocab:</p>
-<ul>
-<li>producers to refer to reactive inputs and expressions, and</li>
-<li>consumers to refer to reactive expressions and outputs</li>
-</ul>
-<p><strong>Execution order</strong><br />
-- determined solely by the reactive graph (and not the order of lines of code/layout in the <em>server</em> fn unlike normal R scripts)</p>
+<div id="exploration" class="section level2">
+<h2><span class="header-section-number">5.3</span> Exploration</h2>
+<p>As motivation for the app we want to build, we’re going to explore the data.</p>
+<p>Let’s have a look at accidents related to toilets:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="exploration.html#cb32-1"></a><span class="co"># product code for toilets is 649</span></span>
+<span id="cb32-2"><a href="exploration.html#cb32-2"></a>selected &lt;-<span class="st"> </span>injuries <span class="op">%&gt;%</span></span>
+<span id="cb32-3"><a href="exploration.html#cb32-3"></a><span class="st">  </span><span class="kw">filter</span>(prod_code <span class="op">==</span><span class="st"> </span><span class="dv">649</span>)</span>
+<span id="cb32-4"><a href="exploration.html#cb32-4"></a></span>
+<span id="cb32-5"><a href="exploration.html#cb32-5"></a><span class="kw">nrow</span>(selected)</span></code></pre></div>
+<pre><code>## [1] 2993</code></pre>
+<p>We’re interested in how many accidents related to toilets we see for different locations, body parts and diagnosis.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="exploration.html#cb34-1"></a>selected <span class="op">%&gt;%</span></span>
+<span id="cb34-2"><a href="exploration.html#cb34-2"></a><span class="st">  </span><span class="kw">count</span>(location, <span class="dt">wt =</span> weight, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   location                         n
+##   &lt;chr&gt;                        &lt;dbl&gt;
+## 1 Home                       99603. 
+## 2 Other Public Property      18663. 
+## 3 Unknown                    16267. 
+## 4 School                       659. 
+## 5 Street Or Highway             16.2
+## 6 Sports Or Recreation Place    14.8</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="exploration.html#cb36-1"></a>selected <span class="op">%&gt;%</span></span>
+<span id="cb36-2"><a href="exploration.html#cb36-2"></a><span class="st">  </span><span class="kw">count</span>(body_part, <span class="dt">wt =</span> weight, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 24 x 2
+##    body_part        n
+##    &lt;chr&gt;        &lt;dbl&gt;
+##  1 Head        31370.
+##  2 Lower Trunk 26855.
+##  3 Face        13016.
+##  4 Upper Trunk 12508.
+##  5 Knee         6968.
+##  6 N.S./Unk     6741.
+##  7 Lower Leg    5087.
+##  8 Shoulder     3590.
+##  9 All Of Body  3438.
+## 10 Ankle        3315.
+## # … with 14 more rows</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="exploration.html#cb38-1"></a>selected <span class="op">%&gt;%</span></span>
+<span id="cb38-2"><a href="exploration.html#cb38-2"></a><span class="st">  </span><span class="kw">count</span>(diag, <span class="dt">wt =</span> weight, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 20 x 2
+##    diag                        n
+##    &lt;chr&gt;                   &lt;dbl&gt;
+##  1 Other Or Not Stated   32897. 
+##  2 Contusion Or Abrasion 22493. 
+##  3 Inter Organ Injury    21525. 
+##  4 Fracture              21497. 
+##  5 Laceration            18734. 
+##  6 Strain, Sprain         7609. 
+##  7 Dislocation            2713. 
+##  8 Hematoma               2386. 
+##  9 Avulsion               1778. 
+## 10 Nerve Damage           1091. 
+## 11 Poisoning               928. 
+## 12 Concussion              822. 
+## 13 Dental Injury           199. 
+## 14 Hemorrhage              167. 
+## 15 Crushing                114. 
+## 16 Dermat Or Conj           84.2
+## 17 Burns, Not Spec          67.2
+## 18 Puncture                 67.2
+## 19 Burns, Thermal           34.0
+## 20 Burns, Scald             17.0</code></pre>
+<p>Next we’ll we create a plot for the number of accidents for different age and sex:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="exploration.html#cb40-1"></a>summary &lt;-<span class="st"> </span>selected <span class="op">%&gt;%</span></span>
+<span id="cb40-2"><a href="exploration.html#cb40-2"></a><span class="st">  </span><span class="kw">count</span>(age, sex, <span class="dt">wt =</span> weight) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb40-3"><a href="exploration.html#cb40-3"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="dt">y =</span> population, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;sex&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb40-4"><a href="exploration.html#cb40-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rate =</span> n <span class="op">/</span><span class="st"> </span>population <span class="op">*</span><span class="st"> </span><span class="fl">1e4</span>)</span>
+<span id="cb40-5"><a href="exploration.html#cb40-5"></a></span>
+<span id="cb40-6"><a href="exploration.html#cb40-6"></a>summary <span class="op">%&gt;%</span></span>
+<span id="cb40-7"><a href="exploration.html#cb40-7"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> rate, <span class="dt">color =</span> sex)) <span class="op">+</span></span>
+<span id="cb40-8"><a href="exploration.html#cb40-8"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">+</span></span>
+<span id="cb40-9"><a href="exploration.html#cb40-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Injuries per 10,000 people&quot;</span>)</span></code></pre></div>
+<p><img src="bookclub-mshiny_files/figure-html/line-plot-1.png" width="672" /></p>
+<p>The goal is to build an app, which outputs the tables and the plot for different products, which the user selects.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reactive-programming.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="controlling-timing-of-evaluation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="the-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="prototype.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -289,7 +338,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/03-basic_reactivity.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/04-case_study_er_injuries.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-03-08" />
+<meta name="date" content="2021-03-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="observers.html"/>
-
+<link rel="next" href="case-study-er-injuries.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -196,6 +196,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5" data-path="observers.html"><a href="observers.html"><i class="fa fa-check"></i><b>4.5</b> Observers</a></li>
 <li class="chapter" data-level="4.6" data-path="execises.html"><a href="execises.html"><i class="fa fa-check"></i><b>4.6</b> Execises</a></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="case-study-er-injuries.html"><a href="case-study-er-injuries.html"><i class="fa fa-check"></i><b>5</b> Case study: ER injuries</a><ul>
+<li class="chapter" data-level="5.1" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="the-data.html"><a href="the-data.html"><i class="fa fa-check"></i><b>5.2</b> The data</a></li>
+<li class="chapter" data-level="5.3" data-path="exploration.html"><a href="exploration.html"><i class="fa fa-check"></i><b>5.3</b> Exploration</a></li>
+<li class="chapter" data-level="5.4" data-path="prototype.html"><a href="prototype.html"><i class="fa fa-check"></i><b>5.4</b> Prototype</a></li>
+<li class="chapter" data-level="5.5" data-path="polish-tables.html"><a href="polish-tables.html"><i class="fa fa-check"></i><b>5.5</b> Polish tables</a></li>
+<li class="chapter" data-level="5.6" data-path="rate-vs-count.html"><a href="rate-vs-count.html"><i class="fa fa-check"></i><b>5.6</b> Rate vs count</a></li>
+<li class="chapter" data-level="5.7" data-path="narrative.html"><a href="narrative.html"><i class="fa fa-check"></i><b>5.7</b> Narrative</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -225,14 +234,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb22-5"><a href="execises.html#cb22-5"></a><span class="st">C--&gt;D[Rectangle One]</span></span>
 <span id="cb22-6"><a href="execises.html#cb22-6"></a><span class="st">C--&gt;E[Rectangle Two]</span></span>
 <span id="cb22-7"><a href="execises.html#cb22-7"></a><span class="st">&quot;</span>)</span></code></pre></div>
-<div id="htmlwidget-a45ccf3567b93701dfcd" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a45ccf3567b93701dfcd">{"x":{"diagram":"\ngraph LR\nA(Rounded)-->B[Rectangular]\nB-->C{A Rhombus}\nC-->D[Rectangle One]\nC-->E[Rectangle Two]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-88f81c16cab22048e93d" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-88f81c16cab22048e93d">{"x":{"diagram":"\ngraph LR\nA(Rounded)-->B[Rectangular]\nB-->C{A Rhombus}\nC-->D[Rectangle One]\nC-->E[Rectangle Two]\n"},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="execises.html#cb23-1"></a><span class="kw">mermaid</span>(<span class="st">&quot;</span></span>
 <span id="cb23-2"><a href="execises.html#cb23-2"></a><span class="st">graph LR</span></span>
 <span id="cb23-3"><a href="execises.html#cb23-3"></a><span class="st">A[A arr_text] --- B&gt;A arrowtext]</span></span>
 <span id="cb23-4"><a href="execises.html#cb23-4"></a><span class="st">&quot;</span>)</span></code></pre></div>
-<div id="htmlwidget-58c72d97864f8a447c5b" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-58c72d97864f8a447c5b">{"x":{"diagram":"\ngraph LR\nA[A arr_text] --- B>A arrowtext]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1b637dc19386211af3ce" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1b637dc19386211af3ce">{"x":{"diagram":"\ngraph LR\nA[A arr_text] --- B>A arrowtext]\n"},"evals":[],"jsHooks":[]}</script>
 
 </div>
 <!-- </div> -->
@@ -241,8 +250,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="observers.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="observers.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="case-study-er-injuries.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
