@@ -1,4 +1,3 @@
-preface
 your-first-shiny-app
 introduction
 if-you-havent-installed-shiny-already
