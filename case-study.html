@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.4 Prototype | Mastering Shiny Book Club</title>
+  <title>5.7 Case study | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.4 Prototype | Mastering Shiny Book Club" />
+  <meta property="og:title" content="5.7 Case study | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.4 Prototype | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="5.7 Case study | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="exploration.html"/>
-<link rel="next" href="polish-tables.html"/>
+<link rel="prev" href="layouts-1.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -249,85 +249,169 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="prototype" class="section level2">
-<h2><span class="header-section-number">4.4</span> Prototype</h2>
-<p>The first version of the app is a dashboard, where the user can choose a product and get the tables and the plot we have seen in the previous chapter.</p>
-<p>Code of the ui:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="prototype.html#cb41-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb41-2"><a href="prototype.html#cb41-2"></a>  <span class="co"># choose product</span></span>
-<span id="cb41-3"><a href="prototype.html#cb41-3"></a>  <span class="kw">fluidRow</span>(</span>
-<span id="cb41-4"><a href="prototype.html#cb41-4"></a>    <span class="kw">column</span>(</span>
-<span id="cb41-5"><a href="prototype.html#cb41-5"></a>      <span class="dt">width =</span> <span class="dv">6</span>,</span>
-<span id="cb41-6"><a href="prototype.html#cb41-6"></a>      <span class="kw">selectInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;code&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Product&quot;</span>, <span class="dt">choices =</span> prod_codes)</span>
-<span id="cb41-7"><a href="prototype.html#cb41-7"></a>    )</span>
-<span id="cb41-8"><a href="prototype.html#cb41-8"></a>  ),</span>
-<span id="cb41-9"><a href="prototype.html#cb41-9"></a>  <span class="co"># display tables</span></span>
-<span id="cb41-10"><a href="prototype.html#cb41-10"></a>  <span class="kw">fluidRow</span>(</span>
-<span id="cb41-11"><a href="prototype.html#cb41-11"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">4</span>, <span class="kw">tableOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;diag&quot;</span>)),</span>
-<span id="cb41-12"><a href="prototype.html#cb41-12"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">4</span>, <span class="kw">tableOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;body_part&quot;</span>)),</span>
-<span id="cb41-13"><a href="prototype.html#cb41-13"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">4</span>, <span class="kw">tableOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;location&quot;</span>))</span>
-<span id="cb41-14"><a href="prototype.html#cb41-14"></a>  ),</span>
-<span id="cb41-15"><a href="prototype.html#cb41-15"></a>  <span class="co"># display plot</span></span>
-<span id="cb41-16"><a href="prototype.html#cb41-16"></a>  <span class="kw">fluidRow</span>(</span>
-<span id="cb41-17"><a href="prototype.html#cb41-17"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">12</span>, <span class="kw">plotOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;age_sex&quot;</span>))</span>
-<span id="cb41-18"><a href="prototype.html#cb41-18"></a>  )</span>
-<span id="cb41-19"><a href="prototype.html#cb41-19"></a>)</span></code></pre></div>
-<p>Code of the server:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="prototype.html#cb42-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
-<span id="cb42-2"><a href="prototype.html#cb42-2"></a>  <span class="co"># reactive for filtered data frame</span></span>
-<span id="cb42-3"><a href="prototype.html#cb42-3"></a>  selected &lt;-<span class="st"> </span><span class="kw">reactive</span>(</span>
-<span id="cb42-4"><a href="prototype.html#cb42-4"></a>    injuries <span class="op">%&gt;%</span></span>
-<span id="cb42-5"><a href="prototype.html#cb42-5"></a><span class="st">      </span><span class="kw">filter</span>(prod_code <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>code)</span>
-<span id="cb42-6"><a href="prototype.html#cb42-6"></a>  )</span>
-<span id="cb42-7"><a href="prototype.html#cb42-7"></a>  </span>
-<span id="cb42-8"><a href="prototype.html#cb42-8"></a>  <span class="co"># render diagnosis table</span></span>
-<span id="cb42-9"><a href="prototype.html#cb42-9"></a>  output<span class="op">$</span>diag &lt;-<span class="st"> </span><span class="kw">renderTable</span>(</span>
-<span id="cb42-10"><a href="prototype.html#cb42-10"></a>    <span class="kw">selected</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-11"><a href="prototype.html#cb42-11"></a><span class="st">      </span><span class="kw">count</span>(diag, <span class="dt">wt =</span> weight, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb42-12"><a href="prototype.html#cb42-12"></a>  )</span>
-<span id="cb42-13"><a href="prototype.html#cb42-13"></a>  </span>
-<span id="cb42-14"><a href="prototype.html#cb42-14"></a>  <span class="co"># render body part table</span></span>
-<span id="cb42-15"><a href="prototype.html#cb42-15"></a>  output<span class="op">$</span>body_part &lt;-<span class="st"> </span><span class="kw">renderTable</span>(</span>
-<span id="cb42-16"><a href="prototype.html#cb42-16"></a>    <span class="kw">selected</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-17"><a href="prototype.html#cb42-17"></a><span class="st">      </span><span class="kw">count</span>(body_part, <span class="dt">wt =</span> weight, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb42-18"><a href="prototype.html#cb42-18"></a>  )</span>
-<span id="cb42-19"><a href="prototype.html#cb42-19"></a>  </span>
-<span id="cb42-20"><a href="prototype.html#cb42-20"></a>  <span class="co"># render location table</span></span>
-<span id="cb42-21"><a href="prototype.html#cb42-21"></a>  output<span class="op">$</span>location &lt;-<span class="st"> </span><span class="kw">renderTable</span>(</span>
-<span id="cb42-22"><a href="prototype.html#cb42-22"></a>    <span class="kw">selected</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-23"><a href="prototype.html#cb42-23"></a><span class="st">      </span><span class="kw">count</span>(location, <span class="dt">wt =</span> weight, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb42-24"><a href="prototype.html#cb42-24"></a>  )</span>
-<span id="cb42-25"><a href="prototype.html#cb42-25"></a>  </span>
-<span id="cb42-26"><a href="prototype.html#cb42-26"></a>  <span class="co"># reactive for plot data</span></span>
-<span id="cb42-27"><a href="prototype.html#cb42-27"></a>  summary &lt;-<span class="st"> </span><span class="kw">reactive</span>(</span>
-<span id="cb42-28"><a href="prototype.html#cb42-28"></a>    <span class="kw">selected</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-29"><a href="prototype.html#cb42-29"></a><span class="st">      </span><span class="kw">count</span>(age, sex, <span class="dt">wt =</span> weight) <span class="op">%&gt;%</span></span>
-<span id="cb42-30"><a href="prototype.html#cb42-30"></a><span class="st">      </span><span class="kw">left_join</span>(<span class="dt">y =</span> population, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;sex&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb42-31"><a href="prototype.html#cb42-31"></a><span class="st">      </span><span class="kw">mutate</span>(<span class="dt">rate =</span> n <span class="op">/</span><span class="st"> </span>population <span class="op">*</span><span class="st"> </span><span class="fl">1e4</span>)</span>
-<span id="cb42-32"><a href="prototype.html#cb42-32"></a>  )</span>
-<span id="cb42-33"><a href="prototype.html#cb42-33"></a>  </span>
-<span id="cb42-34"><a href="prototype.html#cb42-34"></a>  <span class="co"># render plot</span></span>
-<span id="cb42-35"><a href="prototype.html#cb42-35"></a>  output<span class="op">$</span>age_sex &lt;-<span class="st"> </span><span class="kw">renderPlot</span>(</span>
-<span id="cb42-36"><a href="prototype.html#cb42-36"></a>    <span class="dt">expr =</span> {</span>
-<span id="cb42-37"><a href="prototype.html#cb42-37"></a>      <span class="kw">summary</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-38"><a href="prototype.html#cb42-38"></a><span class="st">        </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> n, <span class="dt">colour =</span> sex)) <span class="op">+</span></span>
-<span id="cb42-39"><a href="prototype.html#cb42-39"></a><span class="st">        </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb42-40"><a href="prototype.html#cb42-40"></a><span class="st">        </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Estimated number of injuries&quot;</span>)</span>
-<span id="cb42-41"><a href="prototype.html#cb42-41"></a>    },</span>
-<span id="cb42-42"><a href="prototype.html#cb42-42"></a>    <span class="dt">res =</span> <span class="dv">96</span></span>
-<span id="cb42-43"><a href="prototype.html#cb42-43"></a>  )</span>
-<span id="cb42-44"><a href="prototype.html#cb42-44"></a>}</span></code></pre></div>
-<p><em>Note:</em> The reactive for plot data is only used once. You could also compute the dataframe when rendering the plot, but it is good practise to <strong>seperate computing and plotting</strong>. It’s easier to understand and generalise.</p>
-<p>This prototype is available at <a href="https://hadley.shinyapps.io/ms-prototype/" class="uri">https://hadley.shinyapps.io/ms-prototype/</a>.</p>
-<p>Now we’re going to improve the app step-by-step.</p>
+<div id="case-study" class="section level2">
+<h2><span class="header-section-number">5.7</span> Case study</h2>
+<p>This is one of the first shiny apps I wrote, it pulls data for a specific user
+from Stack Overflow, works out which “tags” they have received the most votes
+for, then plots those top tags in a word cloud.</p>
+<div id="the-initial-app-app-01.r" class="section level3">
+<h3><span class="header-section-number">5.7.1</span> The initial app (app-01.R)</h3>
+<p>How might this app be improved?</p>
+<ul>
+<li>Code
+<ul>
+<li><code>stackr</code> eagerly obtains data from stack overflow (maybe it should wait til
+user has input a complete user ID)</li>
+</ul></li>
+<li>UX
+<ul>
+<li>Visual style is boring (maybe it should look more like stack overflow?)</li>
+<li>Could we input user name, rather than ID?</li>
+<li>Could we show the user-name / image, so the user knows they’ve copied in the
+correct user ID</li>
+<li>Can we add some extra plots / tables and make a multipage layout</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="case-study.html#cb67-1"></a><span class="co"># Plot a wordcloud to summarise the tags that a stack-overflow user tends to</span></span>
+<span id="cb67-2"><a href="case-study.html#cb67-2"></a><span class="co"># answer/ask about</span></span>
+<span id="cb67-3"><a href="case-study.html#cb67-3"></a></span>
+<span id="cb67-4"><a href="case-study.html#cb67-4"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb67-5"><a href="case-study.html#cb67-5"></a><span class="kw">library</span>(wordcloud)</span>
+<span id="cb67-6"><a href="case-study.html#cb67-6"></a><span class="kw">library</span>(stackr)</span>
+<span id="cb67-7"><a href="case-study.html#cb67-7"></a></span>
+<span id="cb67-8"><a href="case-study.html#cb67-8"></a><span class="co"># Helper functions</span></span>
+<span id="cb67-9"><a href="case-study.html#cb67-9"></a></span>
+<span id="cb67-10"><a href="case-study.html#cb67-10"></a>make_word_cloud &lt;-<span class="st"> </span><span class="cf">function</span>(df) {</span>
+<span id="cb67-11"><a href="case-study.html#cb67-11"></a>  <span class="kw">with</span>(</span>
+<span id="cb67-12"><a href="case-study.html#cb67-12"></a>    df,</span>
+<span id="cb67-13"><a href="case-study.html#cb67-13"></a>    wordcloud<span class="op">::</span><span class="kw">wordcloud</span>(</span>
+<span id="cb67-14"><a href="case-study.html#cb67-14"></a>      <span class="dt">words =</span> tag_name,</span>
+<span id="cb67-15"><a href="case-study.html#cb67-15"></a>      <span class="dt">freq =</span> answer_score,</span>
+<span id="cb67-16"><a href="case-study.html#cb67-16"></a>      <span class="dt">min.freq =</span> <span class="dv">0</span>,</span>
+<span id="cb67-17"><a href="case-study.html#cb67-17"></a>      <span class="dt">colors =</span> RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">6</span>, <span class="st">&quot;Purples&quot;</span>)[<span class="op">-</span><span class="dv">1</span>],</span>
+<span id="cb67-18"><a href="case-study.html#cb67-18"></a>      <span class="dt">scale =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="fl">0.5</span>)</span>
+<span id="cb67-19"><a href="case-study.html#cb67-19"></a>    )</span>
+<span id="cb67-20"><a href="case-study.html#cb67-20"></a>  )</span>
+<span id="cb67-21"><a href="case-study.html#cb67-21"></a>}</span>
+<span id="cb67-22"><a href="case-study.html#cb67-22"></a></span>
+<span id="cb67-23"><a href="case-study.html#cb67-23"></a><span class="co"># Define UI for application that plots information about a user&#39;s stack</span></span>
+<span id="cb67-24"><a href="case-study.html#cb67-24"></a><span class="co"># overflow presence</span></span>
+<span id="cb67-25"><a href="case-study.html#cb67-25"></a></span>
+<span id="cb67-26"><a href="case-study.html#cb67-26"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb67-27"><a href="case-study.html#cb67-27"></a></span>
+<span id="cb67-28"><a href="case-study.html#cb67-28"></a>  <span class="co"># Application title</span></span>
+<span id="cb67-29"><a href="case-study.html#cb67-29"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Stack Overflow: User Statistics&quot;</span>),</span>
+<span id="cb67-30"><a href="case-study.html#cb67-30"></a></span>
+<span id="cb67-31"><a href="case-study.html#cb67-31"></a>  <span class="co"># Sidebar for selecting which Stack Overflow user&#39;s data is presented</span></span>
+<span id="cb67-32"><a href="case-study.html#cb67-32"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb67-33"><a href="case-study.html#cb67-33"></a>    <span class="kw">sidebarPanel</span>(</span>
+<span id="cb67-34"><a href="case-study.html#cb67-34"></a>      <span class="kw">textInput</span>(<span class="st">&quot;user_id&quot;</span>, <span class="st">&quot;Select a Stack Overflow user ID:&quot;</span>, <span class="st">&quot;1845650&quot;</span>)</span>
+<span id="cb67-35"><a href="case-study.html#cb67-35"></a>    ),</span>
+<span id="cb67-36"><a href="case-study.html#cb67-36"></a></span>
+<span id="cb67-37"><a href="case-study.html#cb67-37"></a>    <span class="co"># Show a plot of a wordcloud of the user&#39;s answer-tags</span></span>
+<span id="cb67-38"><a href="case-study.html#cb67-38"></a>    <span class="kw">mainPanel</span>(</span>
+<span id="cb67-39"><a href="case-study.html#cb67-39"></a>      <span class="kw">plotOutput</span>(<span class="st">&quot;word_cloud&quot;</span>)</span>
+<span id="cb67-40"><a href="case-study.html#cb67-40"></a>    )</span>
+<span id="cb67-41"><a href="case-study.html#cb67-41"></a>  )</span>
+<span id="cb67-42"><a href="case-study.html#cb67-42"></a>)</span>
+<span id="cb67-43"><a href="case-study.html#cb67-43"></a></span>
+<span id="cb67-44"><a href="case-study.html#cb67-44"></a><span class="co"># Define server logic required to obtain data from stack-overflow and draw a</span></span>
+<span id="cb67-45"><a href="case-study.html#cb67-45"></a><span class="co"># wordcloud</span></span>
+<span id="cb67-46"><a href="case-study.html#cb67-46"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
+<span id="cb67-47"><a href="case-study.html#cb67-47"></a>  stack_data &lt;-<span class="st"> </span><span class="kw">reactive</span>(</span>
+<span id="cb67-48"><a href="case-study.html#cb67-48"></a>    stackr<span class="op">::</span><span class="kw">stack_users</span>(input[[<span class="st">&quot;user_id&quot;</span>]], <span class="st">&quot;top-tags&quot;</span>),</span>
+<span id="cb67-49"><a href="case-study.html#cb67-49"></a>  )</span>
+<span id="cb67-50"><a href="case-study.html#cb67-50"></a></span>
+<span id="cb67-51"><a href="case-study.html#cb67-51"></a>  output<span class="op">$</span>word_cloud &lt;-<span class="st"> </span><span class="kw">renderPlot</span>(</span>
+<span id="cb67-52"><a href="case-study.html#cb67-52"></a>    <span class="kw">make_word_cloud</span>(<span class="kw">stack_data</span>())</span>
+<span id="cb67-53"><a href="case-study.html#cb67-53"></a>  )</span>
+<span id="cb67-54"><a href="case-study.html#cb67-54"></a>}</span>
+<span id="cb67-55"><a href="case-study.html#cb67-55"></a></span>
+<span id="cb67-56"><a href="case-study.html#cb67-56"></a><span class="co"># Run the application</span></span>
+<span id="cb67-57"><a href="case-study.html#cb67-57"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
 </div>
+<div id="the-final-app-app.r" class="section level3">
+<h3><span class="header-section-number">5.7.2</span> The final app (app.R)</h3>
+<p>Relative to the original app, we have:</p>
+<ul>
+<li>introduced a new results table (containing the data obtained from
+stack-overflow)</li>
+<li>converted from a single-panel to a multi-panel layout (using <code>tabsetPanel</code>
+and two <code>tabPanel</code>s)</li>
+<li>attempted to use the stack-overflow colour scheme as part of the apps theme,
+and also in the wordcloud colour scheme</li>
+</ul>
+<p>The stack overflow colour scheme was obtained by using the browser’s developer
+tools (here using “Inspect” in chromium and looking at the “styles” section) on
+an open SO page.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="case-study.html#cb68-1"></a><span class="co"># Plot a wordcloud to summarise the tags that a stack-overflow user tends to</span></span>
+<span id="cb68-2"><a href="case-study.html#cb68-2"></a><span class="co"># answer/ask about</span></span>
+<span id="cb68-3"><a href="case-study.html#cb68-3"></a></span>
+<span id="cb68-4"><a href="case-study.html#cb68-4"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb68-5"><a href="case-study.html#cb68-5"></a><span class="kw">library</span>(wordcloud)</span>
+<span id="cb68-6"><a href="case-study.html#cb68-6"></a><span class="kw">library</span>(stackr)</span>
+<span id="cb68-7"><a href="case-study.html#cb68-7"></a></span>
+<span id="cb68-8"><a href="case-study.html#cb68-8"></a><span class="co"># Helper functions</span></span>
+<span id="cb68-9"><a href="case-study.html#cb68-9"></a></span>
+<span id="cb68-10"><a href="case-study.html#cb68-10"></a>make_word_cloud &lt;-<span class="st"> </span><span class="cf">function</span>(df) {</span>
+<span id="cb68-11"><a href="case-study.html#cb68-11"></a>  <span class="kw">with</span>(</span>
+<span id="cb68-12"><a href="case-study.html#cb68-12"></a>    df,</span>
+<span id="cb68-13"><a href="case-study.html#cb68-13"></a>    wordcloud<span class="op">::</span><span class="kw">wordcloud</span>(</span>
+<span id="cb68-14"><a href="case-study.html#cb68-14"></a>      <span class="dt">words =</span> tag_name,</span>
+<span id="cb68-15"><a href="case-study.html#cb68-15"></a>      <span class="dt">freq =</span> answer_score,</span>
+<span id="cb68-16"><a href="case-study.html#cb68-16"></a>      <span class="dt">min.freq =</span> <span class="dv">0</span>,</span>
+<span id="cb68-17"><a href="case-study.html#cb68-17"></a>      <span class="dt">colors =</span> RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">6</span>, <span class="st">&quot;Purples&quot;</span>)[<span class="op">-</span><span class="dv">1</span>],</span>
+<span id="cb68-18"><a href="case-study.html#cb68-18"></a>      <span class="dt">scale =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="fl">0.5</span>)</span>
+<span id="cb68-19"><a href="case-study.html#cb68-19"></a>    )</span>
+<span id="cb68-20"><a href="case-study.html#cb68-20"></a>  )</span>
+<span id="cb68-21"><a href="case-study.html#cb68-21"></a>}</span>
+<span id="cb68-22"><a href="case-study.html#cb68-22"></a></span>
+<span id="cb68-23"><a href="case-study.html#cb68-23"></a><span class="co"># Define UI for application that plots information about a user&#39;s stack</span></span>
+<span id="cb68-24"><a href="case-study.html#cb68-24"></a><span class="co"># overflow presence</span></span>
+<span id="cb68-25"><a href="case-study.html#cb68-25"></a></span>
+<span id="cb68-26"><a href="case-study.html#cb68-26"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb68-27"><a href="case-study.html#cb68-27"></a></span>
+<span id="cb68-28"><a href="case-study.html#cb68-28"></a>  <span class="co"># Application title</span></span>
+<span id="cb68-29"><a href="case-study.html#cb68-29"></a>  <span class="kw">titlePanel</span>(<span class="st">&quot;Stack Overflow: User Statistics&quot;</span>),</span>
+<span id="cb68-30"><a href="case-study.html#cb68-30"></a></span>
+<span id="cb68-31"><a href="case-study.html#cb68-31"></a>  <span class="co"># Sidebar for selecting which Stack Overflow user&#39;s data is presented</span></span>
+<span id="cb68-32"><a href="case-study.html#cb68-32"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb68-33"><a href="case-study.html#cb68-33"></a>    <span class="kw">sidebarPanel</span>(</span>
+<span id="cb68-34"><a href="case-study.html#cb68-34"></a>      <span class="kw">textInput</span>(<span class="st">&quot;user_id&quot;</span>, <span class="st">&quot;Select a Stack Overflow user ID:&quot;</span>, <span class="st">&quot;1845650&quot;</span>)</span>
+<span id="cb68-35"><a href="case-study.html#cb68-35"></a>    ),</span>
+<span id="cb68-36"><a href="case-study.html#cb68-36"></a></span>
+<span id="cb68-37"><a href="case-study.html#cb68-37"></a>    <span class="co"># Show a plot of a wordcloud of the user&#39;s answer-tags</span></span>
+<span id="cb68-38"><a href="case-study.html#cb68-38"></a>    <span class="kw">mainPanel</span>(</span>
+<span id="cb68-39"><a href="case-study.html#cb68-39"></a>      <span class="kw">plotOutput</span>(<span class="st">&quot;word_cloud&quot;</span>)</span>
+<span id="cb68-40"><a href="case-study.html#cb68-40"></a>    )</span>
+<span id="cb68-41"><a href="case-study.html#cb68-41"></a>  )</span>
+<span id="cb68-42"><a href="case-study.html#cb68-42"></a>)</span>
+<span id="cb68-43"><a href="case-study.html#cb68-43"></a></span>
+<span id="cb68-44"><a href="case-study.html#cb68-44"></a><span class="co"># Define server logic required to obtain data from stack-overflow and draw a</span></span>
+<span id="cb68-45"><a href="case-study.html#cb68-45"></a><span class="co"># wordcloud</span></span>
+<span id="cb68-46"><a href="case-study.html#cb68-46"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output) {</span>
+<span id="cb68-47"><a href="case-study.html#cb68-47"></a>  stack_data &lt;-<span class="st"> </span><span class="kw">reactive</span>(</span>
+<span id="cb68-48"><a href="case-study.html#cb68-48"></a>    stackr<span class="op">::</span><span class="kw">stack_users</span>(input[[<span class="st">&quot;user_id&quot;</span>]], <span class="st">&quot;top-tags&quot;</span>),</span>
+<span id="cb68-49"><a href="case-study.html#cb68-49"></a>  )</span>
+<span id="cb68-50"><a href="case-study.html#cb68-50"></a></span>
+<span id="cb68-51"><a href="case-study.html#cb68-51"></a>  output<span class="op">$</span>word_cloud &lt;-<span class="st"> </span><span class="kw">renderPlot</span>(</span>
+<span id="cb68-52"><a href="case-study.html#cb68-52"></a>    <span class="kw">make_word_cloud</span>(<span class="kw">stack_data</span>())</span>
+<span id="cb68-53"><a href="case-study.html#cb68-53"></a>  )</span>
+<span id="cb68-54"><a href="case-study.html#cb68-54"></a>}</span>
+<span id="cb68-55"><a href="case-study.html#cb68-55"></a></span>
+<span id="cb68-56"><a href="case-study.html#cb68-56"></a><span class="co"># Run the application</span></span>
+<span id="cb68-57"><a href="case-study.html#cb68-57"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="exploration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="polish-tables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="layouts-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -358,7 +442,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/04-case_study_er_injuries.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/06-layout_themes_html.Rmd",
 "text": "Edit"
 },
 "history": {

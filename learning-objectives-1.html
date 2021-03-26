@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.4 Prototype | Mastering Shiny Book Club</title>
+  <title>5.2 Learning objectives | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.4 Prototype | Mastering Shiny Book Club" />
+  <meta property="og:title" content="5.2 Learning objectives | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.4 Prototype | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="5.2 Learning objectives | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="exploration.html"/>
-<link rel="next" href="polish-tables.html"/>
+<link rel="prev" href="disclaimer.html"/>
+<link rel="next" href="resources.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -249,85 +249,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="prototype" class="section level2">
-<h2><span class="header-section-number">4.4</span> Prototype</h2>
-<p>The first version of the app is a dashboard, where the user can choose a product and get the tables and the plot we have seen in the previous chapter.</p>
-<p>Code of the ui:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="prototype.html#cb41-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb41-2"><a href="prototype.html#cb41-2"></a>  <span class="co"># choose product</span></span>
-<span id="cb41-3"><a href="prototype.html#cb41-3"></a>  <span class="kw">fluidRow</span>(</span>
-<span id="cb41-4"><a href="prototype.html#cb41-4"></a>    <span class="kw">column</span>(</span>
-<span id="cb41-5"><a href="prototype.html#cb41-5"></a>      <span class="dt">width =</span> <span class="dv">6</span>,</span>
-<span id="cb41-6"><a href="prototype.html#cb41-6"></a>      <span class="kw">selectInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;code&quot;</span>, <span class="dt">label =</span> <span class="st">&quot;Product&quot;</span>, <span class="dt">choices =</span> prod_codes)</span>
-<span id="cb41-7"><a href="prototype.html#cb41-7"></a>    )</span>
-<span id="cb41-8"><a href="prototype.html#cb41-8"></a>  ),</span>
-<span id="cb41-9"><a href="prototype.html#cb41-9"></a>  <span class="co"># display tables</span></span>
-<span id="cb41-10"><a href="prototype.html#cb41-10"></a>  <span class="kw">fluidRow</span>(</span>
-<span id="cb41-11"><a href="prototype.html#cb41-11"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">4</span>, <span class="kw">tableOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;diag&quot;</span>)),</span>
-<span id="cb41-12"><a href="prototype.html#cb41-12"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">4</span>, <span class="kw">tableOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;body_part&quot;</span>)),</span>
-<span id="cb41-13"><a href="prototype.html#cb41-13"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">4</span>, <span class="kw">tableOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;location&quot;</span>))</span>
-<span id="cb41-14"><a href="prototype.html#cb41-14"></a>  ),</span>
-<span id="cb41-15"><a href="prototype.html#cb41-15"></a>  <span class="co"># display plot</span></span>
-<span id="cb41-16"><a href="prototype.html#cb41-16"></a>  <span class="kw">fluidRow</span>(</span>
-<span id="cb41-17"><a href="prototype.html#cb41-17"></a>    <span class="kw">column</span>(<span class="dt">width =</span> <span class="dv">12</span>, <span class="kw">plotOutput</span>(<span class="dt">outputId =</span> <span class="st">&quot;age_sex&quot;</span>))</span>
-<span id="cb41-18"><a href="prototype.html#cb41-18"></a>  )</span>
-<span id="cb41-19"><a href="prototype.html#cb41-19"></a>)</span></code></pre></div>
-<p>Code of the server:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="prototype.html#cb42-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
-<span id="cb42-2"><a href="prototype.html#cb42-2"></a>  <span class="co"># reactive for filtered data frame</span></span>
-<span id="cb42-3"><a href="prototype.html#cb42-3"></a>  selected &lt;-<span class="st"> </span><span class="kw">reactive</span>(</span>
-<span id="cb42-4"><a href="prototype.html#cb42-4"></a>    injuries <span class="op">%&gt;%</span></span>
-<span id="cb42-5"><a href="prototype.html#cb42-5"></a><span class="st">      </span><span class="kw">filter</span>(prod_code <span class="op">==</span><span class="st"> </span>input<span class="op">$</span>code)</span>
-<span id="cb42-6"><a href="prototype.html#cb42-6"></a>  )</span>
-<span id="cb42-7"><a href="prototype.html#cb42-7"></a>  </span>
-<span id="cb42-8"><a href="prototype.html#cb42-8"></a>  <span class="co"># render diagnosis table</span></span>
-<span id="cb42-9"><a href="prototype.html#cb42-9"></a>  output<span class="op">$</span>diag &lt;-<span class="st"> </span><span class="kw">renderTable</span>(</span>
-<span id="cb42-10"><a href="prototype.html#cb42-10"></a>    <span class="kw">selected</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-11"><a href="prototype.html#cb42-11"></a><span class="st">      </span><span class="kw">count</span>(diag, <span class="dt">wt =</span> weight, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb42-12"><a href="prototype.html#cb42-12"></a>  )</span>
-<span id="cb42-13"><a href="prototype.html#cb42-13"></a>  </span>
-<span id="cb42-14"><a href="prototype.html#cb42-14"></a>  <span class="co"># render body part table</span></span>
-<span id="cb42-15"><a href="prototype.html#cb42-15"></a>  output<span class="op">$</span>body_part &lt;-<span class="st"> </span><span class="kw">renderTable</span>(</span>
-<span id="cb42-16"><a href="prototype.html#cb42-16"></a>    <span class="kw">selected</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-17"><a href="prototype.html#cb42-17"></a><span class="st">      </span><span class="kw">count</span>(body_part, <span class="dt">wt =</span> weight, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb42-18"><a href="prototype.html#cb42-18"></a>  )</span>
-<span id="cb42-19"><a href="prototype.html#cb42-19"></a>  </span>
-<span id="cb42-20"><a href="prototype.html#cb42-20"></a>  <span class="co"># render location table</span></span>
-<span id="cb42-21"><a href="prototype.html#cb42-21"></a>  output<span class="op">$</span>location &lt;-<span class="st"> </span><span class="kw">renderTable</span>(</span>
-<span id="cb42-22"><a href="prototype.html#cb42-22"></a>    <span class="kw">selected</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-23"><a href="prototype.html#cb42-23"></a><span class="st">      </span><span class="kw">count</span>(location, <span class="dt">wt =</span> weight, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb42-24"><a href="prototype.html#cb42-24"></a>  )</span>
-<span id="cb42-25"><a href="prototype.html#cb42-25"></a>  </span>
-<span id="cb42-26"><a href="prototype.html#cb42-26"></a>  <span class="co"># reactive for plot data</span></span>
-<span id="cb42-27"><a href="prototype.html#cb42-27"></a>  summary &lt;-<span class="st"> </span><span class="kw">reactive</span>(</span>
-<span id="cb42-28"><a href="prototype.html#cb42-28"></a>    <span class="kw">selected</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-29"><a href="prototype.html#cb42-29"></a><span class="st">      </span><span class="kw">count</span>(age, sex, <span class="dt">wt =</span> weight) <span class="op">%&gt;%</span></span>
-<span id="cb42-30"><a href="prototype.html#cb42-30"></a><span class="st">      </span><span class="kw">left_join</span>(<span class="dt">y =</span> population, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;sex&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb42-31"><a href="prototype.html#cb42-31"></a><span class="st">      </span><span class="kw">mutate</span>(<span class="dt">rate =</span> n <span class="op">/</span><span class="st"> </span>population <span class="op">*</span><span class="st"> </span><span class="fl">1e4</span>)</span>
-<span id="cb42-32"><a href="prototype.html#cb42-32"></a>  )</span>
-<span id="cb42-33"><a href="prototype.html#cb42-33"></a>  </span>
-<span id="cb42-34"><a href="prototype.html#cb42-34"></a>  <span class="co"># render plot</span></span>
-<span id="cb42-35"><a href="prototype.html#cb42-35"></a>  output<span class="op">$</span>age_sex &lt;-<span class="st"> </span><span class="kw">renderPlot</span>(</span>
-<span id="cb42-36"><a href="prototype.html#cb42-36"></a>    <span class="dt">expr =</span> {</span>
-<span id="cb42-37"><a href="prototype.html#cb42-37"></a>      <span class="kw">summary</span>() <span class="op">%&gt;%</span></span>
-<span id="cb42-38"><a href="prototype.html#cb42-38"></a><span class="st">        </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> n, <span class="dt">colour =</span> sex)) <span class="op">+</span></span>
-<span id="cb42-39"><a href="prototype.html#cb42-39"></a><span class="st">        </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb42-40"><a href="prototype.html#cb42-40"></a><span class="st">        </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Estimated number of injuries&quot;</span>)</span>
-<span id="cb42-41"><a href="prototype.html#cb42-41"></a>    },</span>
-<span id="cb42-42"><a href="prototype.html#cb42-42"></a>    <span class="dt">res =</span> <span class="dv">96</span></span>
-<span id="cb42-43"><a href="prototype.html#cb42-43"></a>  )</span>
-<span id="cb42-44"><a href="prototype.html#cb42-44"></a>}</span></code></pre></div>
-<p><em>Note:</em> The reactive for plot data is only used once. You could also compute the dataframe when rendering the plot, but it is good practise to <strong>seperate computing and plotting</strong>. It’s easier to understand and generalise.</p>
-<p>This prototype is available at <a href="https://hadley.shinyapps.io/ms-prototype/" class="uri">https://hadley.shinyapps.io/ms-prototype/</a>.</p>
-<p>Now we’re going to improve the app step-by-step.</p>
+<div id="learning-objectives-1" class="section level2">
+<h2><span class="header-section-number">5.2</span> Learning objectives</h2>
+<ul>
+<li>Creating raw html using R</li>
+<li>HTML elements: attributes, classes, content</li>
+<li>CSS for styling</li>
+<li>Bootstrap (and related) front end toolkits</li>
+<li>Shiny produces single-page applications</li>
+<li>… but multipage <em>layouts</em> are possible</li>
+</ul>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="exploration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="polish-tables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="disclaimer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -358,7 +297,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/04-case_study_er_injuries.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/06-layout_themes_html.Rmd",
 "text": "Edit"
 },
 "history": {
