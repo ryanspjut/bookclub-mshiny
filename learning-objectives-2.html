@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.1 Recap | Mastering Shiny Book Club</title>
+  <title>6.2 Learning objectives | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.1 Recap | Mastering Shiny Book Club" />
+  <meta property="og:title" content="6.2 Learning objectives | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.1 Recap | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="6.2 Learning objectives | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="basic-reactivity.html"/>
-<link rel="next" href="reactive-programming.html"/>
+<link rel="prev" href="disclaimer.html"/>
+<link rel="next" href="resources.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -268,57 +268,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="recap" class="section level2">
-<h2><span class="header-section-number">3.1</span> Recap</h2>
-<div id="htmlwidget-dec0bd6b90b653e992d0" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dec0bd6b90b653e992d0">{"x":{"diagram":"\ngraph LR\nA[R scripting]-->B[sequential logic]\n"},"evals":[],"jsHooks":[]}</script>
-<div id="htmlwidget-b3352683f366cfa33a48" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b3352683f366cfa33a48">{"x":{"diagram":"\ngraph LR\nA[Reactive Programming]-->B[graph of dependencies]\n"},"evals":[],"jsHooks":[]}</script>
-<p>Important Learnings so far, main app components:</p>
-<ol style="list-style-type: decimal">
-<li>Front end - the ui object</li>
-</ol>
+<div id="learning-objectives-2" class="section level2">
+<h2><span class="header-section-number">6.2</span> Learning objectives</h2>
 <ul>
-<li>contains the HTML presented to every user of your app.</li>
-<li>is simple because <strong>every user</strong> gets the <strong>same</strong> HTML.</li>
+<li>Creating raw html using R</li>
+<li>HTML elements: attributes, classes, content</li>
+<li>CSS for styling</li>
+<li>Bootstrap (and related) front end toolkits</li>
+<li>Shiny produces single-page applications</li>
+<li>… but multipage <em>layouts</em> are possible</li>
 </ul>
-<ol start="2" style="list-style-type: decimal">
-<li>Back end - the server object</li>
-</ol>
-<ul>
-<li>is more complicated because <strong>every user</strong> needs to get an <strong>independent version</strong> of the app (when user A modifies an input field, user B shouldn’t see their outputs change).</li>
-<li>creates a new environment for each run, giving each session to have a unique state.</li>
-</ul>
-<blockquote>
-<p>server &lt;- function(input, output, session)</p>
-</blockquote>
-<p>1 <em>input</em><br />
-- list-like object<br />
-- used for receiving input( sent from the browser)<br />
-- read-only<br />
-- must be read in a reactive context (e.g. renderText() or reactive())</p>
-<p>2 <em>output</em><br />
-- list-like object<br />
-- used for sending output<br />
-- ALWAYS use with a render fn() - sets up the reactive context &amp; renders the HTML.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="recap.html#cb19-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb19-2"><a href="recap.html#cb19-2"></a>  <span class="kw">textInput</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;What&#39;s your name?&quot;</span>),</span>
-<span id="cb19-3"><a href="recap.html#cb19-3"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;greeting&quot;</span>)</span>
-<span id="cb19-4"><a href="recap.html#cb19-4"></a>)</span>
-<span id="cb19-5"><a href="recap.html#cb19-5"></a></span>
-<span id="cb19-6"><a href="recap.html#cb19-6"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
-<span id="cb19-7"><a href="recap.html#cb19-7"></a>  output<span class="op">$</span>greeting &lt;-<span class="st"> </span><span class="kw">renderText</span>({</span>
-<span id="cb19-8"><a href="recap.html#cb19-8"></a>    <span class="kw">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="op">$</span>name, <span class="st">&quot;!&quot;</span>)</span>
-<span id="cb19-9"><a href="recap.html#cb19-9"></a>  })</span>
-<span id="cb19-10"><a href="recap.html#cb19-10"></a>}</span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="basic-reactivity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="reactive-programming.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="disclaimer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -349,7 +316,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/03-basic_reactivity.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/06-layout_themes_html.Rmd",
 "text": "Edit"
 },
 "history": {
