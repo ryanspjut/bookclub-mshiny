@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.2 Learning objectives | Mastering Shiny Book Club</title>
+  <title>7.2 Notifications | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.2 Learning objectives | Mastering Shiny Book Club" />
+  <meta property="og:title" content="7.2 Notifications | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.2 Learning objectives | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="7.2 Notifications | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="disclaimer.html"/>
-<link rel="next" href="resources.html"/>
+<link rel="prev" href="validation.html"/>
+<link rel="next" href="progress-bars.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -290,24 +290,92 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="learning-objectives-2" class="section level2">
-<h2><span class="header-section-number">6.2</span> Learning objectives</h2>
+<div id="notifications" class="section level2">
+<h2><span class="header-section-number">7.2</span> Notifications</h2>
+<p>Use <code>showNotification()</code>, if there is no problem, but you want the user to know what is happening.</p>
 <ul>
-<li>Creating raw html using R</li>
-<li>HTML elements: attributes, classes, content</li>
-<li>CSS for styling</li>
-<li>Bootstrap (and related) front end toolkits</li>
-<li>Shiny produces single-page applications</li>
-<li>… but multipage <em>layouts</em> are possible</li>
+<li>show a transient notification that automatically disappears after a fixed amount of time</li>
+<li>show a notification when a process starts and remove it when the process ends</li>
+<li>update a single notification with progressive updates</li>
 </ul>
+<div id="transient-notifications" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Transient notifications</h3>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="notifications.html#cb99-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb99-2"><a href="notifications.html#cb99-2"></a>  <span class="kw">actionButton</span>(<span class="st">&quot;goodnight&quot;</span>, <span class="st">&quot;Good night&quot;</span>)</span>
+<span id="cb99-3"><a href="notifications.html#cb99-3"></a>)</span>
+<span id="cb99-4"><a href="notifications.html#cb99-4"></a></span>
+<span id="cb99-5"><a href="notifications.html#cb99-5"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb99-6"><a href="notifications.html#cb99-6"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>goodnight, {</span>
+<span id="cb99-7"><a href="notifications.html#cb99-7"></a>    <span class="kw">showNotification</span>(<span class="st">&quot;So long&quot;</span>)</span>
+<span id="cb99-8"><a href="notifications.html#cb99-8"></a>    <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb99-9"><a href="notifications.html#cb99-9"></a>    <span class="kw">showNotification</span>(<span class="st">&quot;Farewell&quot;</span>)</span>
+<span id="cb99-10"><a href="notifications.html#cb99-10"></a>    <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb99-11"><a href="notifications.html#cb99-11"></a>    <span class="kw">showNotification</span>(<span class="st">&quot;Auf Wiedersehen&quot;</span>)</span>
+<span id="cb99-12"><a href="notifications.html#cb99-12"></a>    <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb99-13"><a href="notifications.html#cb99-13"></a>    <span class="kw">showNotification</span>(<span class="st">&quot;Adieu&quot;</span>)</span>
+<span id="cb99-14"><a href="notifications.html#cb99-14"></a>  })</span>
+<span id="cb99-15"><a href="notifications.html#cb99-15"></a>}</span></code></pre></div>
+<p>–&gt; example app</p>
+</div>
+<div id="removing-on-completion" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Removing on completion</h3>
+<p>Show the notification when the task starts, and remove the notification when the task completes.</p>
+<ul>
+<li>Set <code>duration = NULL</code> and <code>closeButton = FALSE</code> so that the notification stays visible until the task is complete</li>
+<li>Store the id returned by <code>showNotification()</code>, and then pass this value to <code>removeNotification()</code> (&amp; <code>on.exit()</code>)</li>
+</ul>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="notifications.html#cb100-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb100-2"><a href="notifications.html#cb100-2"></a>  data &lt;-<span class="st"> </span><span class="kw">reactive</span>({</span>
+<span id="cb100-3"><a href="notifications.html#cb100-3"></a>    id &lt;-<span class="st"> </span><span class="kw">showNotification</span>(<span class="st">&quot;Reading data...&quot;</span>, <span class="dt">duration =</span> <span class="ot">NULL</span>, <span class="dt">closeButton =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb100-4"><a href="notifications.html#cb100-4"></a>    <span class="kw">on.exit</span>(<span class="kw">removeNotification</span>(id), <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb100-5"><a href="notifications.html#cb100-5"></a>    </span>
+<span id="cb100-6"><a href="notifications.html#cb100-6"></a>    <span class="kw">read.csv</span>(input<span class="op">$</span>file<span class="op">$</span>datapath)</span>
+<span id="cb100-7"><a href="notifications.html#cb100-7"></a>  })</span>
+<span id="cb100-8"><a href="notifications.html#cb100-8"></a>}</span></code></pre></div>
+</div>
+<div id="progressive-updates" class="section level3">
+<h3><span class="header-section-number">7.2.3</span> Progressive updates</h3>
+<ul>
+<li>multiple calls to <code>showNotification()</code> –&gt; multiple notifications</li>
+<li>capture <code>id</code> from first call, use it in subsequent calls</li>
+</ul>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="notifications.html#cb101-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb101-2"><a href="notifications.html#cb101-2"></a>  <span class="kw">tableOutput</span>(<span class="st">&quot;data&quot;</span>)</span>
+<span id="cb101-3"><a href="notifications.html#cb101-3"></a>)</span>
+<span id="cb101-4"><a href="notifications.html#cb101-4"></a></span>
+<span id="cb101-5"><a href="notifications.html#cb101-5"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb101-6"><a href="notifications.html#cb101-6"></a>  notify &lt;-<span class="st"> </span><span class="cf">function</span>(msg, <span class="dt">id =</span> <span class="ot">NULL</span>) {</span>
+<span id="cb101-7"><a href="notifications.html#cb101-7"></a>    <span class="kw">showNotification</span>(msg, <span class="dt">id =</span> id, <span class="dt">duration =</span> <span class="ot">NULL</span>, <span class="dt">closeButton =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb101-8"><a href="notifications.html#cb101-8"></a>  }</span>
+<span id="cb101-9"><a href="notifications.html#cb101-9"></a></span>
+<span id="cb101-10"><a href="notifications.html#cb101-10"></a>  data &lt;-<span class="st"> </span><span class="kw">reactive</span>({ </span>
+<span id="cb101-11"><a href="notifications.html#cb101-11"></a>    id &lt;-<span class="st"> </span><span class="kw">notify</span>(<span class="st">&quot;Reading data...&quot;</span>)</span>
+<span id="cb101-12"><a href="notifications.html#cb101-12"></a>    <span class="kw">on.exit</span>(<span class="kw">removeNotification</span>(id), <span class="dt">add =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb101-13"><a href="notifications.html#cb101-13"></a>    <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb101-14"><a href="notifications.html#cb101-14"></a>      </span>
+<span id="cb101-15"><a href="notifications.html#cb101-15"></a>    <span class="kw">notify</span>(<span class="st">&quot;Reticulating splines...&quot;</span>, <span class="dt">id =</span> id)</span>
+<span id="cb101-16"><a href="notifications.html#cb101-16"></a>    <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb101-17"><a href="notifications.html#cb101-17"></a>    </span>
+<span id="cb101-18"><a href="notifications.html#cb101-18"></a>    <span class="kw">notify</span>(<span class="st">&quot;Herding llamas...&quot;</span>, <span class="dt">id =</span> id)</span>
+<span id="cb101-19"><a href="notifications.html#cb101-19"></a>    <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb101-20"><a href="notifications.html#cb101-20"></a></span>
+<span id="cb101-21"><a href="notifications.html#cb101-21"></a>    <span class="kw">notify</span>(<span class="st">&quot;Orthogonalizing matrices...&quot;</span>, <span class="dt">id =</span> id)</span>
+<span id="cb101-22"><a href="notifications.html#cb101-22"></a>    <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
+<span id="cb101-23"><a href="notifications.html#cb101-23"></a>        </span>
+<span id="cb101-24"><a href="notifications.html#cb101-24"></a>    mtcars</span>
+<span id="cb101-25"><a href="notifications.html#cb101-25"></a>  })</span>
+<span id="cb101-26"><a href="notifications.html#cb101-26"></a>  </span>
+<span id="cb101-27"><a href="notifications.html#cb101-27"></a>  output<span class="op">$</span>data &lt;-<span class="st"> </span><span class="kw">renderTable</span>(<span class="kw">head</span>(<span class="kw">data</span>()))</span>
+<span id="cb101-28"><a href="notifications.html#cb101-28"></a>}</span></code></pre></div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="disclaimer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="validation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="progress-bars.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -338,7 +406,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/06-layout_themes_html.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/08-user_feedback.Rmd",
 "text": "Edit"
 },
 "history": {

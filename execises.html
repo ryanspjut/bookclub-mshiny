@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-03-31" />
+<meta name="date" content="2021-04-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -248,6 +248,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.7.2" data-path="case-study.html"><a href="case-study.html#the-final-app-app.r"><i class="fa fa-check"></i><b>6.7.2</b> The final app (app.R)</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="user-feedback.html"><a href="user-feedback.html"><i class="fa fa-check"></i><b>7</b> User Feedback</a><ul>
+<li class="chapter" data-level="7.1" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i><b>7.1</b> Validation</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="validation.html"><a href="validation.html#validating-input"><i class="fa fa-check"></i><b>7.1.1</b> Validating input</a></li>
+<li class="chapter" data-level="7.1.2" data-path="validation.html"><a href="validation.html#cancelling-execution-with-req"><i class="fa fa-check"></i><b>7.1.2</b> Cancelling execution with <code>req()</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="validation.html"><a href="validation.html#req-and-validation"><i class="fa fa-check"></i><b>7.1.3</b> <code>req()</code> and validation</a></li>
+<li class="chapter" data-level="7.1.4" data-path="validation.html"><a href="validation.html#validate-output"><i class="fa fa-check"></i><b>7.1.4</b> Validate output</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="notifications.html"><a href="notifications.html"><i class="fa fa-check"></i><b>7.2</b> Notifications</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="notifications.html"><a href="notifications.html#transient-notifications"><i class="fa fa-check"></i><b>7.2.1</b> Transient notifications</a></li>
+<li class="chapter" data-level="7.2.2" data-path="notifications.html"><a href="notifications.html#removing-on-completion"><i class="fa fa-check"></i><b>7.2.2</b> Removing on completion</a></li>
+<li class="chapter" data-level="7.2.3" data-path="notifications.html"><a href="notifications.html#progressive-updates"><i class="fa fa-check"></i><b>7.2.3</b> Progressive updates</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="progress-bars.html"><a href="progress-bars.html"><i class="fa fa-check"></i><b>7.3</b> Progress bars</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="progress-bars.html"><a href="progress-bars.html#shiny"><i class="fa fa-check"></i><b>7.3.1</b> Shiny</a></li>
+<li class="chapter" data-level="7.3.2" data-path="progress-bars.html"><a href="progress-bars.html#waiter"><i class="fa fa-check"></i><b>7.3.2</b> Waiter</a></li>
+<li class="chapter" data-level="7.3.3" data-path="progress-bars.html"><a href="progress-bars.html#spinners"><i class="fa fa-check"></i><b>7.3.3</b> Spinners</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="confirming-and-undoing.html"><a href="confirming-and-undoing.html"><i class="fa fa-check"></i><b>7.4</b> Confirming and undoing</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="confirming-and-undoing.html"><a href="confirming-and-undoing.html#explicit-confirmation"><i class="fa fa-check"></i><b>7.4.1</b> Explicit confirmation</a></li>
+<li class="chapter" data-level="7.4.2" data-path="confirming-and-undoing.html"><a href="confirming-and-undoing.html#undoing-an-action"><i class="fa fa-check"></i><b>7.4.2</b> Undoing an action</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -277,14 +299,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb22-5"><a href="execises.html#cb22-5"></a><span class="st">C--&gt;D[Rectangle One]</span></span>
 <span id="cb22-6"><a href="execises.html#cb22-6"></a><span class="st">C--&gt;E[Rectangle Two]</span></span>
 <span id="cb22-7"><a href="execises.html#cb22-7"></a><span class="st">&quot;</span>)</span></code></pre></div>
-<div id="htmlwidget-e83f41f485b2553c6236" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e83f41f485b2553c6236">{"x":{"diagram":"\ngraph LR\nA(Rounded)-->B[Rectangular]\nB-->C{A Rhombus}\nC-->D[Rectangle One]\nC-->E[Rectangle Two]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5ff58d1741db3cb314ac" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5ff58d1741db3cb314ac">{"x":{"diagram":"\ngraph LR\nA(Rounded)-->B[Rectangular]\nB-->C{A Rhombus}\nC-->D[Rectangle One]\nC-->E[Rectangle Two]\n"},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="execises.html#cb23-1"></a><span class="kw">mermaid</span>(<span class="st">&quot;</span></span>
 <span id="cb23-2"><a href="execises.html#cb23-2"></a><span class="st">graph LR</span></span>
 <span id="cb23-3"><a href="execises.html#cb23-3"></a><span class="st">A[A arr_text] --- B&gt;A arrowtext]</span></span>
 <span id="cb23-4"><a href="execises.html#cb23-4"></a><span class="st">&quot;</span>)</span></code></pre></div>
-<div id="htmlwidget-fb0942e5a893c1eddd0a" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fb0942e5a893c1eddd0a">{"x":{"diagram":"\ngraph LR\nA[A arr_text] --- B>A arrowtext]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-232275a85895e4d681fd" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-232275a85895e4d681fd">{"x":{"diagram":"\ngraph LR\nA[A arr_text] --- B>A arrowtext]\n"},"evals":[],"jsHooks":[]}</script>
 
 </div>
 <!-- </div> -->

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.2 Learning objectives | Mastering Shiny Book Club</title>
+  <title>7.4 Confirming and undoing | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.2 Learning objectives | Mastering Shiny Book Club" />
+  <meta property="og:title" content="7.4 Confirming and undoing | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.2 Learning objectives | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="7.4 Confirming and undoing | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="disclaimer.html"/>
-<link rel="next" href="resources.html"/>
+<link rel="prev" href="progress-bars.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -290,24 +290,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="learning-objectives-2" class="section level2">
-<h2><span class="header-section-number">6.2</span> Learning objectives</h2>
+<div id="confirming-and-undoing" class="section level2">
+<h2><span class="header-section-number">7.4</span> Confirming and undoing</h2>
 <ul>
-<li>Creating raw html using R</li>
-<li>HTML elements: attributes, classes, content</li>
-<li>CSS for styling</li>
-<li>Bootstrap (and related) front end toolkits</li>
-<li>Shiny produces single-page applications</li>
-<li>… but multipage <em>layouts</em> are possible</li>
+<li>for potentially dangerous actions, like deleting things</li>
 </ul>
+<div id="explicit-confirmation" class="section level3">
+<h3><span class="header-section-number">7.4.1</span> Explicit confirmation</h3>
+<ul>
+<li>create a dialog box with <code>modalDialog()</code></li>
+</ul>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="confirming-and-undoing.html#cb107-1"></a>modal_confirm &lt;-<span class="st"> </span><span class="kw">modalDialog</span>(</span>
+<span id="cb107-2"><a href="confirming-and-undoing.html#cb107-2"></a>  <span class="st">&quot;Are you sure you want to continue?&quot;</span>,</span>
+<span id="cb107-3"><a href="confirming-and-undoing.html#cb107-3"></a>  <span class="dt">title =</span> <span class="st">&quot;Deleting files&quot;</span>,</span>
+<span id="cb107-4"><a href="confirming-and-undoing.html#cb107-4"></a>  <span class="dt">footer =</span> <span class="kw">tagList</span>(</span>
+<span id="cb107-5"><a href="confirming-and-undoing.html#cb107-5"></a>    <span class="kw">actionButton</span>(<span class="st">&quot;cancel&quot;</span>, <span class="st">&quot;Cancel&quot;</span>),</span>
+<span id="cb107-6"><a href="confirming-and-undoing.html#cb107-6"></a>    <span class="kw">actionButton</span>(<span class="st">&quot;ok&quot;</span>, <span class="st">&quot;Delete&quot;</span>, <span class="dt">class =</span> <span class="st">&quot;btn btn-danger&quot;</span>)</span>
+<span id="cb107-7"><a href="confirming-and-undoing.html#cb107-7"></a>  )</span>
+<span id="cb107-8"><a href="confirming-and-undoing.html#cb107-8"></a>)</span></code></pre></div>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/1fd6b657c2fd4df4ef9de687459e433e0b6144f4/93f7d/demos/action-feedback/dialog.png" /></p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="confirming-and-undoing.html#cb108-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb108-2"><a href="confirming-and-undoing.html#cb108-2"></a>  <span class="kw">actionButton</span>(<span class="st">&quot;delete&quot;</span>, <span class="st">&quot;Delete all files?&quot;</span>)</span>
+<span id="cb108-3"><a href="confirming-and-undoing.html#cb108-3"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="confirming-and-undoing.html#cb109-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb109-2"><a href="confirming-and-undoing.html#cb109-2"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>delete, {</span>
+<span id="cb109-3"><a href="confirming-and-undoing.html#cb109-3"></a>    <span class="kw">showModal</span>(modal_confirm)</span>
+<span id="cb109-4"><a href="confirming-and-undoing.html#cb109-4"></a>  })</span>
+<span id="cb109-5"><a href="confirming-and-undoing.html#cb109-5"></a>  </span>
+<span id="cb109-6"><a href="confirming-and-undoing.html#cb109-6"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>ok, {</span>
+<span id="cb109-7"><a href="confirming-and-undoing.html#cb109-7"></a>    <span class="kw">showNotification</span>(<span class="st">&quot;Files deleted&quot;</span>)</span>
+<span id="cb109-8"><a href="confirming-and-undoing.html#cb109-8"></a>    <span class="kw">removeModal</span>()</span>
+<span id="cb109-9"><a href="confirming-and-undoing.html#cb109-9"></a>  })</span>
+<span id="cb109-10"><a href="confirming-and-undoing.html#cb109-10"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>cancel, {</span>
+<span id="cb109-11"><a href="confirming-and-undoing.html#cb109-11"></a>    <span class="kw">removeModal</span>()</span>
+<span id="cb109-12"><a href="confirming-and-undoing.html#cb109-12"></a>  })</span>
+<span id="cb109-13"><a href="confirming-and-undoing.html#cb109-13"></a>}</span></code></pre></div>
 </div>
+<div id="undoing-an-action" class="section level3">
+<h3><span class="header-section-number">7.4.2</span> Undoing an action</h3>
+<p>More like waiting some time before acually performing the task and giving the user time to stop the action before it’s actually happening.</p>
+<p>–&gt; example app</p>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="disclaimer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="progress-bars.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -338,7 +371,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/06-layout_themes_html.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/08-user_feedback.Rmd",
 "text": "Edit"
 },
 "history": {

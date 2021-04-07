@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.2 Learning objectives | Mastering Shiny Book Club</title>
+  <title>7.1 Validation | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.2 Learning objectives | Mastering Shiny Book Club" />
+  <meta property="og:title" content="7.1 Validation | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.2 Learning objectives | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="7.1 Validation | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="disclaimer.html"/>
-<link rel="next" href="resources.html"/>
+<link rel="prev" href="user-feedback.html"/>
+<link rel="next" href="notifications.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -290,24 +290,118 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="learning-objectives-2" class="section level2">
-<h2><span class="header-section-number">6.2</span> Learning objectives</h2>
+<div id="validation" class="section level2">
+<h2><span class="header-section-number">7.1</span> Validation</h2>
+<div id="validating-input" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Validating input</h3>
 <ul>
-<li>Creating raw html using R</li>
-<li>HTML elements: attributes, classes, content</li>
-<li>CSS for styling</li>
-<li>Bootstrap (and related) front end toolkits</li>
-<li>Shiny produces single-page applications</li>
-<li>… but multipage <em>layouts</em> are possible</li>
+<li>giving feedback with the <code>shinyFeedback</code> package</li>
 </ul>
+<p><strong>UI</strong>: add <code>useShinyFeedback()</code></p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="validation.html#cb93-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb93-2"><a href="validation.html#cb93-2"></a>  shinyFeedback<span class="op">::</span><span class="kw">useShinyFeedback</span>(),</span>
+<span id="cb93-3"><a href="validation.html#cb93-3"></a>  <span class="kw">numericInput</span>(<span class="st">&quot;n&quot;</span>, <span class="st">&quot;n&quot;</span>, <span class="dt">value =</span> <span class="dv">10</span>),</span>
+<span id="cb93-4"><a href="validation.html#cb93-4"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;half&quot;</span>)</span>
+<span id="cb93-5"><a href="validation.html#cb93-5"></a>)</span></code></pre></div>
+<p><strong>Server</strong>: use <code>feedback()</code>, <code>feedbackWarning()</code>, <code>feedbackDanger()</code>, and <code>feedbackSuccess()</code></p>
+<p>–&gt; example app</p>
+</div>
+<div id="cancelling-execution-with-req" class="section level3">
+<h3><span class="header-section-number">7.1.2</span> Cancelling execution with <code>req()</code></h3>
+<p><code>req()</code> checks for required values before allowing a reactive producer to continue.</p>
+<p>Without <code>req()</code> the complete reactive graph is computed (even without user input):</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="validation.html#cb94-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb94-2"><a href="validation.html#cb94-2"></a>  <span class="kw">selectInput</span>(<span class="st">&quot;language&quot;</span>, <span class="st">&quot;Language&quot;</span>, <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;English&quot;</span>, <span class="st">&quot;Maori&quot;</span>)),</span>
+<span id="cb94-3"><a href="validation.html#cb94-3"></a>  <span class="kw">textInput</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;Name&quot;</span>),</span>
+<span id="cb94-4"><a href="validation.html#cb94-4"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;greeting&quot;</span>)</span>
+<span id="cb94-5"><a href="validation.html#cb94-5"></a>)</span>
+<span id="cb94-6"><a href="validation.html#cb94-6"></a></span>
+<span id="cb94-7"><a href="validation.html#cb94-7"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb94-8"><a href="validation.html#cb94-8"></a>  greetings &lt;-<span class="st"> </span><span class="kw">c</span>(</span>
+<span id="cb94-9"><a href="validation.html#cb94-9"></a>    <span class="dt">English =</span> <span class="st">&quot;Hello&quot;</span>, </span>
+<span id="cb94-10"><a href="validation.html#cb94-10"></a>    <span class="dt">Maori =</span> <span class="st">&quot;Ki ora&quot;</span></span>
+<span id="cb94-11"><a href="validation.html#cb94-11"></a>  )</span>
+<span id="cb94-12"><a href="validation.html#cb94-12"></a>  output<span class="op">$</span>greeting &lt;-<span class="st"> </span><span class="kw">renderText</span>({</span>
+<span id="cb94-13"><a href="validation.html#cb94-13"></a>    <span class="kw">paste0</span>(greetings[[input<span class="op">$</span>language]], <span class="st">&quot; &quot;</span>, input<span class="op">$</span>name, <span class="st">&quot;!&quot;</span>)</span>
+<span id="cb94-14"><a href="validation.html#cb94-14"></a>  })</span>
+<span id="cb94-15"><a href="validation.html#cb94-15"></a>}</span></code></pre></div>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/8983f6fd77bdc3b97d45f06a7fdd0c67aaf52b3d/b3d13/demos/action-feedback/require-simple.png" /></p>
+<p>Using <code>req()</code>:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="validation.html#cb95-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb95-2"><a href="validation.html#cb95-2"></a>  greetings &lt;-<span class="st"> </span><span class="kw">c</span>(</span>
+<span id="cb95-3"><a href="validation.html#cb95-3"></a>    <span class="dt">English =</span> <span class="st">&quot;Hello&quot;</span>, </span>
+<span id="cb95-4"><a href="validation.html#cb95-4"></a>    <span class="dt">Maori =</span> <span class="st">&quot;Ki ora&quot;</span></span>
+<span id="cb95-5"><a href="validation.html#cb95-5"></a>  )</span>
+<span id="cb95-6"><a href="validation.html#cb95-6"></a>  output<span class="op">$</span>greeting &lt;-<span class="st"> </span><span class="kw">renderText</span>({</span>
+<span id="cb95-7"><a href="validation.html#cb95-7"></a>    <span class="kw">req</span>(input<span class="op">$</span>language, input<span class="op">$</span>name)</span>
+<span id="cb95-8"><a href="validation.html#cb95-8"></a>    <span class="kw">paste0</span>(greetings[[input<span class="op">$</span>language]], <span class="st">&quot; &quot;</span>, input<span class="op">$</span>name, <span class="st">&quot;!&quot;</span>)</span>
+<span id="cb95-9"><a href="validation.html#cb95-9"></a>  })</span>
+<span id="cb95-10"><a href="validation.html#cb95-10"></a>}</span></code></pre></div>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/d6a1e82924f2cf77fca63f35b2805e4392377700/e8a89/demos/action-feedback/require-simple2-on-load.png" /></p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/e8048494af9066952f69e4c7e9ec06c826202c34/4933a/demos/action-feedback/require-simple2-langauge.png" /></p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/5c0d55e52be17b4fc4d52ace8b6bbdc6cdddba86/4d3df/demos/action-feedback/require-simple2-name.png" /></p>
+</div>
+<div id="req-and-validation" class="section level3">
+<h3><span class="header-section-number">7.1.3</span> <code>req()</code> and validation</h3>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="validation.html#cb96-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb96-2"><a href="validation.html#cb96-2"></a>  shinyFeedback<span class="op">::</span><span class="kw">useShinyFeedback</span>(),</span>
+<span id="cb96-3"><a href="validation.html#cb96-3"></a>  <span class="kw">textInput</span>(<span class="st">&quot;dataset&quot;</span>, <span class="st">&quot;Dataset name&quot;</span>), </span>
+<span id="cb96-4"><a href="validation.html#cb96-4"></a>  <span class="kw">tableOutput</span>(<span class="st">&quot;data&quot;</span>)</span>
+<span id="cb96-5"><a href="validation.html#cb96-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="validation.html#cb97-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb97-2"><a href="validation.html#cb97-2"></a>  data &lt;-<span class="st"> </span><span class="kw">reactive</span>({</span>
+<span id="cb97-3"><a href="validation.html#cb97-3"></a>    <span class="kw">req</span>(input<span class="op">$</span>dataset)</span>
+<span id="cb97-4"><a href="validation.html#cb97-4"></a>    </span>
+<span id="cb97-5"><a href="validation.html#cb97-5"></a>    exists &lt;-<span class="st"> </span><span class="kw">exists</span>(input<span class="op">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
+<span id="cb97-6"><a href="validation.html#cb97-6"></a>    shinyFeedback<span class="op">::</span><span class="kw">feedbackDanger</span>(<span class="st">&quot;dataset&quot;</span>, <span class="op">!</span>exists, <span class="st">&quot;Unknown dataset&quot;</span>)</span>
+<span id="cb97-7"><a href="validation.html#cb97-7"></a>    <span class="kw">req</span>(exists, <span class="dt">cancelOutput =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb97-8"><a href="validation.html#cb97-8"></a></span>
+<span id="cb97-9"><a href="validation.html#cb97-9"></a>    <span class="kw">get</span>(input<span class="op">$</span>dataset, <span class="st">&quot;package:datasets&quot;</span>)</span>
+<span id="cb97-10"><a href="validation.html#cb97-10"></a>  })</span>
+<span id="cb97-11"><a href="validation.html#cb97-11"></a>  </span>
+<span id="cb97-12"><a href="validation.html#cb97-12"></a>  output<span class="op">$</span>data &lt;-<span class="st"> </span><span class="kw">renderTable</span>({</span>
+<span id="cb97-13"><a href="validation.html#cb97-13"></a>    <span class="kw">head</span>(<span class="kw">data</span>())</span>
+<span id="cb97-14"><a href="validation.html#cb97-14"></a>  })</span>
+<span id="cb97-15"><a href="validation.html#cb97-15"></a>}</span></code></pre></div>
+<p>Check out this app: <a href="https://hadley.shinyapps.io/ms-require-cancel/" class="uri">https://hadley.shinyapps.io/ms-require-cancel/</a></p>
+</div>
+<div id="validate-output" class="section level3">
+<h3><span class="header-section-number">7.1.4</span> Validate output</h3>
+<ul>
+<li><code>validate(message)</code> stops execution of the rest of the code and instead displays message in any downstream outputs</li>
+</ul>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="validation.html#cb98-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb98-2"><a href="validation.html#cb98-2"></a>  <span class="kw">numericInput</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="dt">value =</span> <span class="dv">0</span>),</span>
+<span id="cb98-3"><a href="validation.html#cb98-3"></a>  <span class="kw">selectInput</span>(<span class="st">&quot;trans&quot;</span>, <span class="st">&quot;transformation&quot;</span>, </span>
+<span id="cb98-4"><a href="validation.html#cb98-4"></a>    <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;square&quot;</span>, <span class="st">&quot;log&quot;</span>, <span class="st">&quot;square-root&quot;</span>)</span>
+<span id="cb98-5"><a href="validation.html#cb98-5"></a>  ),</span>
+<span id="cb98-6"><a href="validation.html#cb98-6"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;out&quot;</span>)</span>
+<span id="cb98-7"><a href="validation.html#cb98-7"></a>)</span>
+<span id="cb98-8"><a href="validation.html#cb98-8"></a></span>
+<span id="cb98-9"><a href="validation.html#cb98-9"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb98-10"><a href="validation.html#cb98-10"></a>  output<span class="op">$</span>out &lt;-<span class="st"> </span><span class="kw">renderText</span>({</span>
+<span id="cb98-11"><a href="validation.html#cb98-11"></a>    <span class="cf">if</span> (input<span class="op">$</span>x <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;&amp;</span><span class="st"> </span>input<span class="op">$</span>trans <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;log&quot;</span>, <span class="st">&quot;square-root&quot;</span>)) {</span>
+<span id="cb98-12"><a href="validation.html#cb98-12"></a>      <span class="kw">validate</span>(<span class="dt">message =</span> <span class="st">&quot;x can not be negative for this transformation&quot;</span>)</span>
+<span id="cb98-13"><a href="validation.html#cb98-13"></a>    }</span>
+<span id="cb98-14"><a href="validation.html#cb98-14"></a>    </span>
+<span id="cb98-15"><a href="validation.html#cb98-15"></a>    <span class="cf">switch</span>(input<span class="op">$</span>trans,</span>
+<span id="cb98-16"><a href="validation.html#cb98-16"></a>      <span class="dt">square =</span> input<span class="op">$</span>x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>,</span>
+<span id="cb98-17"><a href="validation.html#cb98-17"></a>      <span class="st">&quot;square-root&quot;</span> =<span class="st"> </span><span class="kw">sqrt</span>(input<span class="op">$</span>x),</span>
+<span id="cb98-18"><a href="validation.html#cb98-18"></a>      <span class="dt">log =</span> <span class="kw">log</span>(input<span class="op">$</span>x)</span>
+<span id="cb98-19"><a href="validation.html#cb98-19"></a>    )</span>
+<span id="cb98-20"><a href="validation.html#cb98-20"></a>  })</span>
+<span id="cb98-21"><a href="validation.html#cb98-21"></a>}</span></code></pre></div>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/c1c59bed1d77fa2aea32024bbaa907e5dbba6244/b5824/demos/action-feedback/validate-init.png" />
+<img src="https://d33wubrfki0l68.cloudfront.net/4b8074e75bbd617c04f59785861e4465c1a1f6cf/dafeb/demos/action-feedback/validate-log.png" /></p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="disclaimer.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="user-feedback.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="notifications.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -338,7 +432,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/06-layout_themes_html.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/08-user_feedback.Rmd",
 "text": "Edit"
 },
 "history": {
