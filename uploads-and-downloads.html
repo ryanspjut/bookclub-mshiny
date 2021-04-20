@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1.3 Running and stopping the app | Mastering Shiny Book Club</title>
+  <title>Chapter 8 Uploads and Downloads | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1.3 Running and stopping the app | Mastering Shiny Book Club" />
+  <meta property="og:title" content="Chapter 8 Uploads and Downloads | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1.3 Running and stopping the app | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="Chapter 8 Uploads and Downloads | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="creating-an-app.html"/>
-<link rel="next" href="adding-ui-controls.html"/>
+<link rel="prev" href="confirming-and-undoing.html"/>
+<link rel="next" href="uploads.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -311,51 +311,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="running-and-stopping-the-app" class="section level2">
-<h2><span class="header-section-number">1.3</span> Running and stopping the app</h2>
-<p>The basic workflow of shiny app development is…</p>
-<ol style="list-style-type: decimal">
-<li>Write some code</li>
-<li>Start the app</li>
-<li>Play with the app</li>
-<li>Write some more code</li>
-<li>Repeat…</li>
-</ol>
-<div id="running-the-app" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> Running the app</h3>
-<p>There are a few ways you can run your app</p>
-<p><em>If using R Studio:</em></p>
-<ul>
-<li>Click <code>Run App</code> button in document toolbar</li>
-<li>Keyboard shortcut is <code>CMD / CTRL + SHIFT + ENTER</code></li>
-</ul>
-<p><em>If not using R Studio:</em></p>
-<ul>
-<li>(source()) the whole document or call shiny::runApp()</li>
-</ul>
-<p>The console message <code>#&gt; Listening on http://127.0.0.1:3827</code> identifies your app in any (local) web browser.</p>
-<ul>
-<li><code>127.0.0.1</code> is a standard address = this computer</li>
-<li>last 4 digits = randomly assigned port number</li>
-</ul>
-<p>Running a Shiny app keeps R busy and you will not be able to execute other commands in the console at that time.</p>
-</div>
-<div id="stopping-the-app" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> Stopping the app:</h3>
-<ul>
-<li><code>STOP</code> sign on console toolbar</li>
-<li><code>ESC</code> from within R console (<code>CTRL + C</code> is not in R Studio)</li>
-<li>Close shiny app window</li>
-</ul>
-</div>
+<div id="uploads-and-downloads" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Uploads and Downloads</h1>
+<p>In this chapter we learn how to upload/download files to/from a Shiny
+application.
+The UI for both uploads and downloads is simple, with essentially one function
+for each operation.
+The server side is more complex.
+The upload and download functions for the server each have their own quirks.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="creating-an-app.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="adding-ui-controls.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="confirming-and-undoing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="uploads.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -386,7 +357,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/01-your_first_shiny_app.rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/09-uploads-downloads.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -99,6 +99,15 @@ spinners
 confirming-and-undoing
 explicit-confirmation
 undoing-an-action
+uploads-and-downloads
+uploads
+ui
+server
+uploading-data
+downloads
+ui-1
+server-1
+downloading-reports
 dynamic-ui
 introduction-2
 updating-inputs
