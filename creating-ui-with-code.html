@@ -303,11 +303,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">8.4</span> Creating UI with code</h2>
 <p><strong>Create and modify the user interface while the app is running</strong></p>
 <hr />
-<div id="htmlwidget-c674543924b9c242c681" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c674543924b9c242c681">{"x":{"diagram":"\ngraph LR\nA[uiOutput]-->B[renderUI]\n"},"evals":[],"jsHooks":[]}</script>
-<p>These last two functions <strong>uiOutput() and renderUI()</strong>, are the functions to apply the technique of rendering the UI by setting the value of the new input to the current value of the existing control, it gives the developer the ability to create and modify the user interface while the app is running.</p>
-<p><strong>uiOutput()</strong> act in the UI part of the app while <strong>renderUI()</strong> act in the server.</p>
-<p>In this contest the function <strong>isolate()</strong> would be able to select the input see <a href="https://mastering-shiny.org/reactivity-objects.html#isolate">Section 15.4.1</a></p>
+<div id="htmlwidget-a73cc45202a0131f3211" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a73cc45202a0131f3211">{"x":{"diagram":"\ngraph LR\nA[uiOutput]-->B[renderUI]\n"},"evals":[],"jsHooks":[]}</script>
+<p>The last two functions <strong>uiOutput()</strong> and <strong>renderUI()</strong>, are for applying the technique of rendering the UI by setting the value of the new input to the current value of the existing control.</p>
+<p>This technique gives the developer the ability to create and modify the user interface while the app is running.</p>
+<p><strong>uiOutput()</strong> act in the UI part of the app while <strong>renderUI()</strong> act in the Server.</p>
+<p>In this contest the function <strong>isolate()</strong> would be able to do this isolating a particular input, for more info see: <a href="https://mastering-shiny.org/reactivity-objects.html#isolate">Section 15.4.1</a></p>
 <p>Final example to show the position of the two functions inside the <strong>UI</strong> and the <strong>Server</strong>:</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="creating-ui-with-code.html#cb119-1"></a><span class="co">##############################################</span></span>
 <span id="cb119-2"><a href="creating-ui-with-code.html#cb119-2"></a></span>

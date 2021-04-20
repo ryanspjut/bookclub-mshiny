@@ -304,11 +304,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>To show and hide parts of the UI</strong> dynamically and interactively.</p>
 <hr />
 <p>The <strong>tabsetPanel()</strong> is the second function for this chapter and it involves the visibility of part of the app.</p>
-<p>This second function is made to let the user show and/or hide some of the tabs set in the main panel. It is a technique that allows managing the appearance of the app with selecting visibility of the tabs as shown in - <a href="https://shiny.rstudio.com/articles/layout-guide.html">Tabsets</a> section of the Shiny.rstudio.com guide website.</p>
-<div id="htmlwidget-1a71fb2b5a48519c96d7" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1a71fb2b5a48519c96d7">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
-<p>To enhance you app with features and the most wanted themes and as an example on how to set the visibility of a tab in your app, you can follow the steps found here: <a href="https://shiny.rstudio.com/gallery/tabsets.html">Gallery</a></p>
-<p>As an example her is to show how to switch between panels hiding one panel to show the other with different content.</p>
+<p>This second function is made to let the user show and/or hide some of the tabs set in the main panel. It is a technique that allows managing the appearance of the app with selecting visibility of the tabs as shown in the <a href="https://shiny.rstudio.com/articles/layout-guide.html">Tabsets</a> section of the <strong>Shiny.rstudio.com</strong> guide’s page of the website.</p>
+<div id="htmlwidget-c8d57748cd81a6c1b42e" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c8d57748cd81a6c1b42e">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
+<p>To enhance your <strong>app</strong> with features and the most wanted themes and as an example on how to set the visibility of a tab in your app, you can follow the steps found here: <a href="https://shiny.rstudio.com/gallery/tabsets.html">Gallery</a></p>
+<p>As an example here is shown how to switch between panels hiding one panel and showing the other with different content.</p>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="dynamic-visibility.html#cb116-1"></a><span class="kw">library</span>(shiny)</span>
 <span id="cb116-2"><a href="dynamic-visibility.html#cb116-2"></a></span>
 <span id="cb116-3"><a href="dynamic-visibility.html#cb116-3"></a><span class="co">##################  switcher ##############################</span></span>
@@ -337,9 +337,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb116-26"><a href="dynamic-visibility.html#cb116-26"></a>  })</span>
 <span id="cb116-27"><a href="dynamic-visibility.html#cb116-27"></a>  </span>
 <span id="cb116-28"><a href="dynamic-visibility.html#cb116-28"></a>}</span></code></pre></div>
-<p>Finally, the <em>Conditional UI</em> allows you to simulate different parameters to be set in the app.
-The <strong>tabsetPanel()</strong> is updated with input requests as a separate section with different types of [id]Input() and then embedded inside a fuller UI.</p>
-<p>Example of a chunk of code to be integrated in the UI</p>
+<p>Finally, the technique of the <em>Conditional UI</em> allows you to simulate different parameters to be set in the app.
+The <strong>tabsetPanel()</strong> is updated with input requests as a separate section with different types of <strong>[id]Input()</strong> and then embedded inside a fuller UI.</p>
+<p>Example of a chunk of code to be integrated in the UI:</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="dynamic-visibility.html#cb117-1"></a>parameter_tabs &lt;-<span class="st"> </span><span class="kw">tabsetPanel</span>(</span>
 <span id="cb117-2"><a href="dynamic-visibility.html#cb117-2"></a>  </span>
 <span id="cb117-3"><a href="dynamic-visibility.html#cb117-3"></a>  <span class="kw">tabPanel</span>(<span class="st">&quot;normal&quot;</span>,</span>
@@ -359,7 +359,7 @@ The <strong>tabsetPanel()</strong> is updated with input requests as a separate 
 <span id="cb118-11"><a href="dynamic-visibility.html#cb118-11"></a>    )</span>
 <span id="cb118-12"><a href="dynamic-visibility.html#cb118-12"></a>  )</span>
 <span id="cb118-13"><a href="dynamic-visibility.html#cb118-13"></a>)</span></code></pre></div>
-<p>There are other options to use to be able to switch among different pages and this can be done creating a <em>wizard</em> and the <strong>switch_page()</strong> function, this will be seen in particular in <a href="https://mastering-shiny.org/scaling-functions.html">Chapter 18 - Functions</a></p>
+<p>There are other options to use to be able to switch among different pages, an example of this is creating a <em>wizard</em> and using the <strong>switch_page()</strong> function, this will be shown in <a href="https://mastering-shiny.org/scaling-functions.html">Chapter 18 - Functions</a> as said in the book.</p>
 <hr />
 </div>
             </section>
