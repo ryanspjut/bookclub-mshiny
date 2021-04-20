@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.2 The data | Mastering Shiny Book Club</title>
+  <title>8.3 Dynamic visibility | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.2 The data | Mastering Shiny Book Club" />
+  <meta property="og:title" content="8.3 Dynamic visibility | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.2 The data | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="8.3 Dynamic visibility | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="introduction-1.html"/>
-<link rel="next" href="exploration.html"/>
+<link rel="prev" href="updating-inputs.html"/>
+<link rel="next" href="creating-ui-with-code.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -299,95 +299,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="the-data" class="section level2">
-<h2><span class="header-section-number">4.2</span> The data</h2>
-<p>We’re exploring data from the National Electronic Injury Surveillance System (NEISS), which covers <strong>accidents reported from a sample of hospitals in the US</strong>.</p>
-<p>For every accident / inured person we have</p>
-<ul>
-<li><strong>date</strong>,</li>
-<li><strong>age</strong>,</li>
-<li><strong>sex</strong>,</li>
-<li><strong>race</strong>,</li>
-<li><strong>body part</strong>,</li>
-<li><strong>diagnosis</strong> and</li>
-<li><strong>location</strong> (Home, School, Street Or Highway etc.)</li>
-</ul>
-<p>as well as</p>
-<ul>
-<li><strong>primary product</strong> associated with the injury and</li>
-<li><strong>a brief story</strong> how the accident occured.</li>
-</ul>
-<p>Further we have a <strong>weight</strong> attribute for an estimation how may people the current case represents if the dataset was scaled to the entire US population.</p>
-<p>Code to download the data:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="the-data.html#cb25-1"></a><span class="kw">dir.create</span>(<span class="st">&quot;neiss&quot;</span>)</span>
-<span id="cb25-2"><a href="the-data.html#cb25-2"></a></span>
-<span id="cb25-3"><a href="the-data.html#cb25-3"></a>download &lt;-<span class="st"> </span><span class="cf">function</span>(name) {</span>
-<span id="cb25-4"><a href="the-data.html#cb25-4"></a>  url &lt;-<span class="st"> &quot;https://github.com/hadley/mastering-shiny/raw/master/neiss/&quot;</span></span>
-<span id="cb25-5"><a href="the-data.html#cb25-5"></a>  <span class="kw">download.file</span>(<span class="kw">paste0</span>(url, name), <span class="kw">paste0</span>(<span class="st">&quot;neiss/&quot;</span>, name), <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb25-6"><a href="the-data.html#cb25-6"></a>}</span>
-<span id="cb25-7"><a href="the-data.html#cb25-7"></a></span>
-<span id="cb25-8"><a href="the-data.html#cb25-8"></a><span class="kw">download</span>(<span class="st">&quot;injuries.tsv.gz&quot;</span>)</span>
-<span id="cb25-9"><a href="the-data.html#cb25-9"></a><span class="kw">download</span>(<span class="st">&quot;population.tsv&quot;</span>)</span>
-<span id="cb25-10"><a href="the-data.html#cb25-10"></a><span class="kw">download</span>(<span class="st">&quot;products.tsv&quot;</span>)</span></code></pre></div>
-<p>Main data:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="the-data.html#cb26-1"></a>injuries &lt;-<span class="st"> </span><span class="kw">vroom</span>(<span class="st">&quot;neiss/injuries.tsv.gz&quot;</span>)</span>
-<span id="cb26-2"><a href="the-data.html#cb26-2"></a>injuries</span></code></pre></div>
-<pre><code>## # A tibble: 255,064 x 10
-##    trmt_date    age sex    race   body_part diag     location   prod_code weight
-##    &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;
-##  1 2017-01-01    71 male   white  Upper Tr… Contusi… Other Pub…      1807   77.7
-##  2 2017-01-01    16 male   white  Lower Arm Burns, … Home             676   77.7
-##  3 2017-01-01    58 male   white  Upper Tr… Contusi… Home             649   77.7
-##  4 2017-01-01    21 male   white  Lower Tr… Strain,… Home            4076   77.7
-##  5 2017-01-01    54 male   white  Head      Inter O… Other Pub…      1807   77.7
-##  6 2017-01-01    21 male   white  Hand      Fracture Home            1884   77.7
-##  7 2017-01-01    35 female not s… Lower Tr… Strain,… Home            1807   87.1
-##  8 2017-01-01    62 female not s… Lower Arm Lacerat… Home            4074   87.1
-##  9 2017-01-01    22 male   not s… Knee      Disloca… Home            4076   87.1
-## 10 2017-01-01    58 female not s… Lower Leg Fracture Home            1842   87.1
-## # … with 255,054 more rows, and 1 more variable: narrative &lt;chr&gt;</code></pre>
-<p>Product names:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="the-data.html#cb28-1"></a>products &lt;-<span class="st"> </span><span class="kw">vroom</span>(<span class="st">&quot;neiss/products.tsv&quot;</span>)</span>
-<span id="cb28-2"><a href="the-data.html#cb28-2"></a>products</span></code></pre></div>
-<pre><code>## # A tibble: 38 x 2
-##    prod_code title                                   
-##        &lt;dbl&gt; &lt;chr&gt;                                   
-##  1       464 knives, not elsewhere classified        
-##  2       474 tableware and accessories               
-##  3       604 desks, chests, bureaus or buffets       
-##  4       611 bathtubs or showers                     
-##  5       649 toilets                                 
-##  6       676 rugs or carpets, not specified          
-##  7       679 sofas, couches, davenports, divans or st
-##  8      1141 containers, not specified               
-##  9      1200 sports or recreational activity, n.e.c. 
-## 10      1205 basketball (activity, apparel or equip.)
-## # … with 28 more rows</code></pre>
-<p>Population data:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="the-data.html#cb30-1"></a>population &lt;-<span class="st"> </span><span class="kw">vroom</span>(<span class="st">&quot;neiss/population.tsv&quot;</span>)</span>
-<span id="cb30-2"><a href="the-data.html#cb30-2"></a>population</span></code></pre></div>
-<pre><code>## # A tibble: 170 x 3
-##      age sex    population
-##    &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
-##  1     0 female    1924145
-##  2     0 male      2015150
-##  3     1 female    1943534
-##  4     1 male      2031718
-##  5     2 female    1965150
-##  6     2 male      2056625
-##  7     3 female    1956281
-##  8     3 male      2050474
-##  9     4 female    1953782
-## 10     4 male      2042001
-## # … with 160 more rows</code></pre>
+<div id="dynamic-visibility" class="section level2">
+<h2><span class="header-section-number">8.3</span> Dynamic visibility</h2>
+<p><strong>To show and hide parts of the UI</strong> dynamically and interactively.</p>
+<hr />
+<p>The <strong>tabsetPanel()</strong> is the second function for this chapter and it involves the visibility of part of the app.</p>
+<p>This second function is made to let the user show and/or hide some of the tabs set in the main panel. It is a technique that allows managing the appearance of the app with selecting visibility of the tabs as shown in - <a href="https://shiny.rstudio.com/articles/layout-guide.html">Tabsets</a> section of the Shiny.rstudio.com guide website.</p>
+<div id="htmlwidget-1a71fb2b5a48519c96d7" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1a71fb2b5a48519c96d7">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
+<p>To enhance you app with features and the most wanted themes and as an example on how to set the visibility of a tab in your app, you can follow the steps found here: <a href="https://shiny.rstudio.com/gallery/tabsets.html">Gallery</a></p>
+<p>As an example her is to show how to switch between panels hiding one panel to show the other with different content.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="dynamic-visibility.html#cb116-1"></a><span class="kw">library</span>(shiny)</span>
+<span id="cb116-2"><a href="dynamic-visibility.html#cb116-2"></a></span>
+<span id="cb116-3"><a href="dynamic-visibility.html#cb116-3"></a><span class="co">##################  switcher ##############################</span></span>
+<span id="cb116-4"><a href="dynamic-visibility.html#cb116-4"></a></span>
+<span id="cb116-5"><a href="dynamic-visibility.html#cb116-5"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb116-6"><a href="dynamic-visibility.html#cb116-6"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb116-7"><a href="dynamic-visibility.html#cb116-7"></a>    <span class="kw">sidebarPanel</span>(</span>
+<span id="cb116-8"><a href="dynamic-visibility.html#cb116-8"></a>      <span class="kw">selectInput</span>(<span class="st">&quot;controller&quot;</span>, <span class="st">&quot;Show&quot;</span>, <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;plot&quot;</span>,<span class="st">&quot;summary&quot;</span>))</span>
+<span id="cb116-9"><a href="dynamic-visibility.html#cb116-9"></a>    ),</span>
+<span id="cb116-10"><a href="dynamic-visibility.html#cb116-10"></a>    <span class="kw">mainPanel</span>(</span>
+<span id="cb116-11"><a href="dynamic-visibility.html#cb116-11"></a>      <span class="kw">tabsetPanel</span>(</span>
+<span id="cb116-12"><a href="dynamic-visibility.html#cb116-12"></a>        <span class="dt">id =</span> <span class="st">&quot;switcher&quot;</span>,</span>
+<span id="cb116-13"><a href="dynamic-visibility.html#cb116-13"></a>        <span class="dt">type =</span> <span class="st">&quot;hidden&quot;</span>,</span>
+<span id="cb116-14"><a href="dynamic-visibility.html#cb116-14"></a>        <span class="kw">tabPanelBody</span>(<span class="st">&quot;plot&quot;</span>, <span class="st">&quot;Plot&quot;</span>),</span>
+<span id="cb116-15"><a href="dynamic-visibility.html#cb116-15"></a>        <span class="kw">tabPanelBody</span>(<span class="st">&quot;summary&quot;</span>, <span class="st">&quot;Summary&quot;</span>)</span>
+<span id="cb116-16"><a href="dynamic-visibility.html#cb116-16"></a>        </span>
+<span id="cb116-17"><a href="dynamic-visibility.html#cb116-17"></a>      )</span>
+<span id="cb116-18"><a href="dynamic-visibility.html#cb116-18"></a>    )</span>
+<span id="cb116-19"><a href="dynamic-visibility.html#cb116-19"></a>  )</span>
+<span id="cb116-20"><a href="dynamic-visibility.html#cb116-20"></a>)</span>
+<span id="cb116-21"><a href="dynamic-visibility.html#cb116-21"></a></span>
+<span id="cb116-22"><a href="dynamic-visibility.html#cb116-22"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb116-23"><a href="dynamic-visibility.html#cb116-23"></a>  </span>
+<span id="cb116-24"><a href="dynamic-visibility.html#cb116-24"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>controller, {</span>
+<span id="cb116-25"><a href="dynamic-visibility.html#cb116-25"></a>    <span class="kw">updateTabsetPanel</span>(<span class="dt">inputId =</span> <span class="st">&quot;switcher&quot;</span>, <span class="dt">selected =</span> input<span class="op">$</span>controller)</span>
+<span id="cb116-26"><a href="dynamic-visibility.html#cb116-26"></a>  })</span>
+<span id="cb116-27"><a href="dynamic-visibility.html#cb116-27"></a>  </span>
+<span id="cb116-28"><a href="dynamic-visibility.html#cb116-28"></a>}</span></code></pre></div>
+<p>Finally, the <em>Conditional UI</em> allows you to simulate different parameters to be set in the app.
+The <strong>tabsetPanel()</strong> is updated with input requests as a separate section with different types of [id]Input() and then embedded inside a fuller UI.</p>
+<p>Example of a chunk of code to be integrated in the UI</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="dynamic-visibility.html#cb117-1"></a>parameter_tabs &lt;-<span class="st"> </span><span class="kw">tabsetPanel</span>(</span>
+<span id="cb117-2"><a href="dynamic-visibility.html#cb117-2"></a>  </span>
+<span id="cb117-3"><a href="dynamic-visibility.html#cb117-3"></a>  <span class="kw">tabPanel</span>(<span class="st">&quot;normal&quot;</span>,</span>
+<span id="cb117-4"><a href="dynamic-visibility.html#cb117-4"></a>    <span class="kw">numericInput</span>(<span class="st">&quot;mean&quot;</span>, <span class="st">&quot;mean&quot;</span>, <span class="dt">value =</span> <span class="dv">1</span>)</span>
+<span id="cb117-5"><a href="dynamic-visibility.html#cb117-5"></a>  )</span>
+<span id="cb117-6"><a href="dynamic-visibility.html#cb117-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="dynamic-visibility.html#cb118-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb118-2"><a href="dynamic-visibility.html#cb118-2"></a>  <span class="kw">sidebarLayout</span>(</span>
+<span id="cb118-3"><a href="dynamic-visibility.html#cb118-3"></a>    <span class="kw">sidebarPanel</span>(</span>
+<span id="cb118-4"><a href="dynamic-visibility.html#cb118-4"></a>      </span>
+<span id="cb118-5"><a href="dynamic-visibility.html#cb118-5"></a>      <span class="kw">numericInput</span>(<span class="st">&quot;n&quot;</span>, <span class="st">&quot;Number of samples&quot;</span>, <span class="dt">value =</span> <span class="dv">100</span>),</span>
+<span id="cb118-6"><a href="dynamic-visibility.html#cb118-6"></a>      </span>
+<span id="cb118-7"><a href="dynamic-visibility.html#cb118-7"></a>      parameter_tabs, <span class="co"># where to set the chunk of code</span></span>
+<span id="cb118-8"><a href="dynamic-visibility.html#cb118-8"></a>    ),</span>
+<span id="cb118-9"><a href="dynamic-visibility.html#cb118-9"></a>    <span class="kw">mainPanel</span>(</span>
+<span id="cb118-10"><a href="dynamic-visibility.html#cb118-10"></a>      <span class="kw">plotOutput</span>(<span class="st">&quot;hist&quot;</span>)</span>
+<span id="cb118-11"><a href="dynamic-visibility.html#cb118-11"></a>    )</span>
+<span id="cb118-12"><a href="dynamic-visibility.html#cb118-12"></a>  )</span>
+<span id="cb118-13"><a href="dynamic-visibility.html#cb118-13"></a>)</span></code></pre></div>
+<p>There are other options to use to be able to switch among different pages and this can be done creating a <em>wizard</em> and the <strong>switch_page()</strong> function, this will be seen in particular in <a href="https://mastering-shiny.org/scaling-functions.html">Chapter 18 - Functions</a></p>
+<hr />
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="introduction-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="exploration.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="updating-inputs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="creating-ui-with-code.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -418,7 +399,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/04-case_study_er_injuries.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/10-dynamic_ui.rmd",
 "text": "Edit"
 },
 "history": {

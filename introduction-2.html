@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.2 The data | Mastering Shiny Book Club</title>
+  <title>8.1 Introduction | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.2 The data | Mastering Shiny Book Club" />
+  <meta property="og:title" content="8.1 Introduction | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.2 The data | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="8.1 Introduction | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="introduction-1.html"/>
-<link rel="next" href="exploration.html"/>
+<link rel="prev" href="dynamic-ui.html"/>
+<link rel="next" href="updating-inputs.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -299,95 +299,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="the-data" class="section level2">
-<h2><span class="header-section-number">4.2</span> The data</h2>
-<p>We’re exploring data from the National Electronic Injury Surveillance System (NEISS), which covers <strong>accidents reported from a sample of hospitals in the US</strong>.</p>
-<p>For every accident / inured person we have</p>
-<ul>
-<li><strong>date</strong>,</li>
-<li><strong>age</strong>,</li>
-<li><strong>sex</strong>,</li>
-<li><strong>race</strong>,</li>
-<li><strong>body part</strong>,</li>
-<li><strong>diagnosis</strong> and</li>
-<li><strong>location</strong> (Home, School, Street Or Highway etc.)</li>
-</ul>
-<p>as well as</p>
-<ul>
-<li><strong>primary product</strong> associated with the injury and</li>
-<li><strong>a brief story</strong> how the accident occured.</li>
-</ul>
-<p>Further we have a <strong>weight</strong> attribute for an estimation how may people the current case represents if the dataset was scaled to the entire US population.</p>
-<p>Code to download the data:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="the-data.html#cb25-1"></a><span class="kw">dir.create</span>(<span class="st">&quot;neiss&quot;</span>)</span>
-<span id="cb25-2"><a href="the-data.html#cb25-2"></a></span>
-<span id="cb25-3"><a href="the-data.html#cb25-3"></a>download &lt;-<span class="st"> </span><span class="cf">function</span>(name) {</span>
-<span id="cb25-4"><a href="the-data.html#cb25-4"></a>  url &lt;-<span class="st"> &quot;https://github.com/hadley/mastering-shiny/raw/master/neiss/&quot;</span></span>
-<span id="cb25-5"><a href="the-data.html#cb25-5"></a>  <span class="kw">download.file</span>(<span class="kw">paste0</span>(url, name), <span class="kw">paste0</span>(<span class="st">&quot;neiss/&quot;</span>, name), <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb25-6"><a href="the-data.html#cb25-6"></a>}</span>
-<span id="cb25-7"><a href="the-data.html#cb25-7"></a></span>
-<span id="cb25-8"><a href="the-data.html#cb25-8"></a><span class="kw">download</span>(<span class="st">&quot;injuries.tsv.gz&quot;</span>)</span>
-<span id="cb25-9"><a href="the-data.html#cb25-9"></a><span class="kw">download</span>(<span class="st">&quot;population.tsv&quot;</span>)</span>
-<span id="cb25-10"><a href="the-data.html#cb25-10"></a><span class="kw">download</span>(<span class="st">&quot;products.tsv&quot;</span>)</span></code></pre></div>
-<p>Main data:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="the-data.html#cb26-1"></a>injuries &lt;-<span class="st"> </span><span class="kw">vroom</span>(<span class="st">&quot;neiss/injuries.tsv.gz&quot;</span>)</span>
-<span id="cb26-2"><a href="the-data.html#cb26-2"></a>injuries</span></code></pre></div>
-<pre><code>## # A tibble: 255,064 x 10
-##    trmt_date    age sex    race   body_part diag     location   prod_code weight
-##    &lt;date&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;
-##  1 2017-01-01    71 male   white  Upper Tr… Contusi… Other Pub…      1807   77.7
-##  2 2017-01-01    16 male   white  Lower Arm Burns, … Home             676   77.7
-##  3 2017-01-01    58 male   white  Upper Tr… Contusi… Home             649   77.7
-##  4 2017-01-01    21 male   white  Lower Tr… Strain,… Home            4076   77.7
-##  5 2017-01-01    54 male   white  Head      Inter O… Other Pub…      1807   77.7
-##  6 2017-01-01    21 male   white  Hand      Fracture Home            1884   77.7
-##  7 2017-01-01    35 female not s… Lower Tr… Strain,… Home            1807   87.1
-##  8 2017-01-01    62 female not s… Lower Arm Lacerat… Home            4074   87.1
-##  9 2017-01-01    22 male   not s… Knee      Disloca… Home            4076   87.1
-## 10 2017-01-01    58 female not s… Lower Leg Fracture Home            1842   87.1
-## # … with 255,054 more rows, and 1 more variable: narrative &lt;chr&gt;</code></pre>
-<p>Product names:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="the-data.html#cb28-1"></a>products &lt;-<span class="st"> </span><span class="kw">vroom</span>(<span class="st">&quot;neiss/products.tsv&quot;</span>)</span>
-<span id="cb28-2"><a href="the-data.html#cb28-2"></a>products</span></code></pre></div>
-<pre><code>## # A tibble: 38 x 2
-##    prod_code title                                   
-##        &lt;dbl&gt; &lt;chr&gt;                                   
-##  1       464 knives, not elsewhere classified        
-##  2       474 tableware and accessories               
-##  3       604 desks, chests, bureaus or buffets       
-##  4       611 bathtubs or showers                     
-##  5       649 toilets                                 
-##  6       676 rugs or carpets, not specified          
-##  7       679 sofas, couches, davenports, divans or st
-##  8      1141 containers, not specified               
-##  9      1200 sports or recreational activity, n.e.c. 
-## 10      1205 basketball (activity, apparel or equip.)
-## # … with 28 more rows</code></pre>
-<p>Population data:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="the-data.html#cb30-1"></a>population &lt;-<span class="st"> </span><span class="kw">vroom</span>(<span class="st">&quot;neiss/population.tsv&quot;</span>)</span>
-<span id="cb30-2"><a href="the-data.html#cb30-2"></a>population</span></code></pre></div>
-<pre><code>## # A tibble: 170 x 3
-##      age sex    population
-##    &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
-##  1     0 female    1924145
-##  2     0 male      2015150
-##  3     1 female    1943534
-##  4     1 male      2031718
-##  5     2 female    1965150
-##  6     2 male      2056625
-##  7     3 female    1956281
-##  8     3 male      2050474
-##  9     4 female    1953782
-## 10     4 male      2042001
-## # … with 160 more rows</code></pre>
+<div id="introduction-2" class="section level2">
+<h2><span class="header-section-number">8.1</span> Introduction</h2>
+<p>This chapter based on Dynamic UI is made to addressing the user interface by updating the server outcome. Three main sections, all of them relating to automated functions able to dynamically change the output passing through parallel commands between the UI and the server.</p>
+<p>What is a dynamic user interface?</p>
+<p>How to create dynamic user interfaces?</p>
+<p>Changing the UI using code run in the server function and by modifying inputs and outputs will be possible to see dynamic changes in the app.</p>
+<hr />
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="introduction-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="exploration.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dynamic-ui.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="updating-inputs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -418,7 +344,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/04-case_study_er_injuries.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/10-dynamic_ui.rmd",
 "text": "Edit"
 },
 "history": {
