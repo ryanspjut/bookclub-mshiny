@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.13 Summary | Mastering Shiny Book Club</title>
+  <title>10.5 Bookmarking Challenges | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.13 Summary | Mastering Shiny Book Club" />
+  <meta property="og:title" content="10.5 Bookmarking Challenges | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.13 Summary | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="10.5 Bookmarking Challenges | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="other-tools-material.html"/>
-<link rel="next" href="thank-you.html"/>
+<link rel="prev" href="updating-the-url.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -323,36 +323,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="summary" class="section level2">
-<h2><span class="header-section-number">2.13</span> Summary</h2>
-<p>Chapter 3: <em>Basic UI</em> introduces the 3 components of user interface for Shiny</p>
-<ol style="list-style-type: decimal">
-<li><strong>Inputs</strong>;
+<div id="bookmarking-challenges" class="section level2">
+<h2><span class="header-section-number">10.5</span> Bookmarking Challenges</h2>
 <ul>
-<li>Text, Numeric variables, Dates, Limited choices, Radio buttons/Check boxes, File uploads, Buttons</li>
-<li><strong>renderText()</strong> &lt;-&gt; <strong>textOutput()</strong></li>
-<li><strong>renderPrint()</strong> &lt;-&gt; <strong>verbatimTextOutput()</strong></li>
-</ul></li>
-<li><strong>Outputs</strong>;
+<li><p>You must be extra cautious if your app relies on random number generation. Bookmarking will not generate the same results unless you make your process reproducible.</p>
 <ul>
-<li>Text, Tables, Plots, Downloads</li>
-<li><strong>tableOutput()</strong> &lt;-&gt; <strong>renderTable()</strong> for static tables</li>
-<li><strong>dataTableOutput()</strong> &lt;-&gt; <strong>renderDataTable()</strong> for dynamic tables</li>
-<li><strong>plotOutput()</strong> &lt;-&gt; <strong>renderPlot()</strong></li>
+<li>Suggested solution: <code>repeatable()</code> : returns a wrapped version of a random data function that always uses the same seed when called.<br />
+</li>
+<li><code>rnormA &lt;- repeatable(rnorm)</code></li>
 </ul></li>
-<li><strong>Layout functions</strong>;
+<li><p>Be sure to give your tabs an <code>id</code> when using <code>tabsetPanel()</code></p></li>
+<li><p>Be cautious of what you share. If your app requires sensitive information, use <code>setBookmarkExclude()</code> somewhere in the <code>server</code> to ensure that they do not get included in your bookmark.</p>
 <ul>
-<li>Pages with sidebar(s) &amp; mainPanel(s), Bootstrap, Tabsets, Themes, CSS</li>
+<li><code>setBookmarkExclude(c("secret1", "secret2"))</code></li>
 </ul></li>
-</ol>
+<li><p>If you use <code>reactiveValues()</code> to manually manage our reactive state, use <code>onBookmark()</code> instead of <code>onBookmarked()</code>. This will be discussed more in Ch.16 and more details can be found in <a href="https://shiny.rstudio.com/articles/advanced-bookmarking.html">Advanced Bookmarking</a></p></li>
+</ul>
+<hr />
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="other-tools-material.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="thank-you.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="updating-the-url.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -384,7 +381,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/02-basic_ui.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/11-bookmarking.Rmd",
 "text": "Edit"
 },
 "history": {

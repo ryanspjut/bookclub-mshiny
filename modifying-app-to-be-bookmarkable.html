@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.13 Summary | Mastering Shiny Book Club</title>
+  <title>10.2 Modifying app to be bookmarkable | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.13 Summary | Mastering Shiny Book Club" />
+  <meta property="og:title" content="10.2 Modifying app to be bookmarkable | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.13 Summary | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="10.2 Modifying app to be bookmarkable | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="other-tools-material.html"/>
-<link rel="next" href="thank-you.html"/>
+<link rel="prev" href="introduction-3.html"/>
+<link rel="next" href="breaking-down-the-url.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -323,36 +323,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="summary" class="section level2">
-<h2><span class="header-section-number">2.13</span> Summary</h2>
-<p>Chapter 3: <em>Basic UI</em> introduces the 3 components of user interface for Shiny</p>
+<div id="modifying-app-to-be-bookmarkable" class="section level2">
+<h2><span class="header-section-number">10.2</span> Modifying app to be bookmarkable</h2>
+<p><strong>There are three main parts you must modify in a Shiny app in order for it to be bookmarkable:</strong></p>
 <ol style="list-style-type: decimal">
-<li><strong>Inputs</strong>;
-<ul>
-<li>Text, Numeric variables, Dates, Limited choices, Radio buttons/Check boxes, File uploads, Buttons</li>
-<li><strong>renderText()</strong> &lt;-&gt; <strong>textOutput()</strong></li>
-<li><strong>renderPrint()</strong> &lt;-&gt; <strong>verbatimTextOutput()</strong></li>
-</ul></li>
-<li><strong>Outputs</strong>;
-<ul>
-<li>Text, Tables, Plots, Downloads</li>
-<li><strong>tableOutput()</strong> &lt;-&gt; <strong>renderTable()</strong> for static tables</li>
-<li><strong>dataTableOutput()</strong> &lt;-&gt; <strong>renderDataTable()</strong> for dynamic tables</li>
-<li><strong>plotOutput()</strong> &lt;-&gt; <strong>renderPlot()</strong></li>
-</ul></li>
-<li><strong>Layout functions</strong>;
-<ul>
-<li>Pages with sidebar(s) &amp; mainPanel(s), Bootstrap, Tabsets, Themes, CSS</li>
-</ul></li>
+<li>In the <code>ui</code>: make it a function<br />
+</li>
+<li>In the <code>ui</code>: add the <code>bookmarkButton()</code> function<br />
+</li>
+<li>In the <code>shinyApp()</code> call: include <code>enableBookmarking = "url"</code></li>
 </ol>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="modifying-app-to-be-bookmarkable.html#cb122-1"></a>ui &lt;-<span class="st"> </span><span class="cf">function</span>(request) {</span>
+<span id="cb122-2"><a href="modifying-app-to-be-bookmarkable.html#cb122-2"></a>  <span class="kw">fluidPage</span>(</span>
+<span id="cb122-3"><a href="modifying-app-to-be-bookmarkable.html#cb122-3"></a>    <span class="kw">sidebarLayout</span>(</span>
+<span id="cb122-4"><a href="modifying-app-to-be-bookmarkable.html#cb122-4"></a>      <span class="kw">sidebarPanel</span>(</span>
+<span id="cb122-5"><a href="modifying-app-to-be-bookmarkable.html#cb122-5"></a>        <span class="kw">sliderInput</span>(<span class="st">&quot;omega&quot;</span>, <span class="st">&quot;omega&quot;</span>, <span class="dt">value =</span> <span class="dv">1</span>, <span class="dt">min =</span> <span class="dv">-2</span>, <span class="dt">max =</span> <span class="dv">2</span>, <span class="dt">step =</span> <span class="fl">0.01</span>),</span>
+<span id="cb122-6"><a href="modifying-app-to-be-bookmarkable.html#cb122-6"></a>        <span class="kw">sliderInput</span>(<span class="st">&quot;delta&quot;</span>, <span class="st">&quot;delta&quot;</span>, <span class="dt">value =</span> <span class="dv">1</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">2</span>, <span class="dt">step =</span> <span class="fl">0.01</span>),</span>
+<span id="cb122-7"><a href="modifying-app-to-be-bookmarkable.html#cb122-7"></a>        <span class="kw">sliderInput</span>(<span class="st">&quot;damping&quot;</span>, <span class="st">&quot;damping&quot;</span>, <span class="dt">value =</span> <span class="dv">1</span>, <span class="dt">min =</span> <span class="fl">0.9</span>, <span class="dt">max =</span> <span class="dv">1</span>, <span class="dt">step =</span> <span class="fl">0.001</span>),</span>
+<span id="cb122-8"><a href="modifying-app-to-be-bookmarkable.html#cb122-8"></a>        <span class="kw">numericInput</span>(<span class="st">&quot;length&quot;</span>, <span class="st">&quot;length&quot;</span>, <span class="dt">value =</span> <span class="dv">100</span>),</span>
+<span id="cb122-9"><a href="modifying-app-to-be-bookmarkable.html#cb122-9"></a>        <span class="kw">bookmarkButton</span>()</span>
+<span id="cb122-10"><a href="modifying-app-to-be-bookmarkable.html#cb122-10"></a>      ),</span>
+<span id="cb122-11"><a href="modifying-app-to-be-bookmarkable.html#cb122-11"></a>      <span class="kw">mainPanel</span>(</span>
+<span id="cb122-12"><a href="modifying-app-to-be-bookmarkable.html#cb122-12"></a>        <span class="kw">plotOutput</span>(<span class="st">&quot;fig&quot;</span>)</span>
+<span id="cb122-13"><a href="modifying-app-to-be-bookmarkable.html#cb122-13"></a>      )</span>
+<span id="cb122-14"><a href="modifying-app-to-be-bookmarkable.html#cb122-14"></a>    )</span>
+<span id="cb122-15"><a href="modifying-app-to-be-bookmarkable.html#cb122-15"></a>  )</span>
+<span id="cb122-16"><a href="modifying-app-to-be-bookmarkable.html#cb122-16"></a>}</span>
+<span id="cb122-17"><a href="modifying-app-to-be-bookmarkable.html#cb122-17"></a></span>
+<span id="cb122-18"><a href="modifying-app-to-be-bookmarkable.html#cb122-18"></a><span class="kw">shinyApp</span>(ui, server, <span class="dt">enableBookmarking =</span> <span class="st">&quot;url&quot;</span>)</span></code></pre></div>
+<hr />
+<ol style="list-style-type: decimal">
+<li>Making the <code>ui</code> a function
+<ol style="list-style-type: decimal">
+<li>Why? Because Shiny needs to be able to modify the input controls specified by the URL. Like arguments are passed within a normal R function as parameters to produce different outputs, the <code>ui</code> now needs to take in an argument (the URL) in order to return the app into a particular state. The URL holds information on the input parameters that needs to be changed, hence why the <code>ui</code> now needs to be a function.</li>
+</ol></li>
+<li>Adding the <code>bookmarkButton()</code> button to the app
+<ol style="list-style-type: decimal">
+<li>This function adds a button to the <code>ui</code> that captures the current values of all the input controls and generates a URL from it. More on this later.</li>
+</ol></li>
+<li>Adding <code>enableBookmarking = "url"</code> to the <code>shinyApp()</code> call
+<ol style="list-style-type: decimal">
+<li>This function ultimately puts the app together - the <code>ui</code> and the <code>server</code>. Adding this argument tells Shiny enable bookmarking and that the bookmark will be <em>URL-encoded</em> vs <em>saved-on-server</em>. More on this later</li>
+</ol></li>
+</ol>
+<hr />
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="other-tools-material.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="thank-you.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="breaking-down-the-url.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -384,7 +406,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/02-basic_ui.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/11-bookmarking.Rmd",
 "text": "Edit"
 },
 "history": {

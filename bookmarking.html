@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.13 Summary | Mastering Shiny Book Club</title>
+  <title>Chapter 10 Bookmarking | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.13 Summary | Mastering Shiny Book Club" />
+  <meta property="og:title" content="Chapter 10 Bookmarking | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.13 Summary | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="Chapter 10 Bookmarking | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="other-tools-material.html"/>
-<link rel="next" href="thank-you.html"/>
+<link rel="prev" href="conclusions.html"/>
+<link rel="next" href="introduction-3.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -323,36 +323,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="summary" class="section level2">
-<h2><span class="header-section-number">2.13</span> Summary</h2>
-<p>Chapter 3: <em>Basic UI</em> introduces the 3 components of user interface for Shiny</p>
-<ol style="list-style-type: decimal">
-<li><strong>Inputs</strong>;
+<div id="bookmarking" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Bookmarking</h1>
+<p>In brief, bookmarking addresses the issue of not being able to expose the current state of the app in its URL. Because of this, your Shiny app cannot be bookmarked or share a specific place with others.</p>
+<p><strong>Learning objectives:</strong></p>
 <ul>
-<li>Text, Numeric variables, Dates, Limited choices, Radio buttons/Check boxes, File uploads, Buttons</li>
-<li><strong>renderText()</strong> &lt;-&gt; <strong>textOutput()</strong></li>
-<li><strong>renderPrint()</strong> &lt;-&gt; <strong>verbatimTextOutput()</strong></li>
-</ul></li>
-<li><strong>Outputs</strong>;
-<ul>
-<li>Text, Tables, Plots, Downloads</li>
-<li><strong>tableOutput()</strong> &lt;-&gt; <strong>renderTable()</strong> for static tables</li>
-<li><strong>dataTableOutput()</strong> &lt;-&gt; <strong>renderDataTable()</strong> for dynamic tables</li>
-<li><strong>plotOutput()</strong> &lt;-&gt; <strong>renderPlot()</strong></li>
-</ul></li>
-<li><strong>Layout functions</strong>;
-<ul>
-<li>Pages with sidebar(s) &amp; mainPanel(s), Bootstrap, Tabsets, Themes, CSS</li>
-</ul></li>
-</ol>
+<li><p>Learn how to <strong>add <code>bookmarkButton()</code></strong> to the UI</p></li>
+<li><p>Learn how to <strong>make the <code>ui</code> into a function</strong> and understand why it is necessary</p></li>
+<li><p>Learn how to use <strong><code>enableBookmarking='url'</code></strong> to the <code>shinyApp() call</code></p></li>
+</ul>
+<p>At the end of this chapter, you will be able to enable bookmarking for your app.</p>
+<hr />
+<p>Introduction</p>
+<p>1 - Modifying app to be bookmarkable</p>
+<p>2 - Breaking down generated URLs</p>
+<p>3 - Updating the URL/Storing a richer state</p>
+<p>4 - Bookmarking challenges</p>
+<hr />
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="other-tools-material.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="thank-you.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="conclusions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -384,7 +379,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/02-basic_ui.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/11-bookmarking.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -294,6 +294,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.4" data-path="creating-ui-with-code.html"><a href="creating-ui-with-code.html"><i class="fa fa-check"></i><b>9.4</b> Creating UI with code</a></li>
 <li class="chapter" data-level="9.5" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>9.5</b> Conclusions</a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="bookmarking.html"><a href="bookmarking.html"><i class="fa fa-check"></i><b>10</b> Bookmarking</a><ul>
+<li class="chapter" data-level="10.1" data-path="introduction-3.html"><a href="introduction-3.html"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="modifying-app-to-be-bookmarkable.html"><a href="modifying-app-to-be-bookmarkable.html"><i class="fa fa-check"></i><b>10.2</b> Modifying app to be bookmarkable</a></li>
+<li class="chapter" data-level="10.3" data-path="breaking-down-the-url.html"><a href="breaking-down-the-url.html"><i class="fa fa-check"></i><b>10.3</b> Breaking down the URL</a></li>
+<li class="chapter" data-level="10.4" data-path="updating-the-url.html"><a href="updating-the-url.html"><i class="fa fa-check"></i><b>10.4</b> Updating the URL</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="updating-the-url.html"><a href="updating-the-url.html#storing-a-richer-state"><i class="fa fa-check"></i><b>10.4.1</b> Storing a richer state</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="bookmarking-challenges.html"><a href="bookmarking-challenges.html"><i class="fa fa-check"></i><b>10.5</b> Bookmarking Challenges</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -320,8 +329,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>The <strong>tabsetPanel()</strong> is the second function for this chapter and it involves the visibility of part of the app.</p>
 <p>This second function is made to let the user show and/or hide some of the tabs set in the main panel. It is a technique that allows managing the appearance of the app with selecting visibility of the tabs as shown in the <a href="https://shiny.rstudio.com/articles/layout-guide.html">Tabsets</a> section of the <strong>Shiny.rstudio.com</strong> guide’s page of the website.</p>
-<div id="htmlwidget-1cc8dac05b2f12dbebd5" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1cc8dac05b2f12dbebd5">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-772466e976b24b1cf511" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-772466e976b24b1cf511">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
 <p>To enhance your <strong>app</strong> with features and the most wanted themes and as an example on how to set the visibility of a tab in your app, you can follow the steps found here: <a href="https://shiny.rstudio.com/gallery/tabsets.html">Gallery</a></p>
 <p>As an example here is shown how to switch between panels hiding one panel and showing the other with different content.</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="dynamic-visibility.html#cb118-1"></a><span class="kw">library</span>(shiny)</span>
