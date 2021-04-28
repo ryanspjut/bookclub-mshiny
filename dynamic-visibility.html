@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.3 Dynamic visibility | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.3 Dynamic visibility | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-04-20" />
+<meta name="date" content="2021-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <script src="libs/d3-3.3.8/d3.min.js"></script>
 <script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
@@ -125,6 +127,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -317,8 +320,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>The <strong>tabsetPanel()</strong> is the second function for this chapter and it involves the visibility of part of the app.</p>
 <p>This second function is made to let the user show and/or hide some of the tabs set in the main panel. It is a technique that allows managing the appearance of the app with selecting visibility of the tabs as shown in the <a href="https://shiny.rstudio.com/articles/layout-guide.html">Tabsets</a> section of the <strong>Shiny.rstudio.com</strong> guide’s page of the website.</p>
-<div id="htmlwidget-7aa287e64a22a200b5b6" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7aa287e64a22a200b5b6">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1cc8dac05b2f12dbebd5" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1cc8dac05b2f12dbebd5">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
 <p>To enhance your <strong>app</strong> with features and the most wanted themes and as an example on how to set the visibility of a tab in your app, you can follow the steps found here: <a href="https://shiny.rstudio.com/gallery/tabsets.html">Gallery</a></p>
 <p>As an example here is shown how to switch between panels hiding one panel and showing the other with different content.</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="dynamic-visibility.html#cb118-1"></a><span class="kw">library</span>(shiny)</span>
@@ -403,6 +406,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

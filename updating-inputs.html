@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.2 Updating inputs | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.2 Updating inputs | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-04-20" />
+<meta name="date" content="2021-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <script src="libs/d3-3.3.8/d3.min.js"></script>
 <script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
@@ -125,6 +127,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -321,8 +324,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>In this first part of the Dynamic UI chapter we will see how to pass from a basic structure to a more complicate one by adding dynamics to the output of the app, calling the “updating functions”.</p>
 <p>As we know the basic structure of a Shiny app is made of a <strong>UI</strong> (user interface) and a <strong>Server</strong>.</p>
-<div id="htmlwidget-199c239fede3504714b4" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-199c239fede3504714b4">{"x":{"diagram":"\ngraph LR \nA[User Interface]-->B[Server]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a326971ed1bf8e2910fe" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a326971ed1bf8e2910fe">{"x":{"diagram":"\ngraph LR \nA[User Interface]-->B[Server]\n"},"evals":[],"jsHooks":[]}</script>
 <p>The first example is the User Interface and Server basic structure for updating the app.</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="updating-inputs.html#cb112-1"></a><span class="co">############################################</span></span>
 <span id="cb112-2"><a href="updating-inputs.html#cb112-2"></a><span class="co"># ui &lt;- fluidPage(</span></span>
@@ -345,8 +348,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <div id="update-functions" class="section level3">
 <h3><span class="header-section-number">9.2.1</span> Update functions</h3>
-<div id="htmlwidget-333977f3f2fbed445e9d" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-333977f3f2fbed445e9d">{"x":{"diagram":"\ngraph LR\nA[id Input]-->B[update id Input]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f558931da3fa2630926e" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f558931da3fa2630926e">{"x":{"diagram":"\ngraph LR\nA[id Input]-->B[update id Input]\n"},"evals":[],"jsHooks":[]}</script>
 <p>The <strong>Update function</strong> allows you to modify the control after it has been created with a series of <strong>[id]Input</strong> and <strong>update[id]Input</strong>, as shown below:</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="updating-inputs.html#cb113-1"></a><span class="co"># [id]Input()</span></span>
 <span id="cb113-2"><a href="updating-inputs.html#cb113-2"></a><span class="co"># textInput() # ui</span></span>
@@ -442,6 +445,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

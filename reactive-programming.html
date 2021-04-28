@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.2 Reactive Programming | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.2 Reactive Programming | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-04-20" />
+<meta name="date" content="2021-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <script src="libs/d3-3.3.8/d3.min.js"></script>
 <script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
@@ -125,6 +127,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -345,8 +348,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb20-2"><a href="reactive-programming.html#cb20-2"></a><span class="st">graph LR</span></span>
 <span id="cb20-3"><a href="reactive-programming.html#cb20-3"></a><span class="st">A[name] --- B&gt;greeting]</span></span>
 <span id="cb20-4"><a href="reactive-programming.html#cb20-4"></a><span class="st">&quot;</span>)</span></code></pre></div>
-<div id="htmlwidget-303183e080829b6ce959" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-303183e080829b6ce959">{"x":{"diagram":"\ngraph LR\nA[name] --- B>greeting]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-dd7234100609994e5400" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dd7234100609994e5400">{"x":{"diagram":"\ngraph LR\nA[name] --- B>greeting]\n"},"evals":[],"jsHooks":[]}</script>
 <p>reactive graph is a powerful tool for understanding how your app works.<br />
 - Make by hand<br />
 - Use DiagrammeR pkg to make it manually yourself<br />
@@ -382,6 +385,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

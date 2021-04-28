@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.4 Creating UI with code | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.4 Creating UI with code | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-04-20" />
+<meta name="date" content="2021-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <script src="libs/d3-3.3.8/d3.min.js"></script>
 <script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
@@ -125,6 +127,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -315,8 +318,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">9.4</span> Creating UI with code</h2>
 <p><strong>Create and modify the user interface while the app is running</strong></p>
 <hr />
-<div id="htmlwidget-35dbdc67cfbe2d0872cb" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-35dbdc67cfbe2d0872cb">{"x":{"diagram":"\ngraph LR\nA[uiOutput]-->B[renderUI]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-925651622ad65cdf5c25" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-925651622ad65cdf5c25">{"x":{"diagram":"\ngraph LR\nA[uiOutput]-->B[renderUI]\n"},"evals":[],"jsHooks":[]}</script>
 <p>The last two functions <strong>uiOutput()</strong> and <strong>renderUI()</strong>, are for applying the technique of rendering the UI by setting the value of the new input to the current value of the existing control.</p>
 <p>This technique gives the developer the ability to create and modify the user interface while the app is running.</p>
 <p><strong>uiOutput()</strong> act in the UI part of the app while <strong>renderUI()</strong> act in the Server.</p>
@@ -375,6 +378,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
