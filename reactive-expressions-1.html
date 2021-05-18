@@ -333,8 +333,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-4"><a href="reactive-expressions-1.html#cb21-4"></a>  string &lt;-<span class="st"> </span><span class="kw">reactive</span>(<span class="kw">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="op">$</span>name, <span class="st">&quot;!&quot;</span>))</span>
 <span id="cb21-5"><a href="reactive-expressions-1.html#cb21-5"></a>  output<span class="op">$</span>greeting &lt;-<span class="st"> </span><span class="kw">renderText</span>(<span class="kw">string</span>())</span>
 <span id="cb21-6"><a href="reactive-expressions-1.html#cb21-6"></a>}</span></code></pre></div>
-<div id="htmlwidget-0c24820cf6bf10e108e7" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0c24820cf6bf10e108e7">{"x":{"diagram":"\ngraph LR\nA[name] --- B>string]\nB>string] --- C>greeting]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3c8980569d51b045254c" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3c8980569d51b045254c">{"x":{"diagram":"\ngraph LR\nA[name] --- B>string]\nB>string] --- C>greeting]\n"},"evals":[],"jsHooks":[]}</script>
 <p>In other words , makes app cleaner &amp; more efficient (by removing redundant codes &amp; recomputation).
 It also simplifies the reactive graph.</p>
 <p>Reactive expressions have a flavour of both inputs and outputs:</p>
