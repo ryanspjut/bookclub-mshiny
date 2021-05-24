@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10.4 Updating the URL | Mastering Shiny Book Club</title>
+  <title>11.2 Why do we need reactive programming? | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10.4 Updating the URL | Mastering Shiny Book Club" />
+  <meta property="og:title" content="11.2 Why do we need reactive programming? | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10.4 Updating the URL | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="11.2 Why do we need reactive programming? | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="breaking-down-the-url.html"/>
-<link rel="next" href="bookmarking-challenges.html"/>
+<link rel="prev" href="introduction-4.html"/>
+<link rel="next" href="reactive-programming-1.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -333,29 +333,122 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="updating-the-url" class="section level2">
-<h2><span class="header-section-number">10.4</span> Updating the URL</h2>
-<p>It is probably more <em>convenient</em> to have the URL just update itself whenever inputs change instead of having the user press button each time a state must be captured.</p>
-<p>This can be accomplished by wrapping information like <code>input</code> values and <code>session</code> information around an observer as such:</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="updating-the-url.html#cb123-1"></a><span class="kw">observe</span>({</span>
-<span id="cb123-2"><a href="updating-the-url.html#cb123-2"></a>  <span class="kw">reactiveValuesToList</span>(input)</span>
-<span id="cb123-3"><a href="updating-the-url.html#cb123-3"></a>  session<span class="op">$</span><span class="kw">doBookmark</span>()</span>
-<span id="cb123-4"><a href="updating-the-url.html#cb123-4"></a>})</span></code></pre></div>
-<p>The <code>reactiveValuesToList(input)</code> step does what you might expect <code>as.list()</code> to do in base R. It takes the reactive object, <code>input</code> and stores its values and dependencies in a list.</p>
-<p>The next step invokes the <code>doBookmark()</code> function from the session object. The session object is an environment that can be used to access information and functionality relating to the session. <code>doBookmark()</code> invokes the <code>onBookmarked()</code> <em>callback</em> function.</p>
-<p>FYI: a callback function is:</p>
-<blockquote>
-<p>a function that is passed as an argument to another function, to be “called back” at a later time. A function that accepts other functions as arguments is called a higher-order function, which contains the logic for when the callback function gets executed.</p>
-</blockquote>
-<div id="storing-a-richer-state" class="section level3">
-<h3><span class="header-section-number">10.4.1</span> Storing a richer state</h3>
-<p>URL bookmarking is simple and works everywhere you may want to deploy your Shiny app however, could become very long if you have a large number of inputs. If this is the case, it may be better to store your state on the server side.</p>
-<p>Shiny saves the state of your app in an <code>.rds</code> file on the server and generates a shorter and easier URL. To do this, you can simply change the <code>enableBookmarking</code> argument to be “server” instead of “url”</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="updating-the-url.html#cb124-1"></a><span class="kw">shinyApp</span>(ui, server, <span class="dt">enableBookmarking =</span> <span class="st">&quot;server&quot;</span>)</span></code></pre></div>
-<p>This generates URLs like this: <code>http://127.0.0.1:4087/?_state_id_=0d645f1b28f05c97</code></p>
-<p>The parameter in this instance is the <code>state_id</code> which corresponds to a directory in your working directory - <code>shiny_bookmarks/0d645f1b28f05c97</code></p>
-<p>⚠️ Be sure to have a mechanism to routinely delete these directories. If your app requires bookmarking in a complex state and you do not delete these files, your app is going to take up more disk space and may start to lag. However, when you <em>do</em> delete these files, their corresponding URLs will also stop working. Just be sure to either send updated links to stakeholders or be mindful of the state of your app.</p>
-<hr />
+<div id="why-do-we-need-reactive-programming" class="section level2">
+<h2><span class="header-section-number">11.2</span> Why do we need reactive programming?</h2>
+<p>What is reactive programming?</p>
+<ul>
+<li>“focuses on values that change over time, and calculations and actions that
+depend on those values”</li>
+<li>(<a href="https://en.wikipedia.org/wiki/Reactive_programming">Wikipedia</a>) "…
+reactive programming is … concerned with data streams and the
+<strong>propagation of changes</strong> (emphasis mine).</li>
+</ul>
+<p>Why reactive programming in Shiny?</p>
+<ul>
+<li>Shiny applications are interactive</li>
+<li>need something dynamic, unlike most R code</li>
+<li>want inputs &amp; outputs to stay in sync, while minimizing computation
+<ul>
+<li>outputs and reactive expressions change <em>if and only if</em> their inputs change</li>
+</ul></li>
+<li>reactive programming -&gt; <strong>automatic</strong> updating/propagation of <strong>necessary</strong>
+changes</li>
+</ul>
+<div id="why-cant-you-use-variables" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> Why can’t you use variables?</h3>
+<ul>
+<li>reactive programming: values that change over time.</li>
+<li>don’t variables change over time?</li>
+<li>variables don’t update automatically -&gt; no good</li>
+</ul>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="why-do-we-need-reactive-programming.html#cb125-1"></a>temp_c &lt;-<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb125-2"><a href="why-do-we-need-reactive-programming.html#cb125-2"></a>temp_f &lt;-<span class="st"> </span>(temp_c <span class="op">*</span><span class="st"> </span><span class="dv">9</span> <span class="op">/</span><span class="st"> </span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="dv">32</span></span>
+<span id="cb125-3"><a href="why-do-we-need-reactive-programming.html#cb125-3"></a>temp_f</span>
+<span id="cb125-4"><a href="why-do-we-need-reactive-programming.html#cb125-4"></a><span class="co">#&gt; [1] 50</span></span>
+<span id="cb125-5"><a href="why-do-we-need-reactive-programming.html#cb125-5"></a></span>
+<span id="cb125-6"><a href="why-do-we-need-reactive-programming.html#cb125-6"></a>temp_c &lt;-<span class="st"> </span><span class="dv">30</span></span>
+<span id="cb125-7"><a href="why-do-we-need-reactive-programming.html#cb125-7"></a></span>
+<span id="cb125-8"><a href="why-do-we-need-reactive-programming.html#cb125-8"></a><span class="co"># temp_f not automatically updated</span></span>
+<span id="cb125-9"><a href="why-do-we-need-reactive-programming.html#cb125-9"></a>temp_f</span>
+<span id="cb125-10"><a href="why-do-we-need-reactive-programming.html#cb125-10"></a><span class="co">#&gt; [1] 50</span></span></code></pre></div>
+</div>
+<div id="why-about-functions" class="section level3">
+<h3><span class="header-section-number">11.2.2</span> Why about functions?</h3>
+<ul>
+<li>solves automatic updating problem</li>
+<li>doesn’t solve necessary computation problem</li>
+</ul>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="why-do-we-need-reactive-programming.html#cb126-1"></a>temp_c &lt;-<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb126-2"><a href="why-do-we-need-reactive-programming.html#cb126-2"></a>temp_f &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
+<span id="cb126-3"><a href="why-do-we-need-reactive-programming.html#cb126-3"></a>  <span class="kw">message</span>(<span class="st">&quot;Converting&quot;</span>) </span>
+<span id="cb126-4"><a href="why-do-we-need-reactive-programming.html#cb126-4"></a>  (temp_c <span class="op">*</span><span class="st"> </span><span class="dv">9</span> <span class="op">/</span><span class="st"> </span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="dv">32</span></span>
+<span id="cb126-5"><a href="why-do-we-need-reactive-programming.html#cb126-5"></a>}</span>
+<span id="cb126-6"><a href="why-do-we-need-reactive-programming.html#cb126-6"></a><span class="kw">temp_f</span>()</span>
+<span id="cb126-7"><a href="why-do-we-need-reactive-programming.html#cb126-7"></a><span class="co">#&gt; Converting</span></span>
+<span id="cb126-8"><a href="why-do-we-need-reactive-programming.html#cb126-8"></a><span class="co">#&gt; [1] 50</span></span>
+<span id="cb126-9"><a href="why-do-we-need-reactive-programming.html#cb126-9"></a></span>
+<span id="cb126-10"><a href="why-do-we-need-reactive-programming.html#cb126-10"></a><span class="co"># temp_f automatically updated</span></span>
+<span id="cb126-11"><a href="why-do-we-need-reactive-programming.html#cb126-11"></a>temp_c &lt;-<span class="st"> </span><span class="dv">-3</span></span>
+<span id="cb126-12"><a href="why-do-we-need-reactive-programming.html#cb126-12"></a><span class="kw">temp_f</span>() </span>
+<span id="cb126-13"><a href="why-do-we-need-reactive-programming.html#cb126-13"></a><span class="co">#&gt; Converting</span></span>
+<span id="cb126-14"><a href="why-do-we-need-reactive-programming.html#cb126-14"></a><span class="co">#&gt; [1] 26.6</span></span>
+<span id="cb126-15"><a href="why-do-we-need-reactive-programming.html#cb126-15"></a></span>
+<span id="cb126-16"><a href="why-do-we-need-reactive-programming.html#cb126-16"></a><span class="co"># but does unnecessary computation (recomputes every time it&#39;s called)</span></span>
+<span id="cb126-17"><a href="why-do-we-need-reactive-programming.html#cb126-17"></a><span class="kw">temp_f</span>() </span>
+<span id="cb126-18"><a href="why-do-we-need-reactive-programming.html#cb126-18"></a><span class="co">#&gt; Converting</span></span>
+<span id="cb126-19"><a href="why-do-we-need-reactive-programming.html#cb126-19"></a><span class="co">#&gt; [1] 26.6</span></span></code></pre></div>
+</div>
+<div id="event-driven-programming" class="section level3">
+<h3><span class="header-section-number">11.2.3</span> Event-driven programming</h3>
+<ul>
+<li>before, Shiny would probably have used event-driven programming
+<ul>
+<li>callback functions that run in response to events</li>
+<li>Ex: when button clicked, run function to process order</li>
+</ul></li>
+<li>can implement with R6 classes in R</li>
+</ul>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="why-do-we-need-reactive-programming.html#cb127-1"></a>DynamicValue &lt;-<span class="st"> </span>R6<span class="op">::</span><span class="kw">R6Class</span>(<span class="st">&quot;DynamicValue&quot;</span>, <span class="kw">list</span>(</span>
+<span id="cb127-2"><a href="why-do-we-need-reactive-programming.html#cb127-2"></a>  <span class="dt">value =</span> <span class="ot">NULL</span>,</span>
+<span id="cb127-3"><a href="why-do-we-need-reactive-programming.html#cb127-3"></a>  <span class="dt">on_update =</span> <span class="ot">NULL</span>,</span>
+<span id="cb127-4"><a href="why-do-we-need-reactive-programming.html#cb127-4"></a>  </span>
+<span id="cb127-5"><a href="why-do-we-need-reactive-programming.html#cb127-5"></a>  <span class="dt">get =</span> <span class="cf">function</span>() self<span class="op">$</span>value,</span>
+<span id="cb127-6"><a href="why-do-we-need-reactive-programming.html#cb127-6"></a></span>
+<span id="cb127-7"><a href="why-do-we-need-reactive-programming.html#cb127-7"></a>  <span class="dt">set =</span> <span class="cf">function</span>(value) {</span>
+<span id="cb127-8"><a href="why-do-we-need-reactive-programming.html#cb127-8"></a>    self<span class="op">$</span>value &lt;-<span class="st"> </span>value</span>
+<span id="cb127-9"><a href="why-do-we-need-reactive-programming.html#cb127-9"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(self<span class="op">$</span>on_update)) </span>
+<span id="cb127-10"><a href="why-do-we-need-reactive-programming.html#cb127-10"></a>      self<span class="op">$</span><span class="kw">on_update</span>(value)</span>
+<span id="cb127-11"><a href="why-do-we-need-reactive-programming.html#cb127-11"></a>    <span class="kw">invisible</span>(self)</span>
+<span id="cb127-12"><a href="why-do-we-need-reactive-programming.html#cb127-12"></a>  },</span>
+<span id="cb127-13"><a href="why-do-we-need-reactive-programming.html#cb127-13"></a>  </span>
+<span id="cb127-14"><a href="why-do-we-need-reactive-programming.html#cb127-14"></a>  <span class="dt">onUpdate =</span> <span class="cf">function</span>(on_update) {</span>
+<span id="cb127-15"><a href="why-do-we-need-reactive-programming.html#cb127-15"></a>    self<span class="op">$</span>on_update &lt;-<span class="st"> </span>on_update</span>
+<span id="cb127-16"><a href="why-do-we-need-reactive-programming.html#cb127-16"></a>    <span class="kw">invisible</span>(self)</span>
+<span id="cb127-17"><a href="why-do-we-need-reactive-programming.html#cb127-17"></a>  }</span>
+<span id="cb127-18"><a href="why-do-we-need-reactive-programming.html#cb127-18"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="why-do-we-need-reactive-programming.html#cb128-1"></a>temp_c &lt;-<span class="st"> </span>DynamicValue<span class="op">$</span><span class="kw">new</span>()</span>
+<span id="cb128-2"><a href="why-do-we-need-reactive-programming.html#cb128-2"></a>temp_c<span class="op">$</span><span class="kw">onUpdate</span>(<span class="cf">function</span>(value) {</span>
+<span id="cb128-3"><a href="why-do-we-need-reactive-programming.html#cb128-3"></a>  <span class="kw">message</span>(<span class="st">&quot;Converting&quot;</span>) </span>
+<span id="cb128-4"><a href="why-do-we-need-reactive-programming.html#cb128-4"></a>  temp_f &lt;&lt;-<span class="st"> </span>(value <span class="op">*</span><span class="st"> </span><span class="dv">9</span> <span class="op">/</span><span class="st"> </span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="dv">32</span></span>
+<span id="cb128-5"><a href="why-do-we-need-reactive-programming.html#cb128-5"></a>})</span>
+<span id="cb128-6"><a href="why-do-we-need-reactive-programming.html#cb128-6"></a></span>
+<span id="cb128-7"><a href="why-do-we-need-reactive-programming.html#cb128-7"></a>temp_c<span class="op">$</span><span class="kw">set</span>(<span class="dv">10</span>)</span>
+<span id="cb128-8"><a href="why-do-we-need-reactive-programming.html#cb128-8"></a><span class="co">#&gt; Converting</span></span>
+<span id="cb128-9"><a href="why-do-we-need-reactive-programming.html#cb128-9"></a>temp_f</span>
+<span id="cb128-10"><a href="why-do-we-need-reactive-programming.html#cb128-10"></a><span class="co">#&gt; [1] 50</span></span>
+<span id="cb128-11"><a href="why-do-we-need-reactive-programming.html#cb128-11"></a></span>
+<span id="cb128-12"><a href="why-do-we-need-reactive-programming.html#cb128-12"></a>temp_c<span class="op">$</span><span class="kw">set</span>(<span class="op">-</span><span class="dv">3</span>)</span>
+<span id="cb128-13"><a href="why-do-we-need-reactive-programming.html#cb128-13"></a><span class="co">#&gt; Converting</span></span>
+<span id="cb128-14"><a href="why-do-we-need-reactive-programming.html#cb128-14"></a>temp_f</span>
+<span id="cb128-15"><a href="why-do-we-need-reactive-programming.html#cb128-15"></a><span class="co">#&gt; [1] 26.6</span></span></code></pre></div>
+<ul>
+<li>event-driven programming solves problem of unnecessary computation</li>
+<li>but introduces a new problem
+<ul>
+<li>very carefully track which inputs affect which computations</li>
+<li>hard to balance correctness vs. performance</li>
+</ul></li>
+</ul>
 </div>
 </div>
             </section>
@@ -363,8 +456,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="breaking-down-the-url.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bookmarking-challenges.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction-4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reactive-programming-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -396,7 +489,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/11-bookmarking.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/13-why-reactivity.Rmd",
 "text": "Edit"
 },
 "history": {

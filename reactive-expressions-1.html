@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-05-23" />
+<meta name="date" content="2021-05-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -303,6 +303,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10.5" data-path="bookmarking-challenges.html"><a href="bookmarking-challenges.html"><i class="fa fa-check"></i><b>10.5</b> Bookmarking Challenges</a></li>
 </ul></li>
+<li class="chapter" data-level="11" data-path="why-reactivity.html"><a href="why-reactivity.html"><i class="fa fa-check"></i><b>11</b> Why reactivity?</a><ul>
+<li class="chapter" data-level="11.1" data-path="introduction-4.html"><a href="introduction-4.html"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="why-do-we-need-reactive-programming.html"><a href="why-do-we-need-reactive-programming.html"><i class="fa fa-check"></i><b>11.2</b> Why do we need reactive programming?</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="why-do-we-need-reactive-programming.html"><a href="why-do-we-need-reactive-programming.html#why-cant-you-use-variables"><i class="fa fa-check"></i><b>11.2.1</b> Why can’t you use variables?</a></li>
+<li class="chapter" data-level="11.2.2" data-path="why-do-we-need-reactive-programming.html"><a href="why-do-we-need-reactive-programming.html#why-about-functions"><i class="fa fa-check"></i><b>11.2.2</b> Why about functions?</a></li>
+<li class="chapter" data-level="11.2.3" data-path="why-do-we-need-reactive-programming.html"><a href="why-do-we-need-reactive-programming.html#event-driven-programming"><i class="fa fa-check"></i><b>11.2.3</b> Event-driven programming</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="reactive-programming-1.html"><a href="reactive-programming-1.html"><i class="fa fa-check"></i><b>11.3</b> Reactive programming</a></li>
+<li class="chapter" data-level="11.4" data-path="a-brief-history-of-reactive-programming.html"><a href="a-brief-history-of-reactive-programming.html"><i class="fa fa-check"></i><b>11.4</b> A brief history of reactive programming</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -333,8 +343,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-4"><a href="reactive-expressions-1.html#cb21-4"></a>  string &lt;-<span class="st"> </span><span class="kw">reactive</span>(<span class="kw">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="op">$</span>name, <span class="st">&quot;!&quot;</span>))</span>
 <span id="cb21-5"><a href="reactive-expressions-1.html#cb21-5"></a>  output<span class="op">$</span>greeting &lt;-<span class="st"> </span><span class="kw">renderText</span>(<span class="kw">string</span>())</span>
 <span id="cb21-6"><a href="reactive-expressions-1.html#cb21-6"></a>}</span></code></pre></div>
-<div id="htmlwidget-017deb0064615886abba" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-017deb0064615886abba">{"x":{"diagram":"\ngraph LR\nA[name] --- B>string]\nB>string] --- C>greeting]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b961f73957d71f346aa6" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b961f73957d71f346aa6">{"x":{"diagram":"\ngraph LR\nA[name] --- B>string]\nB>string] --- C>greeting]\n"},"evals":[],"jsHooks":[]}</script>
 <p>In other words , makes app cleaner &amp; more efficient (by removing redundant codes &amp; recomputation).
 It also simplifies the reactive graph.</p>
 <p>Reactive expressions have a flavour of both inputs and outputs:</p>

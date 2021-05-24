@@ -122,3 +122,11 @@ breaking-down-the-url
 updating-the-url
 storing-a-richer-state
 bookmarking-challenges
+why-reactivity
+introduction-4
+why-do-we-need-reactive-programming
+why-cant-you-use-variables
+why-about-functions
+event-driven-programming
+reactive-programming-1
+a-brief-history-of-reactive-programming

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10.4 Updating the URL | Mastering Shiny Book Club</title>
+  <title>Chapter 11 Why reactivity? | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10.4 Updating the URL | Mastering Shiny Book Club" />
+  <meta property="og:title" content="Chapter 11 Why reactivity? | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10.4 Updating the URL | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="Chapter 11 Why reactivity? | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="breaking-down-the-url.html"/>
-<link rel="next" href="bookmarking-challenges.html"/>
+<link rel="prev" href="bookmarking-challenges.html"/>
+<link rel="next" href="introduction-4.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -333,38 +333,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="updating-the-url" class="section level2">
-<h2><span class="header-section-number">10.4</span> Updating the URL</h2>
-<p>It is probably more <em>convenient</em> to have the URL just update itself whenever inputs change instead of having the user press button each time a state must be captured.</p>
-<p>This can be accomplished by wrapping information like <code>input</code> values and <code>session</code> information around an observer as such:</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="updating-the-url.html#cb123-1"></a><span class="kw">observe</span>({</span>
-<span id="cb123-2"><a href="updating-the-url.html#cb123-2"></a>  <span class="kw">reactiveValuesToList</span>(input)</span>
-<span id="cb123-3"><a href="updating-the-url.html#cb123-3"></a>  session<span class="op">$</span><span class="kw">doBookmark</span>()</span>
-<span id="cb123-4"><a href="updating-the-url.html#cb123-4"></a>})</span></code></pre></div>
-<p>The <code>reactiveValuesToList(input)</code> step does what you might expect <code>as.list()</code> to do in base R. It takes the reactive object, <code>input</code> and stores its values and dependencies in a list.</p>
-<p>The next step invokes the <code>doBookmark()</code> function from the session object. The session object is an environment that can be used to access information and functionality relating to the session. <code>doBookmark()</code> invokes the <code>onBookmarked()</code> <em>callback</em> function.</p>
-<p>FYI: a callback function is:</p>
-<blockquote>
-<p>a function that is passed as an argument to another function, to be “called back” at a later time. A function that accepts other functions as arguments is called a higher-order function, which contains the logic for when the callback function gets executed.</p>
-</blockquote>
-<div id="storing-a-richer-state" class="section level3">
-<h3><span class="header-section-number">10.4.1</span> Storing a richer state</h3>
-<p>URL bookmarking is simple and works everywhere you may want to deploy your Shiny app however, could become very long if you have a large number of inputs. If this is the case, it may be better to store your state on the server side.</p>
-<p>Shiny saves the state of your app in an <code>.rds</code> file on the server and generates a shorter and easier URL. To do this, you can simply change the <code>enableBookmarking</code> argument to be “server” instead of “url”</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="updating-the-url.html#cb124-1"></a><span class="kw">shinyApp</span>(ui, server, <span class="dt">enableBookmarking =</span> <span class="st">&quot;server&quot;</span>)</span></code></pre></div>
-<p>This generates URLs like this: <code>http://127.0.0.1:4087/?_state_id_=0d645f1b28f05c97</code></p>
-<p>The parameter in this instance is the <code>state_id</code> which corresponds to a directory in your working directory - <code>shiny_bookmarks/0d645f1b28f05c97</code></p>
-<p>⚠️ Be sure to have a mechanism to routinely delete these directories. If your app requires bookmarking in a complex state and you do not delete these files, your app is going to take up more disk space and may start to lag. However, when you <em>do</em> delete these files, their corresponding URLs will also stop working. Just be sure to either send updated links to stakeholders or be mindful of the state of your app.</p>
-<hr />
-</div>
+<div id="why-reactivity" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> Why reactivity?</h1>
+<p>This chapter starts a new section of the book focused on reactivity.
+Yes, we have already learned about reactivity in earlier chapters.
+But in this section, we shift from an intuitive understanding based on applying
+reactivity to a formal understanding of the underlying theory.
+This chapter focuses on what reactivity, or reactive programming, is and why
+it is used in Shiny.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="breaking-down-the-url.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bookmarking-challenges.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bookmarking-challenges.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -396,7 +380,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/11-bookmarking.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/13-why-reactivity.Rmd",
 "text": "Edit"
 },
 "history": {
