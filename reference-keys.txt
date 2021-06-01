@@ -130,3 +130,11 @@ why-about-functions
 event-driven-programming
 reactive-programming-1
 a-brief-history-of-reactive-programming
+the-reactive-graph-1
+quick-review-of-chapter-3-basic-reactivity
+introduction-5
+an-example
+excercises
+dynamism
+the-reactlog-package
+summary-1

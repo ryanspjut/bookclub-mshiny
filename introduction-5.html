@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Mastering Shiny Book Club</title>
+  <title>12.2 Introduction | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Mastering Shiny Book Club" />
+  <meta property="og:title" content="12.2 Introduction | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="12.2 Introduction | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="book-club-meetings.html"/>
+<link rel="prev" href="quick-review-of-chapter-3-basic-reactivity.html"/>
+<link rel="next" href="an-example.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -342,25 +342,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Mastering Shiny Book Club</h1>
-<p class="author"><em>The R4DS Online Learning Community</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-06-01</em></p>
-</div>
-<div id="welcome" class="section level1 unnumbered">
-<h1>Welcome</h1>
-<p>This is a companion for the book <a href="https://mastering-shiny.org/">Mastering Shiny</a> by Hadley Wickham.
-This companion is available at <a href="r4ds.io/mshiny">r4ds.io/mshiny</a>.</p>
-<p>This website is being developed by the <a href="https://rfordatasci.com">R4DS Online Learning Community</a>. Follow along, and <a href="https://r4ds.io/join">join the community</a> to participate.</p>
-<p>This companion follows the <a href="https://r4ds.io/conduct">R4DS Online Learning Community Code of Conduct</a>.</p>
+<div id="introduction-5" class="section level2">
+<h2><span class="header-section-number">12.2</span> Introduction</h2>
+<p>We begin with a simple example:</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="introduction-5.html#cb130-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb130-2"><a href="introduction-5.html#cb130-2"></a>  <span class="kw">numericInput</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="dt">value =</span> <span class="dv">10</span>),</span>
+<span id="cb130-3"><a href="introduction-5.html#cb130-3"></a>  <span class="kw">numericInput</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="dt">value =</span> <span class="dv">1</span>),</span>
+<span id="cb130-4"><a href="introduction-5.html#cb130-4"></a>  <span class="kw">numericInput</span>(<span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="dt">value =</span> <span class="dv">1</span>),</span>
+<span id="cb130-5"><a href="introduction-5.html#cb130-5"></a>  <span class="kw">plotOutput</span>(<span class="st">&quot;x&quot;</span>),</span>
+<span id="cb130-6"><a href="introduction-5.html#cb130-6"></a>  <span class="kw">tableOutput</span>(<span class="st">&quot;y&quot;</span>),</span>
+<span id="cb130-7"><a href="introduction-5.html#cb130-7"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;z&quot;</span>)</span>
+<span id="cb130-8"><a href="introduction-5.html#cb130-8"></a>)</span>
+<span id="cb130-9"><a href="introduction-5.html#cb130-9"></a></span>
+<span id="cb130-10"><a href="introduction-5.html#cb130-10"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb130-11"><a href="introduction-5.html#cb130-11"></a>  rng &lt;-<span class="st"> </span><span class="kw">reactive</span>(input<span class="op">$</span>a <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</span>
+<span id="cb130-12"><a href="introduction-5.html#cb130-12"></a>  smp &lt;-<span class="st"> </span><span class="kw">reactive</span>(<span class="kw">sample</span>(<span class="kw">rng</span>(), input<span class="op">$</span>b, <span class="dt">replace =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb130-13"><a href="introduction-5.html#cb130-13"></a>  bc &lt;-<span class="st"> </span><span class="kw">reactive</span>(input<span class="op">$</span>b <span class="op">*</span><span class="st"> </span>input<span class="op">$</span>c)</span>
+<span id="cb130-14"><a href="introduction-5.html#cb130-14"></a>  </span>
+<span id="cb130-15"><a href="introduction-5.html#cb130-15"></a>  output<span class="op">$</span>x &lt;-<span class="st"> </span><span class="kw">renderPlot</span>(<span class="kw">hist</span>(<span class="kw">smp</span>()))</span>
+<span id="cb130-16"><a href="introduction-5.html#cb130-16"></a>  output<span class="op">$</span>y &lt;-<span class="st"> </span><span class="kw">renderTable</span>(<span class="kw">max</span>(<span class="kw">smp</span>()))</span>
+<span id="cb130-17"><a href="introduction-5.html#cb130-17"></a>  output<span class="op">$</span>z &lt;-<span class="st"> </span><span class="kw">renderText</span>(<span class="kw">bc</span>())</span>
+<span id="cb130-18"><a href="introduction-5.html#cb130-18"></a>}</span></code></pre></div>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/9f65da9e6e5066eb409030bd85c465aa0c787e0c/7fce6/diagrams/reactivity-tracking/08.png" /></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="book-club-meetings.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="quick-review-of-chapter-3-basic-reactivity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="an-example.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -392,7 +403,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/index.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/14-the-reactive-graph.Rmd",
 "text": "Edit"
 },
 "history": {
