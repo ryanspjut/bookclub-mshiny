@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>13.4 Reactive Values | Mastering Shiny Book Club</title>
+  <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="13.4 Reactive Values | Mastering Shiny Book Club" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
+  <meta name="github-repo" content="r4ds/bookclub-mshiny" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="13.4 Reactive Values | Mastering Shiny Book Club" />
+  
+  <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
+  
+
+<meta name="author" content="The R4DS Online Learning Community" />
+
+
+<meta name="date" content="2021-06-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="prerequisite-knowledge.html"/>
+<link rel="next" href="reactive-expressions-2.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.6.1/DiagrammeR.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Mastering Shiny Book Club</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="" data-path="book-club-meetings.html"><a href="book-club-meetings.html"><i class="fa fa-check"></i>Book club meetings</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="your-first-shiny-app.html"><a href="your-first-shiny-app.html"><i class="fa fa-check"></i><b>1</b> Your first Shiny app</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1.1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#if-you-havent-installed-shiny-already"><i class="fa fa-check"></i><b>1.1.1</b> If you haven’t installed Shiny already:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="creating-an-app.html"><a href="creating-an-app.html"><i class="fa fa-check"></i><b>1.2</b> Creating an app</a></li>
+<li class="chapter" data-level="1.3" data-path="running-and-stopping-the-app.html"><a href="running-and-stopping-the-app.html"><i class="fa fa-check"></i><b>1.3</b> Running and stopping the app</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="running-and-stopping-the-app.html"><a href="running-and-stopping-the-app.html#running-the-app"><i class="fa fa-check"></i><b>1.3.1</b> Running the app</a></li>
+<li class="chapter" data-level="1.3.2" data-path="running-and-stopping-the-app.html"><a href="running-and-stopping-the-app.html#stopping-the-app"><i class="fa fa-check"></i><b>1.3.2</b> Stopping the app:</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="adding-ui-controls.html"><a href="adding-ui-controls.html"><i class="fa fa-check"></i><b>1.4</b> Adding UI controls</a></li>
+<li class="chapter" data-level="1.5" data-path="adding-behaviour.html"><a href="adding-behaviour.html"><i class="fa fa-check"></i><b>1.5</b> Adding behaviour</a></li>
+<li class="chapter" data-level="1.6" data-path="reactive-expressions.html"><a href="reactive-expressions.html"><i class="fa fa-check"></i><b>1.6</b> Reactive expressions</a></li>
+<li class="chapter" data-level="1.7" data-path="visualising-reactive-expressions.html"><a href="visualising-reactive-expressions.html"><i class="fa fa-check"></i><b>1.7</b> Visualising reactive expressions</a></li>
+<li class="chapter" data-level="1.8" data-path="shiny-resources.html"><a href="shiny-resources.html"><i class="fa fa-check"></i><b>1.8</b> Shiny resources</a><ul>
+<li class="chapter" data-level="1.8.1" data-path="shiny-resources.html"><a href="shiny-resources.html#other-resources"><i class="fa fa-check"></i><b>1.8.1</b> Other resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="meeting-videos.html"><a href="meeting-videos.html"><i class="fa fa-check"></i><b>1.9</b> Meeting Videos</a><ul>
+<li class="chapter" data-level="1.9.1" data-path="meeting-videos.html"><a href="meeting-videos.html#cohort-1"><i class="fa fa-check"></i><b>1.9.1</b> Cohort 1</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="shiny-basic-user-interface.html"><a href="shiny-basic-user-interface.html"><i class="fa fa-check"></i><b>2</b> Shiny - Basic User Interface</a><ul>
+<li class="chapter" data-level="2.1" data-path="learning-objectives.html"><a href="learning-objectives.html"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="fyi.html"><a href="fyi.html"><i class="fa fa-check"></i><b>2.2</b> FYI</a></li>
+<li class="chapter" data-level="2.3" data-path="the-shiny-basic-user-interfaceui.html"><a href="the-shiny-basic-user-interfaceui.html"><i class="fa fa-check"></i><b>2.3</b> The Shiny Basic User Interface(ui)</a></li>
+<li class="chapter" data-level="2.4" data-path="what-can-one-input.html"><a href="what-can-one-input.html"><i class="fa fa-check"></i><b>2.4</b> What Can One INPUT?</a></li>
+<li class="chapter" data-level="2.5" data-path="input-1-text-numeric.html"><a href="input-1-text-numeric.html"><i class="fa fa-check"></i><b>2.5</b> Input 1 - Text &amp; Numeric</a></li>
+<li class="chapter" data-level="2.6" data-path="inputs-2-dates-limited-choices-file-uploads-action-buttons.html"><a href="inputs-2-dates-limited-choices-file-uploads-action-buttons.html"><i class="fa fa-check"></i><b>2.6</b> Inputs 2 - Dates, Limited choices, File uploads, Action buttons</a></li>
+<li class="chapter" data-level="2.7" data-path="what-can-one-output.html"><a href="what-can-one-output.html"><i class="fa fa-check"></i><b>2.7</b> What can one OUTPUT?</a><ul>
+<li class="chapter" data-level="" data-path="what-can-one-output.html"><a href="what-can-one-output.html#text"><i class="fa fa-check"></i>Text</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="outputs-2-tables.html"><a href="outputs-2-tables.html"><i class="fa fa-check"></i><b>2.8</b> Outputs 2 - Tables</a></li>
+<li class="chapter" data-level="2.9" data-path="outputs-3-plots-downloads.html"><a href="outputs-3-plots-downloads.html"><i class="fa fa-check"></i><b>2.9</b> Outputs 3 - Plots, Downloads</a></li>
+<li class="chapter" data-level="2.10" data-path="layouts.html"><a href="layouts.html"><i class="fa fa-check"></i><b>2.10</b> Layouts</a></li>
+<li class="chapter" data-level="2.11" data-path="under-the-hood.html"><a href="under-the-hood.html"><i class="fa fa-check"></i><b>2.11</b> Under the hood</a></li>
+<li class="chapter" data-level="2.12" data-path="other-tools-material.html"><a href="other-tools-material.html"><i class="fa fa-check"></i><b>2.12</b> Other tools &amp; material</a></li>
+<li class="chapter" data-level="2.13" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>2.13</b> Summary</a></li>
+<li class="chapter" data-level="2.14" data-path="thank-you.html"><a href="thank-you.html"><i class="fa fa-check"></i><b>2.14</b> Thank you</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="basic-reactivity.html"><a href="basic-reactivity.html"><i class="fa fa-check"></i><b>3</b> Basic Reactivity</a><ul>
+<li class="chapter" data-level="3.1" data-path="recap.html"><a href="recap.html"><i class="fa fa-check"></i><b>3.1</b> Recap</a></li>
+<li class="chapter" data-level="3.2" data-path="reactive-programming.html"><a href="reactive-programming.html"><i class="fa fa-check"></i><b>3.2</b> Reactive Programming</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="reactive-programming.html"><a href="reactive-programming.html#imperative-vs-declarative-programming"><i class="fa fa-check"></i><b>3.2.1</b> Imperative vs declarative programming</a></li>
+<li class="chapter" data-level="3.2.2" data-path="reactive-programming.html"><a href="reactive-programming.html#laziness"><i class="fa fa-check"></i><b>3.2.2</b> Laziness</a></li>
+<li class="chapter" data-level="3.2.3" data-path="reactive-programming.html"><a href="reactive-programming.html#the-reactive-graph"><i class="fa fa-check"></i><b>3.2.3</b> The reactive graph</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="reactive-expressions-1.html"><a href="reactive-expressions-1.html"><i class="fa fa-check"></i><b>3.3</b> Reactive expressions</a></li>
+<li class="chapter" data-level="3.4" data-path="controlling-timing-of-evaluation.html"><a href="controlling-timing-of-evaluation.html"><i class="fa fa-check"></i><b>3.4</b> Controlling timing of evaluation</a></li>
+<li class="chapter" data-level="3.5" data-path="observers.html"><a href="observers.html"><i class="fa fa-check"></i><b>3.5</b> Observers</a></li>
+<li class="chapter" data-level="3.6" data-path="execises.html"><a href="execises.html"><i class="fa fa-check"></i><b>3.6</b> Execises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="case-study-er-injuries.html"><a href="case-study-er-injuries.html"><i class="fa fa-check"></i><b>4</b> Case study: ER injuries</a><ul>
+<li class="chapter" data-level="4.1" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="the-data.html"><a href="the-data.html"><i class="fa fa-check"></i><b>4.2</b> The data</a></li>
+<li class="chapter" data-level="4.3" data-path="exploration.html"><a href="exploration.html"><i class="fa fa-check"></i><b>4.3</b> Exploration</a></li>
+<li class="chapter" data-level="4.4" data-path="prototype.html"><a href="prototype.html"><i class="fa fa-check"></i><b>4.4</b> Prototype</a></li>
+<li class="chapter" data-level="4.5" data-path="polish-tables.html"><a href="polish-tables.html"><i class="fa fa-check"></i><b>4.5</b> Polish tables</a></li>
+<li class="chapter" data-level="4.6" data-path="rate-vs-count.html"><a href="rate-vs-count.html"><i class="fa fa-check"></i><b>4.6</b> Rate vs count</a></li>
+<li class="chapter" data-level="4.7" data-path="narrative.html"><a href="narrative.html"><i class="fa fa-check"></i><b>4.7</b> Narrative</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="workflow.html"><a href="workflow.html"><i class="fa fa-check"></i><b>5</b> Workflow</a><ul>
+<li class="chapter" data-level="5.1" data-path="why-workflow.html"><a href="why-workflow.html"><i class="fa fa-check"></i><b>5.1</b> Why workflow?</a></li>
+<li class="chapter" data-level="5.2" data-path="learning-objectives-1.html"><a href="learning-objectives-1.html"><i class="fa fa-check"></i><b>5.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.3" data-path="development-workflow.html"><a href="development-workflow.html"><i class="fa fa-check"></i><b>5.3</b> Development workflow</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="development-workflow.html"><a href="development-workflow.html#creating-apps"><i class="fa fa-check"></i><b>5.3.1</b> Creating apps</a></li>
+<li class="chapter" data-level="5.3.2" data-path="development-workflow.html"><a href="development-workflow.html#seeing-your-changes-faster"><i class="fa fa-check"></i><b>5.3.2</b> Seeing your changes faster</a></li>
+<li class="chapter" data-level="5.3.3" data-path="development-workflow.html"><a href="development-workflow.html#controlling-the-view"><i class="fa fa-check"></i><b>5.3.3</b> Controlling the view</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>5.4</b> Debugging</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="debugging.html"><a href="debugging.html#three-dubugging-challengeswhat-goes-wrong"><i class="fa fa-check"></i><b>5.4.1</b> Three dubugging Challenges(What goes wrong)</a></li>
+<li class="chapter" data-level="5.4.2" data-path="debugging.html"><a href="debugging.html#how-to-fix-errors-using-tracebacks"><i class="fa fa-check"></i><b>5.4.2</b> How to fix errors (using tracebacks)</a></li>
+<li class="chapter" data-level="5.4.3" data-path="debugging.html"><a href="debugging.html#three-part-of-shiny-error-stack"><i class="fa fa-check"></i><b>5.4.3</b> Three part of Shiny error stack</a></li>
+<li class="chapter" data-level="5.4.4" data-path="debugging.html"><a href="debugging.html#how-to-fix-errors-using-interactive-debugger"><i class="fa fa-check"></i><b>5.4.4</b> How to fix errors (using interactive debugger)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="getting-help-using-reprex.html"><a href="getting-help-using-reprex.html"><i class="fa fa-check"></i><b>5.5</b> Getting help (using Reprex)</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="getting-help-using-reprex.html"><a href="getting-help-using-reprex.html#how-to-make-a-reprex"><i class="fa fa-check"></i><b>5.5.1</b> How to make a reprex</a></li>
+<li class="chapter" data-level="5.5.2" data-path="getting-help-using-reprex.html"><a href="getting-help-using-reprex.html#making-a-minimal-reprex"><i class="fa fa-check"></i><b>5.5.2</b> Making a minimal reprex</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="layout-themes-html.html"><a href="layout-themes-html.html"><i class="fa fa-check"></i><b>6</b> Layout, themes, HTML</a><ul>
+<li class="chapter" data-level="6.1" data-path="disclaimer.html"><a href="disclaimer.html"><i class="fa fa-check"></i><b>6.1</b> Disclaimer</a></li>
+<li class="chapter" data-level="6.2" data-path="learning-objectives-2.html"><a href="learning-objectives-2.html"><i class="fa fa-check"></i><b>6.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="6.3" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>6.3</b> Resources</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="resources.html"><a href="resources.html#websites"><i class="fa fa-check"></i><b>6.3.1</b> Websites</a></li>
+<li class="chapter" data-level="6.3.2" data-path="resources.html"><a href="resources.html#books"><i class="fa fa-check"></i><b>6.3.2</b> Books</a></li>
+<li class="chapter" data-level="6.3.3" data-path="resources.html"><a href="resources.html#packages-tools"><i class="fa fa-check"></i><b>6.3.3</b> Packages / Tools</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="under-the-hood-1.html"><a href="under-the-hood-1.html"><i class="fa fa-check"></i><b>6.4</b> Under the hood</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="under-the-hood-1.html"><a href="under-the-hood-1.html#html---hypertext-markup-language"><i class="fa fa-check"></i><b>6.4.1</b> HTML - Hypertext markup language</a></li>
+<li class="chapter" data-level="6.4.2" data-path="under-the-hood-1.html"><a href="under-the-hood-1.html#writing-html-with-shiny-htmltools"><i class="fa fa-check"></i><b>6.4.2</b> Writing HTML with <code>shiny</code> / <code>htmltools</code></a></li>
+<li class="chapter" data-level="6.4.3" data-path="under-the-hood-1.html"><a href="under-the-hood-1.html#css---cascading-style-sheets"><i class="fa fa-check"></i><b>6.4.3</b> CSS - Cascading Style Sheets</a></li>
+<li class="chapter" data-level="6.4.4" data-path="under-the-hood-1.html"><a href="under-the-hood-1.html#using-css-to-style-a-shiny-app"><i class="fa fa-check"></i><b>6.4.4</b> Using CSS to style a shiny app</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="bootstrap-themes.html"><a href="bootstrap-themes.html"><i class="fa fa-check"></i><b>6.5</b> Bootstrap &amp; Themes</a></li>
+<li class="chapter" data-level="6.6" data-path="layouts-1.html"><a href="layouts-1.html"><i class="fa fa-check"></i><b>6.6</b> Layouts</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="layouts-1.html"><a href="layouts-1.html#single-page-layouts"><i class="fa fa-check"></i><b>6.6.1</b> Single-page Layouts</a></li>
+<li class="chapter" data-level="6.6.2" data-path="layouts-1.html"><a href="layouts-1.html#multi-page-layouts"><i class="fa fa-check"></i><b>6.6.2</b> Multi-page Layouts</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="case-study.html"><a href="case-study.html"><i class="fa fa-check"></i><b>6.7</b> Case study</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="case-study.html"><a href="case-study.html#the-initial-app-app-01.r"><i class="fa fa-check"></i><b>6.7.1</b> The initial app (app-01.R)</a></li>
+<li class="chapter" data-level="6.7.2" data-path="case-study.html"><a href="case-study.html#the-final-app-app.r"><i class="fa fa-check"></i><b>6.7.2</b> The final app (app.R)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="user-feedback.html"><a href="user-feedback.html"><i class="fa fa-check"></i><b>7</b> User Feedback</a><ul>
+<li class="chapter" data-level="7.1" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i><b>7.1</b> Validation</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="validation.html"><a href="validation.html#validating-input"><i class="fa fa-check"></i><b>7.1.1</b> Validating input</a></li>
+<li class="chapter" data-level="7.1.2" data-path="validation.html"><a href="validation.html#cancelling-execution-with-req"><i class="fa fa-check"></i><b>7.1.2</b> Cancelling execution with <code>req()</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="validation.html"><a href="validation.html#req-and-validation"><i class="fa fa-check"></i><b>7.1.3</b> <code>req()</code> and validation</a></li>
+<li class="chapter" data-level="7.1.4" data-path="validation.html"><a href="validation.html#validate-output"><i class="fa fa-check"></i><b>7.1.4</b> Validate output</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="notifications.html"><a href="notifications.html"><i class="fa fa-check"></i><b>7.2</b> Notifications</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="notifications.html"><a href="notifications.html#transient-notifications"><i class="fa fa-check"></i><b>7.2.1</b> Transient notifications</a></li>
+<li class="chapter" data-level="7.2.2" data-path="notifications.html"><a href="notifications.html#removing-on-completion"><i class="fa fa-check"></i><b>7.2.2</b> Removing on completion</a></li>
+<li class="chapter" data-level="7.2.3" data-path="notifications.html"><a href="notifications.html#progressive-updates"><i class="fa fa-check"></i><b>7.2.3</b> Progressive updates</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="progress-bars.html"><a href="progress-bars.html"><i class="fa fa-check"></i><b>7.3</b> Progress bars</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="progress-bars.html"><a href="progress-bars.html#shiny"><i class="fa fa-check"></i><b>7.3.1</b> Shiny</a></li>
+<li class="chapter" data-level="7.3.2" data-path="progress-bars.html"><a href="progress-bars.html#waiter"><i class="fa fa-check"></i><b>7.3.2</b> Waiter</a></li>
+<li class="chapter" data-level="7.3.3" data-path="progress-bars.html"><a href="progress-bars.html#spinners"><i class="fa fa-check"></i><b>7.3.3</b> Spinners</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="confirming-and-undoing.html"><a href="confirming-and-undoing.html"><i class="fa fa-check"></i><b>7.4</b> Confirming and undoing</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="confirming-and-undoing.html"><a href="confirming-and-undoing.html#explicit-confirmation"><i class="fa fa-check"></i><b>7.4.1</b> Explicit confirmation</a></li>
+<li class="chapter" data-level="7.4.2" data-path="confirming-and-undoing.html"><a href="confirming-and-undoing.html#undoing-an-action"><i class="fa fa-check"></i><b>7.4.2</b> Undoing an action</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="uploads-and-downloads.html"><a href="uploads-and-downloads.html"><i class="fa fa-check"></i><b>8</b> Uploads and Downloads</a><ul>
+<li class="chapter" data-level="8.1" data-path="uploads.html"><a href="uploads.html"><i class="fa fa-check"></i><b>8.1</b> Uploads</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="uploads.html"><a href="uploads.html#ui"><i class="fa fa-check"></i><b>8.1.1</b> UI</a></li>
+<li class="chapter" data-level="8.1.2" data-path="uploads.html"><a href="uploads.html#server"><i class="fa fa-check"></i><b>8.1.2</b> Server</a></li>
+<li class="chapter" data-level="8.1.3" data-path="uploads.html"><a href="uploads.html#uploading-data"><i class="fa fa-check"></i><b>8.1.3</b> Uploading data</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="downloads.html"><a href="downloads.html"><i class="fa fa-check"></i><b>8.2</b> Downloads</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="downloads.html"><a href="downloads.html#ui-1"><i class="fa fa-check"></i><b>8.2.1</b> UI</a></li>
+<li class="chapter" data-level="8.2.2" data-path="downloads.html"><a href="downloads.html#server-1"><i class="fa fa-check"></i><b>8.2.2</b> Server</a></li>
+<li class="chapter" data-level="8.2.3" data-path="downloads.html"><a href="downloads.html#downloading-reports"><i class="fa fa-check"></i><b>8.2.3</b> Downloading reports</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="dynamic-ui.html"><a href="dynamic-ui.html"><i class="fa fa-check"></i><b>9</b> Dynamic UI</a><ul>
+<li class="chapter" data-level="9.1" data-path="introduction-2.html"><a href="introduction-2.html"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="updating-inputs.html"><a href="updating-inputs.html"><i class="fa fa-check"></i><b>9.2</b> Updating inputs</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="updating-inputs.html"><a href="updating-inputs.html#update-functions"><i class="fa fa-check"></i><b>9.2.1</b> Update functions</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="dynamic-visibility.html"><a href="dynamic-visibility.html"><i class="fa fa-check"></i><b>9.3</b> Dynamic visibility</a></li>
+<li class="chapter" data-level="9.4" data-path="creating-ui-with-code.html"><a href="creating-ui-with-code.html"><i class="fa fa-check"></i><b>9.4</b> Creating UI with code</a></li>
+<li class="chapter" data-level="9.5" data-path="conclusions.html"><a href="conclusions.html"><i class="fa fa-check"></i><b>9.5</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="bookmarking.html"><a href="bookmarking.html"><i class="fa fa-check"></i><b>10</b> Bookmarking</a><ul>
+<li class="chapter" data-level="10.1" data-path="introduction-3.html"><a href="introduction-3.html"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="modifying-app-to-be-bookmarkable.html"><a href="modifying-app-to-be-bookmarkable.html"><i class="fa fa-check"></i><b>10.2</b> Modifying app to be bookmarkable</a></li>
+<li class="chapter" data-level="10.3" data-path="breaking-down-the-url.html"><a href="breaking-down-the-url.html"><i class="fa fa-check"></i><b>10.3</b> Breaking down the URL</a></li>
+<li class="chapter" data-level="10.4" data-path="updating-the-url.html"><a href="updating-the-url.html"><i class="fa fa-check"></i><b>10.4</b> Updating the URL</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="updating-the-url.html"><a href="updating-the-url.html#storing-a-richer-state"><i class="fa fa-check"></i><b>10.4.1</b> Storing a richer state</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="bookmarking-challenges.html"><a href="bookmarking-challenges.html"><i class="fa fa-check"></i><b>10.5</b> Bookmarking Challenges</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="why-reactivity.html"><a href="why-reactivity.html"><i class="fa fa-check"></i><b>11</b> Why reactivity?</a><ul>
+<li class="chapter" data-level="11.1" data-path="introduction-4.html"><a href="introduction-4.html"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="why-do-we-need-reactive-programming.html"><a href="why-do-we-need-reactive-programming.html"><i class="fa fa-check"></i><b>11.2</b> Why do we need reactive programming?</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="why-do-we-need-reactive-programming.html"><a href="why-do-we-need-reactive-programming.html#why-cant-you-use-variables"><i class="fa fa-check"></i><b>11.2.1</b> Why can’t you use variables?</a></li>
+<li class="chapter" data-level="11.2.2" data-path="why-do-we-need-reactive-programming.html"><a href="why-do-we-need-reactive-programming.html#why-about-functions"><i class="fa fa-check"></i><b>11.2.2</b> Why about functions?</a></li>
+<li class="chapter" data-level="11.2.3" data-path="why-do-we-need-reactive-programming.html"><a href="why-do-we-need-reactive-programming.html#event-driven-programming"><i class="fa fa-check"></i><b>11.2.3</b> Event-driven programming</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="reactive-programming-1.html"><a href="reactive-programming-1.html"><i class="fa fa-check"></i><b>11.3</b> Reactive programming</a></li>
+<li class="chapter" data-level="11.4" data-path="a-brief-history-of-reactive-programming.html"><a href="a-brief-history-of-reactive-programming.html"><i class="fa fa-check"></i><b>11.4</b> A brief history of reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="the-reactive-graph-1.html"><a href="the-reactive-graph-1.html"><i class="fa fa-check"></i><b>12</b> The reactive graph</a><ul>
+<li class="chapter" data-level="12.1" data-path="quick-review-of-chapter-3-basic-reactivity.html"><a href="quick-review-of-chapter-3-basic-reactivity.html"><i class="fa fa-check"></i><b>12.1</b> Quick review of chapter 3 Basic reactivity</a></li>
+<li class="chapter" data-level="12.2" data-path="introduction-5.html"><a href="introduction-5.html"><i class="fa fa-check"></i><b>12.2</b> Introduction</a></li>
+<li class="chapter" data-level="12.3" data-path="an-example.html"><a href="an-example.html"><i class="fa fa-check"></i><b>12.3</b> An example</a></li>
+<li class="chapter" data-level="12.4" data-path="excercises.html"><a href="excercises.html"><i class="fa fa-check"></i><b>12.4</b> Excercises</a></li>
+<li class="chapter" data-level="12.5" data-path="dynamism.html"><a href="dynamism.html"><i class="fa fa-check"></i><b>12.5</b> Dynamism</a></li>
+<li class="chapter" data-level="12.6" data-path="the-reactlog-package.html"><a href="the-reactlog-package.html"><i class="fa fa-check"></i><b>12.6</b> The reactlog package</a></li>
+<li class="chapter" data-level="12.7" data-path="summary-1.html"><a href="summary-1.html"><i class="fa fa-check"></i><b>12.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="reactive-building-blocks.html"><a href="reactive-building-blocks.html"><i class="fa fa-check"></i><b>13</b> Reactive Building Blocks</a><ul>
+<li class="chapter" data-level="13.1" data-path="learning-objectives-3.html"><a href="learning-objectives-3.html"><i class="fa fa-check"></i><b>13.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="13.2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>13.2</b> Tools</a></li>
+<li class="chapter" data-level="13.3" data-path="prerequisite-knowledge.html"><a href="prerequisite-knowledge.html"><i class="fa fa-check"></i><b>13.3</b> Prerequisite Knowledge</a></li>
+<li class="chapter" data-level="13.4" data-path="reactive-values.html"><a href="reactive-values.html"><i class="fa fa-check"></i><b>13.4</b> Reactive Values</a></li>
+<li class="chapter" data-level="13.5" data-path="reactive-expressions-2.html"><a href="reactive-expressions-2.html"><i class="fa fa-check"></i><b>13.5</b> Reactive Expressions</a><ul>
+<li class="chapter" data-level="13.5.1" data-path="reactive-expressions-2.html"><a href="reactive-expressions-2.html#errors"><i class="fa fa-check"></i><b>13.5.1</b> Errors</a></li>
+<li class="chapter" data-level="13.5.2" data-path="reactive-expressions-2.html"><a href="reactive-expressions-2.html#on.exit"><i class="fa fa-check"></i><b>13.5.2</b> <code>on.exit()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="observers-and-outputs.html"><a href="observers-and-outputs.html"><i class="fa fa-check"></i><b>13.6</b> Observers and Outputs</a></li>
+<li class="chapter" data-level="13.7" data-path="isolating-code.html"><a href="isolating-code.html"><i class="fa fa-check"></i><b>13.7</b> Isolating Code</a></li>
+<li class="chapter" data-level="13.8" data-path="timed-invalidation.html"><a href="timed-invalidation.html"><i class="fa fa-check"></i><b>13.8</b> Timed Invalidation</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="escaping-the-graph.html"><a href="escaping-the-graph.html"><i class="fa fa-check"></i><b>14</b> Escaping the graph</a><ul>
+<li class="chapter" data-level="14.1" data-path="introduction-6.html"><a href="introduction-6.html"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="combine-reactive-values.html"><a href="combine-reactive-values.html"><i class="fa fa-check"></i><b>14.2</b> Combine reactive values</a></li>
+<li class="chapter" data-level="14.3" data-path="connect-the-right-side-with-the-left-side.html"><a href="connect-the-right-side-with-the-left-side.html"><i class="fa fa-check"></i><b>14.3</b> Connect the right side with the left side</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="connect-the-right-side-with-the-left-side.html"><a href="connect-the-right-side-with-the-left-side.html#case-studies"><i class="fa fa-check"></i><b>14.3.1</b> Case Studies:</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="create-infinite-loops.html"><a href="create-infinite-loops.html"><i class="fa fa-check"></i><b>14.4</b> Create infinite loops</a></li>
+<li class="chapter" data-level="14.5" data-path="conclusions-1.html"><a href="conclusions-1.html"><i class="fa fa-check"></i><b>14.5</b> Conclusions</a><ul>
+<li class="chapter" data-level="14.5.1" data-path="conclusions-1.html"><a href="conclusions-1.html#resources-1"><i class="fa fa-check"></i><b>14.5.1</b> Resources:</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Mastering Shiny Book Club</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="reactive-values" class="section level2">
+<h2><span class="header-section-number">13.4</span> Reactive Values</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+reactiveVal()
+</th>
+<th style="text-align:left;">
+reactiveValues()
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Holds
+</td>
+<td style="text-align:left;">
+Single value
+</td>
+<td style="text-align:left;">
+Multiple values (sim to list)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Definition
+</td>
+<td style="text-align:left;">
+x &lt;- reactiveVal(1)
+</td>
+<td style="text-align:left;">
+x &lt;- reactiveValues(a = 1, b = 2)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Getting syntax
+</td>
+<td style="text-align:left;">
+x()
+</td>
+<td style="text-align:left;">
+x$a
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Setting syntax
+</td>
+<td style="text-align:left;">
+x(2)
+</td>
+<td style="text-align:left;">
+x$a &lt;- 2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Class
+</td>
+<td style="text-align:left;">
+reactiveVal,reactive,function
+</td>
+<td style="text-align:left;">
+reactivevalues
+</td>
+</tr>
+</tbody>
+</table>
+<p>Reference semantics</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="reactive-values.html#cb133-1"></a><span class="co"># Most of R uses copy-on-modify semantics</span></span>
+<span id="cb133-2"><a href="reactive-values.html#cb133-2"></a>f &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb133-3"><a href="reactive-values.html#cb133-3"></a>  x<span class="op">$</span>a =<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb133-4"><a href="reactive-values.html#cb133-4"></a>  x</span>
+<span id="cb133-5"><a href="reactive-values.html#cb133-5"></a>}</span>
+<span id="cb133-6"><a href="reactive-values.html#cb133-6"></a>x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="reactive-values.html#cb134-1"></a><span class="kw">f</span>(x) <span class="co"># a new object is returned</span></span></code></pre></div>
+<pre><code>## $a
+## [1] 2
+## 
+## $b
+## [1] 2</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="reactive-values.html#cb136-1"></a>x <span class="co"># ... and the initial object is unchanged</span></span></code></pre></div>
+<pre><code>## $a
+## [1] 1
+## 
+## $b
+## [1] 2</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="reactive-values.html#cb138-1"></a>x1 &lt;-<span class="st"> </span>x2 &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb138-2"><a href="reactive-values.html#cb138-2"></a>x2 &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb138-3"><a href="reactive-values.html#cb138-3"></a>x1</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="reactive-values.html#cb140-1"></a>x2</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="reactive-values.html#cb142-1"></a><span class="co"># R6 classes use reference semantics</span></span>
+<span id="cb142-2"><a href="reactive-values.html#cb142-2"></a>g &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb142-3"><a href="reactive-values.html#cb142-3"></a>  x<span class="op">$</span>a =<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb142-4"><a href="reactive-values.html#cb142-4"></a>  <span class="kw">invisible</span>(<span class="ot">NULL</span>)</span>
+<span id="cb142-5"><a href="reactive-values.html#cb142-5"></a>}</span>
+<span id="cb142-6"><a href="reactive-values.html#cb142-6"></a>Y &lt;-<span class="st"> </span>R6<span class="op">::</span><span class="kw">R6Class</span>(<span class="st">&quot;Y&quot;</span>, <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>))</span>
+<span id="cb142-7"><a href="reactive-values.html#cb142-7"></a>y &lt;-<span class="st"> </span>Y<span class="op">$</span><span class="kw">new</span>()</span>
+<span id="cb142-8"><a href="reactive-values.html#cb142-8"></a>y</span></code></pre></div>
+<pre><code>## &lt;Y&gt;
+##   Public:
+##     a: 1
+##     b: 2
+##     clone: function (deep = FALSE)</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="reactive-values.html#cb144-1"></a><span class="kw">g</span>(y)</span>
+<span id="cb144-2"><a href="reactive-values.html#cb144-2"></a>y</span></code></pre></div>
+<pre><code>## &lt;Y&gt;
+##   Public:
+##     a: 2
+##     b: 2
+##     clone: function (deep = FALSE)</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="reactive-values.html#cb146-1"></a>y1 &lt;-<span class="st"> </span>y2 &lt;-<span class="st"> </span>Y<span class="op">$</span><span class="kw">new</span>()</span>
+<span id="cb146-2"><a href="reactive-values.html#cb146-2"></a>y2<span class="op">$</span>a &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb146-3"><a href="reactive-values.html#cb146-3"></a>y1</span></code></pre></div>
+<pre><code>## &lt;Y&gt;
+##   Public:
+##     a: 2
+##     b: 2
+##     clone: function (deep = FALSE)</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="reactive-values.html#cb148-1"></a>y2</span></code></pre></div>
+<pre><code>## &lt;Y&gt;
+##   Public:
+##     a: 2
+##     b: 2
+##     clone: function (deep = FALSE)</code></pre>
+<p>Both <code>reactiveVal</code> and <code>reactiveValues</code> have reference semantics</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="reactive-values.html#cb150-1"></a><span class="co"># Exercise from the book</span></span>
+<span id="cb150-2"><a href="reactive-values.html#cb150-2"></a><span class="co"># Run this interactively:</span></span>
+<span id="cb150-3"><a href="reactive-values.html#cb150-3"></a></span>
+<span id="cb150-4"><a href="reactive-values.html#cb150-4"></a>l1 &lt;-<span class="st"> </span><span class="kw">reactiveValues</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>)</span>
+<span id="cb150-5"><a href="reactive-values.html#cb150-5"></a>l2 &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a =</span> <span class="kw">reactiveVal</span>(<span class="dv">1</span>), <span class="dt">b =</span> <span class="kw">reactiveVal</span>(<span class="dv">2</span>))</span>
+<span id="cb150-6"><a href="reactive-values.html#cb150-6"></a></span>
+<span id="cb150-7"><a href="reactive-values.html#cb150-7"></a><span class="co"># ... with a little extra</span></span>
+<span id="cb150-8"><a href="reactive-values.html#cb150-8"></a>l3 &lt;-<span class="st"> </span><span class="kw">reactiveVal</span>(<span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>))</span>
+<span id="cb150-9"><a href="reactive-values.html#cb150-9"></a></span>
+<span id="cb150-10"><a href="reactive-values.html#cb150-10"></a><span class="co"># Getting</span></span>
+<span id="cb150-11"><a href="reactive-values.html#cb150-11"></a>l1<span class="op">$</span>a</span>
+<span id="cb150-12"><a href="reactive-values.html#cb150-12"></a>l1[[<span class="st">&quot;a&quot;</span>]]</span>
+<span id="cb150-13"><a href="reactive-values.html#cb150-13"></a>l2<span class="op">$</span><span class="kw">a</span>()</span>
+<span id="cb150-14"><a href="reactive-values.html#cb150-14"></a>l2[[<span class="st">&quot;a&quot;</span>]]()</span>
+<span id="cb150-15"><a href="reactive-values.html#cb150-15"></a><span class="kw">l3</span>()<span class="op">$</span>a</span>
+<span id="cb150-16"><a href="reactive-values.html#cb150-16"></a></span>
+<span id="cb150-17"><a href="reactive-values.html#cb150-17"></a><span class="co"># Setting</span></span>
+<span id="cb150-18"><a href="reactive-values.html#cb150-18"></a>l1<span class="op">$</span>a &lt;-<span class="st"> </span><span class="dv">15</span></span>
+<span id="cb150-19"><a href="reactive-values.html#cb150-19"></a>l2<span class="op">$</span><span class="kw">a</span>(<span class="dv">15</span>)</span>
+<span id="cb150-20"><a href="reactive-values.html#cb150-20"></a><span class="co"># For l3, can&#39;t easily update just &#39;a&#39;</span></span>
+<span id="cb150-21"><a href="reactive-values.html#cb150-21"></a><span class="kw">l3</span>(<span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">15</span>, <span class="dt">b =</span> <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="reactive-values.html#cb151-1"></a><span class="co"># Exercise, run this interactively:</span></span>
+<span id="cb151-2"><a href="reactive-values.html#cb151-2"></a></span>
+<span id="cb151-3"><a href="reactive-values.html#cb151-3"></a><span class="co"># reactiveVal has reference semantics</span></span>
+<span id="cb151-4"><a href="reactive-values.html#cb151-4"></a>x &lt;-<span class="st"> </span><span class="kw">reactiveVal</span>(<span class="dv">1</span>)</span>
+<span id="cb151-5"><a href="reactive-values.html#cb151-5"></a>y &lt;-<span class="st"> </span>x</span>
+<span id="cb151-6"><a href="reactive-values.html#cb151-6"></a>z &lt;-<span class="st"> </span><span class="kw">reactiveVal</span>(<span class="dv">1</span>)</span>
+<span id="cb151-7"><a href="reactive-values.html#cb151-7"></a></span>
+<span id="cb151-8"><a href="reactive-values.html#cb151-8"></a>x_init_address &lt;-<span class="st"> </span>pryr<span class="op">::</span><span class="kw">address</span>(x)</span>
+<span id="cb151-9"><a href="reactive-values.html#cb151-9"></a></span>
+<span id="cb151-10"><a href="reactive-values.html#cb151-10"></a><span class="kw">x</span>()</span>
+<span id="cb151-11"><a href="reactive-values.html#cb151-11"></a><span class="kw">y</span>()</span>
+<span id="cb151-12"><a href="reactive-values.html#cb151-12"></a><span class="kw">z</span>()</span>
+<span id="cb151-13"><a href="reactive-values.html#cb151-13"></a></span>
+<span id="cb151-14"><a href="reactive-values.html#cb151-14"></a><span class="kw">x</span>(<span class="dv">2</span>)</span>
+<span id="cb151-15"><a href="reactive-values.html#cb151-15"></a></span>
+<span id="cb151-16"><a href="reactive-values.html#cb151-16"></a><span class="kw">x</span>()</span>
+<span id="cb151-17"><a href="reactive-values.html#cb151-17"></a><span class="kw">y</span>()</span>
+<span id="cb151-18"><a href="reactive-values.html#cb151-18"></a><span class="kw">z</span>()</span>
+<span id="cb151-19"><a href="reactive-values.html#cb151-19"></a></span>
+<span id="cb151-20"><a href="reactive-values.html#cb151-20"></a>pryr<span class="op">::</span><span class="kw">address</span>(x) <span class="op">==</span><span class="st"> </span>pryr<span class="op">::</span><span class="kw">address</span>(y)</span>
+<span id="cb151-21"><a href="reactive-values.html#cb151-21"></a>pryr<span class="op">::</span><span class="kw">address</span>(x) <span class="op">==</span><span class="st"> </span>pryr<span class="op">::</span><span class="kw">address</span>(z)</span>
+<span id="cb151-22"><a href="reactive-values.html#cb151-22"></a>pryr<span class="op">::</span><span class="kw">address</span>(x) <span class="op">==</span><span class="st"> </span>x_init_address</span></code></pre></div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="prerequisite-knowledge.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reactive-expressions-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/15-reactive-building-blocks.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

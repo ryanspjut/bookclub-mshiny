@@ -141,6 +141,17 @@ excercises
 dynamism
 the-reactlog-package
 summary-1
+reactive-building-blocks
+learning-objectives-3
+tools
+prerequisite-knowledge
+reactive-values
+reactive-expressions-2
+errors
+on.exit
+observers-and-outputs
+isolating-code
+timed-invalidation
 escaping-the-graph
 introduction-6
 combine-reactive-values

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>13.4 Create infinite loops | Mastering Shiny Book Club</title>
+  <title>14.4 Create infinite loops | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="13.4 Create infinite loops | Mastering Shiny Book Club" />
+  <meta property="og:title" content="14.4 Create infinite loops | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="13.4 Create infinite loops | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="14.4 Create infinite loops | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -61,6 +61,8 @@
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
 <script src="libs/chromatography-0.1/chromatography.js"></script>
 <script src="libs/DiagrammeR-binding-1.0.6.1/DiagrammeR.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -322,15 +324,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.6" data-path="the-reactlog-package.html"><a href="the-reactlog-package.html"><i class="fa fa-check"></i><b>12.6</b> The reactlog package</a></li>
 <li class="chapter" data-level="12.7" data-path="summary-1.html"><a href="summary-1.html"><i class="fa fa-check"></i><b>12.7</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="escaping-the-graph.html"><a href="escaping-the-graph.html"><i class="fa fa-check"></i><b>13</b> Escaping the graph</a><ul>
-<li class="chapter" data-level="13.1" data-path="introduction-6.html"><a href="introduction-6.html"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
-<li class="chapter" data-level="13.2" data-path="combine-reactive-values.html"><a href="combine-reactive-values.html"><i class="fa fa-check"></i><b>13.2</b> Combine reactive values</a></li>
-<li class="chapter" data-level="13.3" data-path="connect-the-right-side-with-the-left-side.html"><a href="connect-the-right-side-with-the-left-side.html"><i class="fa fa-check"></i><b>13.3</b> Connect the right side with the left side</a><ul>
-<li class="chapter" data-level="13.3.1" data-path="connect-the-right-side-with-the-left-side.html"><a href="connect-the-right-side-with-the-left-side.html#case-studies"><i class="fa fa-check"></i><b>13.3.1</b> Case Studies:</a></li>
+<li class="chapter" data-level="13" data-path="reactive-building-blocks.html"><a href="reactive-building-blocks.html"><i class="fa fa-check"></i><b>13</b> Reactive Building Blocks</a><ul>
+<li class="chapter" data-level="13.1" data-path="learning-objectives-3.html"><a href="learning-objectives-3.html"><i class="fa fa-check"></i><b>13.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="13.2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>13.2</b> Tools</a></li>
+<li class="chapter" data-level="13.3" data-path="prerequisite-knowledge.html"><a href="prerequisite-knowledge.html"><i class="fa fa-check"></i><b>13.3</b> Prerequisite Knowledge</a></li>
+<li class="chapter" data-level="13.4" data-path="reactive-values.html"><a href="reactive-values.html"><i class="fa fa-check"></i><b>13.4</b> Reactive Values</a></li>
+<li class="chapter" data-level="13.5" data-path="reactive-expressions-2.html"><a href="reactive-expressions-2.html"><i class="fa fa-check"></i><b>13.5</b> Reactive Expressions</a><ul>
+<li class="chapter" data-level="13.5.1" data-path="reactive-expressions-2.html"><a href="reactive-expressions-2.html#errors"><i class="fa fa-check"></i><b>13.5.1</b> Errors</a></li>
+<li class="chapter" data-level="13.5.2" data-path="reactive-expressions-2.html"><a href="reactive-expressions-2.html#on.exit"><i class="fa fa-check"></i><b>13.5.2</b> <code>on.exit()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="create-infinite-loops.html"><a href="create-infinite-loops.html"><i class="fa fa-check"></i><b>13.4</b> Create infinite loops</a></li>
-<li class="chapter" data-level="13.5" data-path="conclusions-1.html"><a href="conclusions-1.html"><i class="fa fa-check"></i><b>13.5</b> Conclusions</a><ul>
-<li class="chapter" data-level="13.5.1" data-path="conclusions-1.html"><a href="conclusions-1.html#resources-1"><i class="fa fa-check"></i><b>13.5.1</b> Resources:</a></li>
+<li class="chapter" data-level="13.6" data-path="observers-and-outputs.html"><a href="observers-and-outputs.html"><i class="fa fa-check"></i><b>13.6</b> Observers and Outputs</a></li>
+<li class="chapter" data-level="13.7" data-path="isolating-code.html"><a href="isolating-code.html"><i class="fa fa-check"></i><b>13.7</b> Isolating Code</a></li>
+<li class="chapter" data-level="13.8" data-path="timed-invalidation.html"><a href="timed-invalidation.html"><i class="fa fa-check"></i><b>13.8</b> Timed Invalidation</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="escaping-the-graph.html"><a href="escaping-the-graph.html"><i class="fa fa-check"></i><b>14</b> Escaping the graph</a><ul>
+<li class="chapter" data-level="14.1" data-path="introduction-6.html"><a href="introduction-6.html"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="combine-reactive-values.html"><a href="combine-reactive-values.html"><i class="fa fa-check"></i><b>14.2</b> Combine reactive values</a></li>
+<li class="chapter" data-level="14.3" data-path="connect-the-right-side-with-the-left-side.html"><a href="connect-the-right-side-with-the-left-side.html"><i class="fa fa-check"></i><b>14.3</b> Connect the right side with the left side</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="connect-the-right-side-with-the-left-side.html"><a href="connect-the-right-side-with-the-left-side.html#case-studies"><i class="fa fa-check"></i><b>14.3.1</b> Case Studies:</a></li>
+</ul></li>
+<li class="chapter" data-level="14.4" data-path="create-infinite-loops.html"><a href="create-infinite-loops.html"><i class="fa fa-check"></i><b>14.4</b> Create infinite loops</a></li>
+<li class="chapter" data-level="14.5" data-path="conclusions-1.html"><a href="conclusions-1.html"><i class="fa fa-check"></i><b>14.5</b> Conclusions</a><ul>
+<li class="chapter" data-level="14.5.1" data-path="conclusions-1.html"><a href="conclusions-1.html#resources-1"><i class="fa fa-check"></i><b>14.5.1</b> Resources:</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -354,39 +369,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="create-infinite-loops" class="section level2">
-<h2><span class="header-section-number">13.4</span> Create infinite loops</h2>
+<h2><span class="header-section-number">14.4</span> Create infinite loops</h2>
 <ul>
 <li>Pausing animations</li>
 </ul>
 <p>In this example we use <strong>running</strong> reactive value and <strong>invalidateLater()</strong> function. This is the case when we can’t use <strong>observeEvent()</strong> but we need to used <strong>observe()</strong> and <strong>isolate()</strong> otherwise an infinite loop is created.</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="create-infinite-loops.html#cb134-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
-<span id="cb134-2"><a href="create-infinite-loops.html#cb134-2"></a>  <span class="kw">actionButton</span>(<span class="st">&quot;start&quot;</span>, <span class="st">&quot;start&quot;</span>),</span>
-<span id="cb134-3"><a href="create-infinite-loops.html#cb134-3"></a>  <span class="kw">actionButton</span>(<span class="st">&quot;stop&quot;</span>, <span class="st">&quot;stop&quot;</span>),</span>
-<span id="cb134-4"><a href="create-infinite-loops.html#cb134-4"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;n&quot;</span>)</span>
-<span id="cb134-5"><a href="create-infinite-loops.html#cb134-5"></a>)</span>
-<span id="cb134-6"><a href="create-infinite-loops.html#cb134-6"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
-<span id="cb134-7"><a href="create-infinite-loops.html#cb134-7"></a>  </span>
-<span id="cb134-8"><a href="create-infinite-loops.html#cb134-8"></a>  r &lt;-<span class="st"> </span><span class="kw">reactiveValues</span>(<span class="dt">running =</span> <span class="ot">FALSE</span>, <span class="dt">n =</span> <span class="dv">0</span>)</span>
-<span id="cb134-9"><a href="create-infinite-loops.html#cb134-9"></a>  </span>
-<span id="cb134-10"><a href="create-infinite-loops.html#cb134-10"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>start, {</span>
-<span id="cb134-11"><a href="create-infinite-loops.html#cb134-11"></a>    r<span class="op">$</span>running &lt;-<span class="st"> </span><span class="ot">TRUE</span></span>
-<span id="cb134-12"><a href="create-infinite-loops.html#cb134-12"></a>  })</span>
-<span id="cb134-13"><a href="create-infinite-loops.html#cb134-13"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>stop, {</span>
-<span id="cb134-14"><a href="create-infinite-loops.html#cb134-14"></a>    r<span class="op">$</span>running &lt;-<span class="st"> </span><span class="ot">FALSE</span></span>
-<span id="cb134-15"><a href="create-infinite-loops.html#cb134-15"></a>  })</span>
-<span id="cb134-16"><a href="create-infinite-loops.html#cb134-16"></a>  </span>
-<span id="cb134-17"><a href="create-infinite-loops.html#cb134-17"></a>  <span class="co"># we cannot use observeEvent() but observe() and isolate()</span></span>
-<span id="cb134-18"><a href="create-infinite-loops.html#cb134-18"></a>  <span class="kw">observe</span>({</span>
-<span id="cb134-19"><a href="create-infinite-loops.html#cb134-19"></a>    <span class="cf">if</span> (r<span class="op">$</span>running) {</span>
-<span id="cb134-20"><a href="create-infinite-loops.html#cb134-20"></a>      r<span class="op">$</span>n &lt;-<span class="st"> </span><span class="kw">isolate</span>(r<span class="op">$</span>n) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb134-21"><a href="create-infinite-loops.html#cb134-21"></a>      <span class="kw">invalidateLater</span>(<span class="dv">250</span>)</span>
-<span id="cb134-22"><a href="create-infinite-loops.html#cb134-22"></a>    }</span>
-<span id="cb134-23"><a href="create-infinite-loops.html#cb134-23"></a>  })</span>
-<span id="cb134-24"><a href="create-infinite-loops.html#cb134-24"></a>  </span>
-<span id="cb134-25"><a href="create-infinite-loops.html#cb134-25"></a>  output<span class="op">$</span>n &lt;-<span class="st"> </span><span class="kw">renderText</span>(r<span class="op">$</span>n)</span>
-<span id="cb134-26"><a href="create-infinite-loops.html#cb134-26"></a>}</span>
-<span id="cb134-27"><a href="create-infinite-loops.html#cb134-27"></a></span>
-<span id="cb134-28"><a href="create-infinite-loops.html#cb134-28"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="create-infinite-loops.html#cb169-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb169-2"><a href="create-infinite-loops.html#cb169-2"></a>  <span class="kw">actionButton</span>(<span class="st">&quot;start&quot;</span>, <span class="st">&quot;start&quot;</span>),</span>
+<span id="cb169-3"><a href="create-infinite-loops.html#cb169-3"></a>  <span class="kw">actionButton</span>(<span class="st">&quot;stop&quot;</span>, <span class="st">&quot;stop&quot;</span>),</span>
+<span id="cb169-4"><a href="create-infinite-loops.html#cb169-4"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;n&quot;</span>)</span>
+<span id="cb169-5"><a href="create-infinite-loops.html#cb169-5"></a>)</span>
+<span id="cb169-6"><a href="create-infinite-loops.html#cb169-6"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb169-7"><a href="create-infinite-loops.html#cb169-7"></a>  </span>
+<span id="cb169-8"><a href="create-infinite-loops.html#cb169-8"></a>  r &lt;-<span class="st"> </span><span class="kw">reactiveValues</span>(<span class="dt">running =</span> <span class="ot">FALSE</span>, <span class="dt">n =</span> <span class="dv">0</span>)</span>
+<span id="cb169-9"><a href="create-infinite-loops.html#cb169-9"></a>  </span>
+<span id="cb169-10"><a href="create-infinite-loops.html#cb169-10"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>start, {</span>
+<span id="cb169-11"><a href="create-infinite-loops.html#cb169-11"></a>    r<span class="op">$</span>running &lt;-<span class="st"> </span><span class="ot">TRUE</span></span>
+<span id="cb169-12"><a href="create-infinite-loops.html#cb169-12"></a>  })</span>
+<span id="cb169-13"><a href="create-infinite-loops.html#cb169-13"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>stop, {</span>
+<span id="cb169-14"><a href="create-infinite-loops.html#cb169-14"></a>    r<span class="op">$</span>running &lt;-<span class="st"> </span><span class="ot">FALSE</span></span>
+<span id="cb169-15"><a href="create-infinite-loops.html#cb169-15"></a>  })</span>
+<span id="cb169-16"><a href="create-infinite-loops.html#cb169-16"></a>  </span>
+<span id="cb169-17"><a href="create-infinite-loops.html#cb169-17"></a>  <span class="co"># we cannot use observeEvent() but observe() and isolate()</span></span>
+<span id="cb169-18"><a href="create-infinite-loops.html#cb169-18"></a>  <span class="kw">observe</span>({</span>
+<span id="cb169-19"><a href="create-infinite-loops.html#cb169-19"></a>    <span class="cf">if</span> (r<span class="op">$</span>running) {</span>
+<span id="cb169-20"><a href="create-infinite-loops.html#cb169-20"></a>      r<span class="op">$</span>n &lt;-<span class="st"> </span><span class="kw">isolate</span>(r<span class="op">$</span>n) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb169-21"><a href="create-infinite-loops.html#cb169-21"></a>      <span class="kw">invalidateLater</span>(<span class="dv">250</span>)</span>
+<span id="cb169-22"><a href="create-infinite-loops.html#cb169-22"></a>    }</span>
+<span id="cb169-23"><a href="create-infinite-loops.html#cb169-23"></a>  })</span>
+<span id="cb169-24"><a href="create-infinite-loops.html#cb169-24"></a>  </span>
+<span id="cb169-25"><a href="create-infinite-loops.html#cb169-25"></a>  output<span class="op">$</span>n &lt;-<span class="st"> </span><span class="kw">renderText</span>(r<span class="op">$</span>n)</span>
+<span id="cb169-26"><a href="create-infinite-loops.html#cb169-26"></a>}</span>
+<span id="cb169-27"><a href="create-infinite-loops.html#cb169-27"></a></span>
+<span id="cb169-28"><a href="create-infinite-loops.html#cb169-28"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code></pre></div>
 <hr />
 </div>
             </section>
