@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-06-13" />
+<meta name="date" content="2021-06-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -322,6 +322,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.6" data-path="the-reactlog-package.html"><a href="the-reactlog-package.html"><i class="fa fa-check"></i><b>12.6</b> The reactlog package</a></li>
 <li class="chapter" data-level="12.7" data-path="summary-1.html"><a href="summary-1.html"><i class="fa fa-check"></i><b>12.7</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="escaping-the-graph.html"><a href="escaping-the-graph.html"><i class="fa fa-check"></i><b>13</b> Escaping the graph</a><ul>
+<li class="chapter" data-level="13.1" data-path="introduction-6.html"><a href="introduction-6.html"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="combine-reactive-values.html"><a href="combine-reactive-values.html"><i class="fa fa-check"></i><b>13.2</b> Combine reactive values</a></li>
+<li class="chapter" data-level="13.3" data-path="connect-the-right-side-with-the-left-side.html"><a href="connect-the-right-side-with-the-left-side.html"><i class="fa fa-check"></i><b>13.3</b> Connect the right side with the left side</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="connect-the-right-side-with-the-left-side.html"><a href="connect-the-right-side-with-the-left-side.html#case-studies"><i class="fa fa-check"></i><b>13.3.1</b> Case Studies:</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="create-infinite-loops.html"><a href="create-infinite-loops.html"><i class="fa fa-check"></i><b>13.4</b> Create infinite loops</a></li>
+<li class="chapter" data-level="13.5" data-path="conclusions-1.html"><a href="conclusions-1.html"><i class="fa fa-check"></i><b>13.5</b> Conclusions</a><ul>
+<li class="chapter" data-level="13.5.1" data-path="conclusions-1.html"><a href="conclusions-1.html#resources-1"><i class="fa fa-check"></i><b>13.5.1</b> Resources:</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -348,8 +359,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>The <strong>tabsetPanel()</strong> is the second function for this chapter and it involves the visibility of part of the app.</p>
 <p>This second function is made to let the user show and/or hide some of the tabs set in the main panel. It is a technique that allows managing the appearance of the app with selecting visibility of the tabs as shown in the <a href="https://shiny.rstudio.com/articles/layout-guide.html">Tabsets</a> section of the <strong>Shiny.rstudio.com</strong> guide’s page of the website.</p>
-<div id="htmlwidget-f3b894acc3acab6d1a31" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f3b894acc3acab6d1a31">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-80be5f9dd6efe361fb92" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-80be5f9dd6efe361fb92">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
 <p>To enhance your <strong>app</strong> with features and the most wanted themes and as an example on how to set the visibility of a tab in your app, you can follow the steps found here: <a href="https://shiny.rstudio.com/gallery/tabsets.html">Gallery</a></p>
 <p>As an example here is shown how to switch between panels hiding one panel and showing the other with different content.</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="dynamic-visibility.html#cb118-1"></a><span class="kw">library</span>(shiny)</span>

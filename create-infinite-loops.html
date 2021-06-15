@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11.4 A brief history of reactive programming | Mastering Shiny Book Club</title>
+  <title>13.4 Create infinite loops | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11.4 A brief history of reactive programming | Mastering Shiny Book Club" />
+  <meta property="og:title" content="13.4 Create infinite loops | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11.4 A brief history of reactive programming | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="13.4 Create infinite loops | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reactive-programming-1.html"/>
-<link rel="next" href="the-reactive-graph-1.html"/>
+<link rel="prev" href="connect-the-right-side-with-the-left-side.html"/>
+<link rel="next" href="conclusions-1.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -353,29 +353,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="a-brief-history-of-reactive-programming" class="section level2">
-<h2><span class="header-section-number">11.4</span> A brief history of reactive programming</h2>
+<div id="create-infinite-loops" class="section level2">
+<h2><span class="header-section-number">13.4</span> Create infinite loops</h2>
 <ul>
-<li>spreadsheets! (VisCalc, 1979)</li>
-<li>not really studied academically until late 1990s</li>
-<li>2010s -&gt; mainstream
-<ul>
-<li>JavaScript UI frameworks: Knockout, Ember, Meteor</li>
-<li>now: React, Vue, Angular</li>
-</ul></li>
-<li>“reactive programming” is a general term. a lot of variablility in
-implementations and terminology</li>
+<li>Pausing animations</li>
 </ul>
-
+<p>In this example we use <strong>running</strong> reactive value and <strong>invalidateLater()</strong> function. This is the case when we can’t use <strong>observeEvent()</strong> but we need to used <strong>observe()</strong> and <strong>isolate()</strong> otherwise an infinite loop is created.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="create-infinite-loops.html#cb133-1"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb133-2"><a href="create-infinite-loops.html#cb133-2"></a>  <span class="kw">actionButton</span>(<span class="st">&quot;start&quot;</span>, <span class="st">&quot;start&quot;</span>),</span>
+<span id="cb133-3"><a href="create-infinite-loops.html#cb133-3"></a>  <span class="kw">actionButton</span>(<span class="st">&quot;stop&quot;</span>, <span class="st">&quot;stop&quot;</span>),</span>
+<span id="cb133-4"><a href="create-infinite-loops.html#cb133-4"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;n&quot;</span>)</span>
+<span id="cb133-5"><a href="create-infinite-loops.html#cb133-5"></a>)</span>
+<span id="cb133-6"><a href="create-infinite-loops.html#cb133-6"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb133-7"><a href="create-infinite-loops.html#cb133-7"></a>  </span>
+<span id="cb133-8"><a href="create-infinite-loops.html#cb133-8"></a>  r &lt;-<span class="st"> </span><span class="kw">reactiveValues</span>(<span class="dt">running =</span> <span class="ot">FALSE</span>, <span class="dt">n =</span> <span class="dv">0</span>)</span>
+<span id="cb133-9"><a href="create-infinite-loops.html#cb133-9"></a>  </span>
+<span id="cb133-10"><a href="create-infinite-loops.html#cb133-10"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>start, {</span>
+<span id="cb133-11"><a href="create-infinite-loops.html#cb133-11"></a>    r<span class="op">$</span>running &lt;-<span class="st"> </span><span class="ot">TRUE</span></span>
+<span id="cb133-12"><a href="create-infinite-loops.html#cb133-12"></a>  })</span>
+<span id="cb133-13"><a href="create-infinite-loops.html#cb133-13"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>stop, {</span>
+<span id="cb133-14"><a href="create-infinite-loops.html#cb133-14"></a>    r<span class="op">$</span>running &lt;-<span class="st"> </span><span class="ot">FALSE</span></span>
+<span id="cb133-15"><a href="create-infinite-loops.html#cb133-15"></a>  })</span>
+<span id="cb133-16"><a href="create-infinite-loops.html#cb133-16"></a>  </span>
+<span id="cb133-17"><a href="create-infinite-loops.html#cb133-17"></a>  <span class="co"># we cannot use observeEvent() but observe() and isolate()</span></span>
+<span id="cb133-18"><a href="create-infinite-loops.html#cb133-18"></a>  <span class="kw">observe</span>({</span>
+<span id="cb133-19"><a href="create-infinite-loops.html#cb133-19"></a>    <span class="cf">if</span> (r<span class="op">$</span>running) {</span>
+<span id="cb133-20"><a href="create-infinite-loops.html#cb133-20"></a>      r<span class="op">$</span>n &lt;-<span class="st"> </span><span class="kw">isolate</span>(r<span class="op">$</span>n) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb133-21"><a href="create-infinite-loops.html#cb133-21"></a>      <span class="kw">invalidateLater</span>(<span class="dv">250</span>)</span>
+<span id="cb133-22"><a href="create-infinite-loops.html#cb133-22"></a>    }</span>
+<span id="cb133-23"><a href="create-infinite-loops.html#cb133-23"></a>  })</span>
+<span id="cb133-24"><a href="create-infinite-loops.html#cb133-24"></a>  </span>
+<span id="cb133-25"><a href="create-infinite-loops.html#cb133-25"></a>  output<span class="op">$</span>n &lt;-<span class="st"> </span><span class="kw">renderText</span>(r<span class="op">$</span>n)</span>
+<span id="cb133-26"><a href="create-infinite-loops.html#cb133-26"></a>}</span>
+<span id="cb133-27"><a href="create-infinite-loops.html#cb133-27"></a></span>
+<span id="cb133-28"><a href="create-infinite-loops.html#cb133-28"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code></pre></div>
+<hr />
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="reactive-programming-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-reactive-graph-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="connect-the-right-side-with-the-left-side.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclusions-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -407,7 +427,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/13-why-reactivity.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/16-Escaping_the_graph.Rmd",
 "text": "Edit"
 },
 "history": {

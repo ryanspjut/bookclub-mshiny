@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11.4 A brief history of reactive programming | Mastering Shiny Book Club</title>
+  <title>13.3 Connect the right side with the left side | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11.4 A brief history of reactive programming | Mastering Shiny Book Club" />
+  <meta property="og:title" content="13.3 Connect the right side with the left side | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11.4 A brief history of reactive programming | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="13.3 Connect the right side with the left side | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reactive-programming-1.html"/>
-<link rel="next" href="the-reactive-graph-1.html"/>
+<link rel="prev" href="combine-reactive-values.html"/>
+<link rel="next" href="create-infinite-loops.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -353,29 +353,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="a-brief-history-of-reactive-programming" class="section level2">
-<h2><span class="header-section-number">11.4</span> A brief history of reactive programming</h2>
-<ul>
-<li>spreadsheets! (VisCalc, 1979)</li>
-<li>not really studied academically until late 1990s</li>
-<li>2010s -&gt; mainstream
-<ul>
-<li>JavaScript UI frameworks: Knockout, Ember, Meteor</li>
-<li>now: React, Vue, Angular</li>
-</ul></li>
-<li>“reactive programming” is a general term. a lot of variablility in
-implementations and terminology</li>
-</ul>
+<div id="connect-the-right-side-with-the-left-side" class="section level2">
+<h2><span class="header-section-number">13.3</span> Connect the right side with the left side</h2>
+<p>In this section we combine <strong>reactiveValues()</strong> and <strong>observeEvent()</strong></p>
+Figure <a href="connect-the-right-side-with-the-left-side.html#fig:diagram3">13.3</a> Connecting the right side with the left side with directional arrow to show the missing connection<br />
 
+<div class="figure"><span id="fig:diagram3"></span>
+<div id="htmlwidget-0f5c1b4597e94f673494" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0f5c1b4597e94f673494">{"x":{"diagram":"\ngraph LR\nA((ui))-.-B(actionButton)\nC((server))-.-D(reactiveValues)\nD-.-E(observeEvent)\nE==>B\nstyle A fill:#f9f\nstyle B fill:#bbf\nstyle C fill:#f9f\nstyle D fill:#bbf\nstyle E fill:#bbf\n"},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 13.3: This is the graph of the connection
+</p>
 </div>
-<!-- </div> -->
+<div id="case-studies" class="section level3">
+<h3><span class="header-section-number">13.3.1</span> Case Studies:</h3>
+<ul>
+<li>One output modified by multiple inputs</li>
+<li>Accumulating inputs</li>
+<li>Pausing animations</li>
+<li>Anti-patterns</li>
+</ul>
+<hr />
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reactive-programming-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-reactive-graph-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="combine-reactive-values.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="create-infinite-loops.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -407,7 +414,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/13-why-reactivity.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/16-Escaping_the_graph.Rmd",
 "text": "Edit"
 },
 "history": {

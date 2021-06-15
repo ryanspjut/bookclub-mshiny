@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11.4 A brief history of reactive programming | Mastering Shiny Book Club</title>
+  <title>13.2 Combine reactive values | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11.4 A brief history of reactive programming | Mastering Shiny Book Club" />
+  <meta property="og:title" content="13.2 Combine reactive values | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11.4 A brief history of reactive programming | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="13.2 Combine reactive values | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reactive-programming-1.html"/>
-<link rel="next" href="the-reactive-graph-1.html"/>
+<link rel="prev" href="introduction-6.html"/>
+<link rel="next" href="connect-the-right-side-with-the-left-side.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -353,29 +353,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="a-brief-history-of-reactive-programming" class="section level2">
-<h2><span class="header-section-number">11.4</span> A brief history of reactive programming</h2>
-<ul>
-<li>spreadsheets! (VisCalc, 1979)</li>
-<li>not really studied academically until late 1990s</li>
-<li>2010s -&gt; mainstream
-<ul>
-<li>JavaScript UI frameworks: Knockout, Ember, Meteor</li>
-<li>now: React, Vue, Angular</li>
-</ul></li>
-<li>“reactive programming” is a general term. a lot of variablility in
-implementations and terminology</li>
-</ul>
-
+<div id="combine-reactive-values" class="section level2">
+<h2><span class="header-section-number">13.2</span> Combine reactive values</h2>
+<p>A reactive graph shows the connections between the reactive components of the app, which are directional indicating the direction of reactivity; when a connection is not in use, the graph highlights it in grey color which means that the connection is invalidated.</p>
+<p>In this first part we learn how to combine reactive values which are <em>escaping the graph</em> and to do this we need to:</p>
+<hr />
+<p>1 - modify the value of a reactive value</p>
+<p>2 - use reactiveVal() or reactiveValues() functions</p>
+<p>3 - combine them with observe() and observeEvent() in the server</p>
+<hr />
+<p>In particular, we will see how <strong>invalidation</strong> caused by the user might not be captured by the reactivity graph, and for this reason, it is said to be <em>escaping the graph</em>. An example is a request of changing the input made by the user, such as when using the <em>reset</em> button (made with an <em>actionbutton()</em>), which is not evidenced in the reactivity graph.</p>
+<p>The figure below shows an app with an <strong>actionButton()</strong>, the input value of the app changes but the reactivity graph stays the same. The reactive graph does not capture the connection between the <em>unnamed observer</em> and the <em>input</em>.</p>
+<p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div></p>
+<p>To have an idea of what is happening inside the app we can sketch a graph of the connections with one of the {diagrammeR} functions for making flowcharts, such as the <strong>mermaid()</strong> function, so, we visually identify the connections related to the action of the reset button.</p>
+<p>Figure <a href="combine-reactive-values.html#fig:diagram2">13.2</a> Graph of the App</p>
+<div class="figure"><span id="fig:diagram2"></span>
+<div id="htmlwidget-391d21377eb95dd6154a" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-391d21377eb95dd6154a">{"x":{"diagram":"\ngraph LR\n\nA((ui))-.-B\n   B(textInput)-.-C>textOutput]\n   C-. reactive connection .->D\n   D((server))-.-E\nE(reactive)-.-S(output)\n   \nA((ui))-.-F\n   F(name)-.-G(salutation)\n   G-. reactive connection .->    D((server))\n   D((server))-.-H(Hello)\nH-.-T(Your name here)\n   \nI((ui))-.-L(actionButton)\nL-.-M((server))\nM-.-N(observeEvent)\nN-.-O>updateTextInput]\n  O-.-P>no record of the reset in the reactive graph]\n\nI((ui))-.-Q\nQ(clr)-.-M\nM-.-R(Clear)\nR-.-U(name)\nU-.-P\n  style A fill:#f9f\n  style B fill:#bbf\n  style C fill:#f96\n  style D fill:#f9f\n  style I fill:#f9f\n  style L fill:#bbf\n  style M fill:#f9f\n  style O fill:#f96\n  style P fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 13.2: Graph of the steps made by the app
+</p>
 </div>
-<!-- </div> -->
+<p>In this contest, the reactive graph represent a static connection that doesn’t show the recursivity of the reset. Another way to visualize and/or modify interactively the reactive graph is to change it directly, moving the parts aside and adjusting it as it is needed.</p>
+<hr />
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reactive-programming-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-reactive-graph-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction-6.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="connect-the-right-side-with-the-left-side.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -407,7 +415,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/13-why-reactivity.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/16-Escaping_the_graph.Rmd",
 "text": "Edit"
 },
 "history": {

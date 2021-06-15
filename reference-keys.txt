@@ -1,3 +1,6 @@
+fig:diagram
+fig:diagram2
+fig:diagram3
 your-first-shiny-app
 introduction
 if-you-havent-installed-shiny-already
@@ -138,3 +141,11 @@ excercises
 dynamism
 the-reactlog-package
 summary-1
+escaping-the-graph
+introduction-6
+combine-reactive-values
+connect-the-right-side-with-the-left-side
+case-studies
+create-infinite-loops
+conclusions-1
+resources-1
