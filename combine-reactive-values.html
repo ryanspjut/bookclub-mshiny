@@ -364,12 +364,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>In particular, we will see how <strong>invalidation</strong> caused by the user might not be captured by the reactivity graph, and for this reason, it is said to be <em>escaping the graph</em>. An example is a request of changing the input made by the user, such as when using the <em>reset</em> button (made with an <em>actionbutton()</em>), which is not evidenced in the reactivity graph.</p>
 <p>The figure below shows an app with an <strong>actionButton()</strong>, the input value of the app changes but the reactivity graph stays the same. The reactive graph does not capture the connection between the <em>unnamed observer</em> and the <em>input</em>.</p>
-<p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div></p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="combine-reactive-values.html#cb133-1"></a><span class="kw">reactlog_enable</span>()</span>
+<span id="cb133-2"><a href="combine-reactive-values.html#cb133-2"></a></span>
+<span id="cb133-3"><a href="combine-reactive-values.html#cb133-3"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb133-4"><a href="combine-reactive-values.html#cb133-4"></a>  <span class="kw">textInput</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;Your name here&quot;</span>),</span>
+<span id="cb133-5"><a href="combine-reactive-values.html#cb133-5"></a>  <span class="kw">actionButton</span>(<span class="st">&quot;clr&quot;</span>, <span class="st">&quot;Clear&quot;</span>),</span>
+<span id="cb133-6"><a href="combine-reactive-values.html#cb133-6"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;salutation&quot;</span>)</span>
+<span id="cb133-7"><a href="combine-reactive-values.html#cb133-7"></a>)</span>
+<span id="cb133-8"><a href="combine-reactive-values.html#cb133-8"></a></span>
+<span id="cb133-9"><a href="combine-reactive-values.html#cb133-9"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb133-10"><a href="combine-reactive-values.html#cb133-10"></a>  </span>
+<span id="cb133-11"><a href="combine-reactive-values.html#cb133-11"></a>  <span class="co"># reactive function</span></span>
+<span id="cb133-12"><a href="combine-reactive-values.html#cb133-12"></a>  hello &lt;-<span class="st"> </span><span class="kw">reactive</span>(<span class="kw">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="op">$</span>name))</span>
+<span id="cb133-13"><a href="combine-reactive-values.html#cb133-13"></a>  </span>
+<span id="cb133-14"><a href="combine-reactive-values.html#cb133-14"></a>  output<span class="op">$</span>salutation &lt;-<span class="st"> </span><span class="kw">renderText</span>(<span class="kw">hello</span>())</span>
+<span id="cb133-15"><a href="combine-reactive-values.html#cb133-15"></a>  </span>
+<span id="cb133-16"><a href="combine-reactive-values.html#cb133-16"></a>  <span class="co"># observer</span></span>
+<span id="cb133-17"><a href="combine-reactive-values.html#cb133-17"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>clr, {</span>
+<span id="cb133-18"><a href="combine-reactive-values.html#cb133-18"></a>    <span class="kw">updateTextInput</span>(session, <span class="st">&quot;name&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb133-19"><a href="combine-reactive-values.html#cb133-19"></a>  })</span>
+<span id="cb133-20"><a href="combine-reactive-values.html#cb133-20"></a>}</span>
+<span id="cb133-21"><a href="combine-reactive-values.html#cb133-21"></a></span>
+<span id="cb133-22"><a href="combine-reactive-values.html#cb133-22"></a><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</span></code></pre></div>
 <p>To have an idea of what is happening inside the app we can sketch a graph of the connections with one of the {diagrammeR} functions for making flowcharts, such as the <strong>mermaid()</strong> function, so, we visually identify the connections related to the action of the reset button.</p>
 <p>Figure <a href="combine-reactive-values.html#fig:diagram2">13.2</a> Graph of the App</p>
 <div class="figure"><span id="fig:diagram2"></span>
-<div id="htmlwidget-391d21377eb95dd6154a" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-391d21377eb95dd6154a">{"x":{"diagram":"\ngraph LR\n\nA((ui))-.-B\n   B(textInput)-.-C>textOutput]\n   C-. reactive connection .->D\n   D((server))-.-E\nE(reactive)-.-S(output)\n   \nA((ui))-.-F\n   F(name)-.-G(salutation)\n   G-. reactive connection .->    D((server))\n   D((server))-.-H(Hello)\nH-.-T(Your name here)\n   \nI((ui))-.-L(actionButton)\nL-.-M((server))\nM-.-N(observeEvent)\nN-.-O>updateTextInput]\n  O-.-P>no record of the reset in the reactive graph]\n\nI((ui))-.-Q\nQ(clr)-.-M\nM-.-R(Clear)\nR-.-U(name)\nU-.-P\n  style A fill:#f9f\n  style B fill:#bbf\n  style C fill:#f96\n  style D fill:#f9f\n  style I fill:#f9f\n  style L fill:#bbf\n  style M fill:#f9f\n  style O fill:#f96\n  style P fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f1f26bfbc9571ce5c201" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f1f26bfbc9571ce5c201">{"x":{"diagram":"\ngraph LR\n\nA((ui))-.-B\n   B(textInput)-.-C>textOutput]\n   C-. reactive connection .->D\n   D((server))-.-E\nE(reactive)-.-S(output)\n   \nA((ui))-.-F\n   F(name)-.-G(salutation)\n   G-. reactive connection .->    D((server))\n   D((server))-.-H(Hello)\nH-.-T(Your name here)\n   \nI((ui))-.-L(actionButton)\nL-.-M((server))\nM-.-N(observeEvent)\nN-.-O>updateTextInput]\n  O-.-P>no record of the reset in the reactive graph]\n\nI((ui))-.-Q\nQ(clr)-.-M\nM-.-R(Clear)\nR-.-U(name)\nU-.-P\n  style A fill:#f9f\n  style B fill:#bbf\n  style C fill:#f96\n  style D fill:#f9f\n  style I fill:#f9f\n  style L fill:#bbf\n  style M fill:#f9f\n  style O fill:#f96\n  style P fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 13.2: Graph of the steps made by the app
 </p>
