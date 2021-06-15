@@ -363,8 +363,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>In this first part of the Dynamic UI chapter we will see how to pass from a basic structure to a more complicate one by adding dynamics to the output of the app, calling the “updating functions”.</p>
 <p>As we know the basic structure of a Shiny app is made of a <strong>UI</strong> (user interface) and a <strong>Server</strong>.</p>
-<div id="htmlwidget-1d495edf7480dff63bd5" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1d495edf7480dff63bd5">{"x":{"diagram":"\ngraph LR \nA[User Interface]-->B[Server]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-230c75adf22f4ad3bde9" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-230c75adf22f4ad3bde9">{"x":{"diagram":"\ngraph LR \nA[User Interface]-->B[Server]\n"},"evals":[],"jsHooks":[]}</script>
 <p>The first example is the User Interface and Server basic structure for updating the app.</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="updating-inputs.html#cb112-1"></a><span class="co">############################################</span></span>
 <span id="cb112-2"><a href="updating-inputs.html#cb112-2"></a><span class="co"># ui &lt;- fluidPage(</span></span>
@@ -387,8 +387,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <div id="update-functions" class="section level3">
 <h3><span class="header-section-number">9.2.1</span> Update functions</h3>
-<div id="htmlwidget-3483a20feffa7d1cb8b7" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3483a20feffa7d1cb8b7">{"x":{"diagram":"\ngraph LR\nA[id Input]-->B[update id Input]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-89e15dcc4b854e4b39e9" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-89e15dcc4b854e4b39e9">{"x":{"diagram":"\ngraph LR\nA[id Input]-->B[update id Input]\n"},"evals":[],"jsHooks":[]}</script>
 <p>The <strong>Update function</strong> allows you to modify the control after it has been created with a series of <strong>[id]Input</strong> and <strong>update[id]Input</strong>, as shown below:</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="updating-inputs.html#cb113-1"></a><span class="co"># [id]Input()</span></span>
 <span id="cb113-2"><a href="updating-inputs.html#cb113-2"></a><span class="co"># textInput() # ui</span></span>
