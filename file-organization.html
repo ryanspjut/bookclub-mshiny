@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Layout, themes, HTML | Mastering Shiny Book Club</title>
+  <title>15.1 File Organization | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Layout, themes, HTML | Mastering Shiny Book Club" />
+  <meta property="og:title" content="15.1 File Organization | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Layout, themes, HTML | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="15.1 File Organization | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="getting-help-using-reprex.html"/>
-<link rel="next" href="disclaimer.html"/>
+<link rel="prev" href="functions.html"/>
+<link rel="next" href="ui-functions.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -378,19 +378,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="layout-themes-html" class="section level1">
-<h1><span class="header-section-number">Chapter 6</span> Layout, themes, HTML</h1>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="layout-themes-html.html#cb73-1"></a><span class="kw">library</span>(bslib)</span>
-<span id="cb73-2"><a href="layout-themes-html.html#cb73-2"></a><span class="kw">library</span>(htmltools)</span>
-<span id="cb73-3"><a href="layout-themes-html.html#cb73-3"></a><span class="kw">library</span>(shiny)</span></code></pre></div>
+<div id="file-organization" class="section level2">
+<h2><span class="header-section-number">15.1</span> File Organization</h2>
+<ul>
+<li><em>Functions</em> allow you to spread your code across multiple files
+<ul>
+<li>this is where organization is 🔑</li>
+</ul></li>
+<li>Make sure to have an <code>R/</code> directory and in it, place large functions into their own script - <code>R/myFunc.R</code>
+<ul>
+<li>Collections of smaller functions can go into 1 script, i.e. <code>R/utils.R</code></li>
+<li>Shiny uses similar storing conventions as R packages</li>
+</ul></li>
+</ul>
+<hr />
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="getting-help-using-reprex.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="disclaimer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ui-functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -422,7 +431,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/06-layout_themes_html.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/18-functions.Rmd",
 "text": "Edit"
 },
 "history": {

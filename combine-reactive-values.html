@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-06-15" />
+<meta name="date" content="2021-06-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -348,6 +348,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.5.1" data-path="conclusions-1.html"><a href="conclusions-1.html#resources-1"><i class="fa fa-check"></i><b>14.5.1</b> Resources:</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="15" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>15</b> Functions</a><ul>
+<li class="chapter" data-level="15.1" data-path="file-organization.html"><a href="file-organization.html"><i class="fa fa-check"></i><b>15.1</b> File Organization</a></li>
+<li class="chapter" data-level="15.2" data-path="ui-functions.html"><a href="ui-functions.html"><i class="fa fa-check"></i><b>15.2</b> UI Functions</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="ui-functions.html"><a href="ui-functions.html#functional-programming"><i class="fa fa-check"></i><b>15.2.1</b> Functional Programming</a></li>
+<li class="chapter" data-level="15.2.2" data-path="ui-functions.html"><a href="ui-functions.html#ui-as-data"><i class="fa fa-check"></i><b>15.2.2</b> UI as data</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="server-functions.html"><a href="server-functions.html"><i class="fa fa-check"></i><b>15.3</b> Server Functions</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="server-functions.html"><a href="server-functions.html#internal-functions"><i class="fa fa-check"></i><b>15.3.1</b> Internal functions</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -404,8 +414,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>To have an idea of what is happening inside the app we can sketch a graph of the connections with one of the {diagrammeR} functions for making flowcharts, such as the <strong>mermaid()</strong> function, so, we visually identify the connections related to the action of the reset button.</p>
 <p>Figure <a href="combine-reactive-values.html#fig:diagram2">14.2</a> Graph of the App</p>
 <div class="figure"><span id="fig:diagram2"></span>
-<div id="htmlwidget-f5a533f406c2901d5b83" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f5a533f406c2901d5b83">{"x":{"diagram":"\ngraph LR\n\nA((ui))-.-B\n   B(textInput)-.-C>textOutput]\n   C-. reactive connection .->D\n   D((server))-.-E\nE(reactive)-.-S(output)\n   \nA((ui))-.-F\n   F(name)-.-G(salutation)\n   G-. reactive connection .->    D((server))\n   D((server))-.-H(Hello)\nH-.-T(Your name here)\n   \nI((ui))-.-L(actionButton)\nL-.-M((server))\nM-.-N(observeEvent)\nN-.-O>updateTextInput]\n  O-.-P>no record of the reset in the reactive graph]\n\nI((ui))-.-Q\nQ(clr)-.-M\nM-.-R(Clear)\nR-.-U(name)\nU-.-P\n  style A fill:#f9f\n  style B fill:#bbf\n  style C fill:#f96\n  style D fill:#f9f\n  style I fill:#f9f\n  style L fill:#bbf\n  style M fill:#f9f\n  style O fill:#f96\n  style P fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-699e8f77ca06a9d35ff2" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-699e8f77ca06a9d35ff2">{"x":{"diagram":"\ngraph LR\n\nA((ui))-.-B\n   B(textInput)-.-C>textOutput]\n   C-. reactive connection .->D\n   D((server))-.-E\nE(reactive)-.-S(output)\n   \nA((ui))-.-F\n   F(name)-.-G(salutation)\n   G-. reactive connection .->    D((server))\n   D((server))-.-H(Hello)\nH-.-T(Your name here)\n   \nI((ui))-.-L(actionButton)\nL-.-M((server))\nM-.-N(observeEvent)\nN-.-O>updateTextInput]\n  O-.-P>no record of the reset in the reactive graph]\n\nI((ui))-.-Q\nQ(clr)-.-M\nM-.-R(Clear)\nR-.-U(name)\nU-.-P\n  style A fill:#f9f\n  style B fill:#bbf\n  style C fill:#f96\n  style D fill:#f9f\n  style I fill:#f9f\n  style L fill:#bbf\n  style M fill:#f9f\n  style O fill:#f96\n  style P fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5\n\n "},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 14.2: Graph of the steps made by the app
 </p>

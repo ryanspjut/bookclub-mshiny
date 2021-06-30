@@ -24,7 +24,7 @@
 <meta name="author" content="The R4DS Online Learning Community" />
 
 
-<meta name="date" content="2021-06-15" />
+<meta name="date" content="2021-06-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -348,6 +348,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.5.1" data-path="conclusions-1.html"><a href="conclusions-1.html#resources-1"><i class="fa fa-check"></i><b>14.5.1</b> Resources:</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="15" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>15</b> Functions</a><ul>
+<li class="chapter" data-level="15.1" data-path="file-organization.html"><a href="file-organization.html"><i class="fa fa-check"></i><b>15.1</b> File Organization</a></li>
+<li class="chapter" data-level="15.2" data-path="ui-functions.html"><a href="ui-functions.html"><i class="fa fa-check"></i><b>15.2</b> UI Functions</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="ui-functions.html"><a href="ui-functions.html#functional-programming"><i class="fa fa-check"></i><b>15.2.1</b> Functional Programming</a></li>
+<li class="chapter" data-level="15.2.2" data-path="ui-functions.html"><a href="ui-functions.html#ui-as-data"><i class="fa fa-check"></i><b>15.2.2</b> UI as data</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="server-functions.html"><a href="server-functions.html"><i class="fa fa-check"></i><b>15.3</b> Server Functions</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="server-functions.html"><a href="server-functions.html#internal-functions"><i class="fa fa-check"></i><b>15.3.1</b> Internal functions</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -378,8 +388,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-4"><a href="reactive-expressions-1.html#cb21-4"></a>  string &lt;-<span class="st"> </span><span class="kw">reactive</span>(<span class="kw">paste0</span>(<span class="st">&quot;Hello &quot;</span>, input<span class="op">$</span>name, <span class="st">&quot;!&quot;</span>))</span>
 <span id="cb21-5"><a href="reactive-expressions-1.html#cb21-5"></a>  output<span class="op">$</span>greeting &lt;-<span class="st"> </span><span class="kw">renderText</span>(<span class="kw">string</span>())</span>
 <span id="cb21-6"><a href="reactive-expressions-1.html#cb21-6"></a>}</span></code></pre></div>
-<div id="htmlwidget-41e3ca65da2628524808" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-41e3ca65da2628524808">{"x":{"diagram":"\ngraph LR\nA[name] --- B>string]\nB>string] --- C>greeting]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-991fa3ce1afd9d1f7134" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-991fa3ce1afd9d1f7134">{"x":{"diagram":"\ngraph LR\nA[name] --- B>string]\nB>string] --- C>greeting]\n"},"evals":[],"jsHooks":[]}</script>
 <p>In other words , makes app cleaner &amp; more efficient (by removing redundant codes &amp; recomputation).
 It also simplifies the reactive graph.</p>
 <p>Reactive expressions have a flavour of both inputs and outputs:</p>

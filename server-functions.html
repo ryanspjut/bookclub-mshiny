@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Layout, themes, HTML | Mastering Shiny Book Club</title>
+  <title>15.3 Server Functions | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Layout, themes, HTML | Mastering Shiny Book Club" />
+  <meta property="og:title" content="15.3 Server Functions | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Layout, themes, HTML | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="15.3 Server Functions | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="getting-help-using-reprex.html"/>
-<link rel="next" href="disclaimer.html"/>
+<link rel="prev" href="ui-functions.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -378,19 +378,80 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="layout-themes-html" class="section level1">
-<h1><span class="header-section-number">Chapter 6</span> Layout, themes, HTML</h1>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="layout-themes-html.html#cb73-1"></a><span class="kw">library</span>(bslib)</span>
-<span id="cb73-2"><a href="layout-themes-html.html#cb73-2"></a><span class="kw">library</span>(htmltools)</span>
-<span id="cb73-3"><a href="layout-themes-html.html#cb73-3"></a><span class="kw">library</span>(shiny)</span></code></pre></div>
+<div id="server-functions" class="section level2">
+<h2><span class="header-section-number">15.3</span> Server Functions</h2>
+<ul>
+<li>Long reactives should be put into a non-reactive functions outside the server
+<ul>
+<li>easier to debug</li>
+<li>easier to tell what inputs were passed to a function vs a reactive expression</li>
+</ul></li>
+</ul>
+<p>CASE 1: Reading uploaded data</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="server-functions.html#cb178-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb178-2"><a href="server-functions.html#cb178-2"></a>  data &lt;-<span class="st"> </span><span class="kw">reactive</span>({</span>
+<span id="cb178-3"><a href="server-functions.html#cb178-3"></a>    <span class="kw">req</span>(input<span class="op">$</span>file)</span>
+<span id="cb178-4"><a href="server-functions.html#cb178-4"></a>    </span>
+<span id="cb178-5"><a href="server-functions.html#cb178-5"></a>    ext &lt;-<span class="st"> </span>tools<span class="op">::</span><span class="kw">file_ext</span>(input<span class="op">$</span>file<span class="op">$</span>name)</span>
+<span id="cb178-6"><a href="server-functions.html#cb178-6"></a>    <span class="cf">switch</span>(ext,</span>
+<span id="cb178-7"><a href="server-functions.html#cb178-7"></a>      <span class="dt">csv =</span> vroom<span class="op">::</span><span class="kw">vroom</span>(input<span class="op">$</span>file<span class="op">$</span>datapath, <span class="dt">delim =</span> <span class="st">&quot;,&quot;</span>),</span>
+<span id="cb178-8"><a href="server-functions.html#cb178-8"></a>      <span class="dt">tsv =</span> vroom<span class="op">::</span><span class="kw">vroom</span>(input<span class="op">$</span>file<span class="op">$</span>datapath, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>),</span>
+<span id="cb178-9"><a href="server-functions.html#cb178-9"></a>      <span class="kw">validate</span>(<span class="st">&quot;Invalid file; Please upload a .csv or .tsv file&quot;</span>)</span>
+<span id="cb178-10"><a href="server-functions.html#cb178-10"></a>    )</span>
+<span id="cb178-11"><a href="server-functions.html#cb178-11"></a>  })</span>
+<span id="cb178-12"><a href="server-functions.html#cb178-12"></a>  </span>
+<span id="cb178-13"><a href="server-functions.html#cb178-13"></a>  output<span class="op">$</span>head &lt;-<span class="st"> </span><span class="kw">renderTable</span>({</span>
+<span id="cb178-14"><a href="server-functions.html#cb178-14"></a>    <span class="kw">head</span>(<span class="kw">data</span>(), input<span class="op">$</span>n)</span>
+<span id="cb178-15"><a href="server-functions.html#cb178-15"></a>  })</span>
+<span id="cb178-16"><a href="server-functions.html#cb178-16"></a>}</span></code></pre></div>
+<p>To a function that extracts:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="server-functions.html#cb179-1"></a><span class="co"># IN ITS OWN FILE</span></span>
+<span id="cb179-2"><a href="server-functions.html#cb179-2"></a>load_file &lt;-<span class="st"> </span><span class="cf">function</span>(name, path) {</span>
+<span id="cb179-3"><a href="server-functions.html#cb179-3"></a>  ext &lt;-<span class="st"> </span>tools<span class="op">::</span><span class="kw">file_ext</span>(name)</span>
+<span id="cb179-4"><a href="server-functions.html#cb179-4"></a>  <span class="cf">switch</span>(ext,</span>
+<span id="cb179-5"><a href="server-functions.html#cb179-5"></a>    <span class="dt">csv =</span> vroom<span class="op">::</span><span class="kw">vroom</span>(path, <span class="dt">delim =</span> <span class="st">&quot;,&quot;</span>),</span>
+<span id="cb179-6"><a href="server-functions.html#cb179-6"></a>    <span class="dt">tsv =</span> vroom<span class="op">::</span><span class="kw">vroom</span>(path, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>),</span>
+<span id="cb179-7"><a href="server-functions.html#cb179-7"></a>    <span class="co"># validate works similarly to stop() outside of shiny</span></span>
+<span id="cb179-8"><a href="server-functions.html#cb179-8"></a>    <span class="kw">validate</span>(<span class="st">&quot;Invalid file; Please upload a .csv or .tsv file&quot;</span>)</span>
+<span id="cb179-9"><a href="server-functions.html#cb179-9"></a>  )</span>
+<span id="cb179-10"><a href="server-functions.html#cb179-10"></a>}</span>
+<span id="cb179-11"><a href="server-functions.html#cb179-11"></a><span class="co">#----------------------------------------------</span></span>
+<span id="cb179-12"><a href="server-functions.html#cb179-12"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb179-13"><a href="server-functions.html#cb179-13"></a>  data &lt;-<span class="st"> </span><span class="kw">reactive</span>({</span>
+<span id="cb179-14"><a href="server-functions.html#cb179-14"></a>    <span class="kw">req</span>(input<span class="op">$</span>file)</span>
+<span id="cb179-15"><a href="server-functions.html#cb179-15"></a>    <span class="kw">load_file</span>(input<span class="op">$</span>file<span class="op">$</span>name, input<span class="op">$</span>file<span class="op">$</span>datapath)</span>
+<span id="cb179-16"><a href="server-functions.html#cb179-16"></a>  })</span>
+<span id="cb179-17"><a href="server-functions.html#cb179-17"></a>  </span>
+<span id="cb179-18"><a href="server-functions.html#cb179-18"></a>  output<span class="op">$</span>head &lt;-<span class="st"> </span><span class="kw">renderTable</span>({</span>
+<span id="cb179-19"><a href="server-functions.html#cb179-19"></a>    <span class="kw">head</span>(<span class="kw">data</span>(), input<span class="op">$</span>n)</span>
+<span id="cb179-20"><a href="server-functions.html#cb179-20"></a>  })</span>
+<span id="cb179-21"><a href="server-functions.html#cb179-21"></a>}</span></code></pre></div>
+<p>Note: generally better to keep reactive and non-reactive parts of app as separate as possible</p>
+<div id="internal-functions" class="section level3">
+<h3><span class="header-section-number">15.3.1</span> Internal functions</h3>
+<p>If the function needs to use input, output or session, it makes more sense to write the function directly in the server</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="server-functions.html#cb180-1"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb180-2"><a href="server-functions.html#cb180-2"></a>  switch_page &lt;-<span class="st"> </span><span class="cf">function</span>(i) {</span>
+<span id="cb180-3"><a href="server-functions.html#cb180-3"></a>    <span class="kw">updateTabsetPanel</span>(<span class="dt">input =</span> <span class="st">&quot;wizard&quot;</span>, <span class="dt">selected =</span> <span class="kw">paste0</span>(<span class="st">&quot;page_&quot;</span>, i))</span>
+<span id="cb180-4"><a href="server-functions.html#cb180-4"></a>  }</span>
+<span id="cb180-5"><a href="server-functions.html#cb180-5"></a>  </span>
+<span id="cb180-6"><a href="server-functions.html#cb180-6"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>page_<span class="dv">12</span>, <span class="kw">switch_page</span>(<span class="dv">2</span>))</span>
+<span id="cb180-7"><a href="server-functions.html#cb180-7"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>page_<span class="dv">21</span>, <span class="kw">switch_page</span>(<span class="dv">1</span>))</span>
+<span id="cb180-8"><a href="server-functions.html#cb180-8"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>page_<span class="dv">23</span>, <span class="kw">switch_page</span>(<span class="dv">3</span>))</span>
+<span id="cb180-9"><a href="server-functions.html#cb180-9"></a>  <span class="kw">observeEvent</span>(input<span class="op">$</span>page_<span class="dv">32</span>, <span class="kw">switch_page</span>(<span class="dv">2</span>))</span>
+<span id="cb180-10"><a href="server-functions.html#cb180-10"></a>}</span></code></pre></div>
+<hr />
+
 </div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="getting-help-using-reprex.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="disclaimer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ui-functions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -422,7 +483,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/06-layout_themes_html.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/18-functions.Rmd",
 "text": "Edit"
 },
 "history": {
