@@ -384,8 +384,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <p>The <strong>tabsetPanel()</strong> is the second function for this chapter and it involves the visibility of part of the app.</p>
 <p>This second function is made to let the user show and/or hide some of the tabs set in the main panel. It is a technique that allows managing the appearance of the app with selecting visibility of the tabs as shown in the <a href="https://shiny.rstudio.com/articles/layout-guide.html">Tabsets</a> section of the <strong>Shiny.rstudio.com</strong> guide’s page of the website.</p>
-<div id="htmlwidget-7d97320b01d9097f10e4" style="width:672px;height:480px;" class="DiagrammeR html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7d97320b01d9097f10e4">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-15d89b11f3aae0d38afd" style="width:100%;height:100%;" class="DiagrammeR html-widget"></div>
+<script type="application/json" data-for="htmlwidget-15d89b11f3aae0d38afd">{"x":{"diagram":"\ngraph LR \nA[tabsetPanel]-->B[updateTabsetPanel]\n"},"evals":[],"jsHooks":[]}</script>
 <p>To enhance your <strong>app</strong> with features and the most wanted themes and as an example on how to set the visibility of a tab in your app, you can follow the steps found here: <a href="https://shiny.rstudio.com/gallery/tabsets.html">Gallery</a></p>
 <p>As an example here is shown how to switch between panels hiding one panel and showing the other with different content.</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="dynamic-visibility.html#cb118-1"></a><span class="kw">library</span>(shiny)</span>
@@ -431,7 +431,7 @@ The <strong>tabsetPanel()</strong> is updated with input requests as a separate 
 <span id="cb120-4"><a href="dynamic-visibility.html#cb120-4"></a>      </span>
 <span id="cb120-5"><a href="dynamic-visibility.html#cb120-5"></a>      <span class="kw">numericInput</span>(<span class="st">&quot;n&quot;</span>, <span class="st">&quot;Number of samples&quot;</span>, <span class="dt">value =</span> <span class="dv">100</span>),</span>
 <span id="cb120-6"><a href="dynamic-visibility.html#cb120-6"></a>      </span>
-<span id="cb120-7"><a href="dynamic-visibility.html#cb120-7"></a>      parameter_tabs, <span class="co"># where to set the chunk of code</span></span>
+<span id="cb120-7"><a href="dynamic-visibility.html#cb120-7"></a>      parameter_tabs <span class="co"># where to set the chunk of code</span></span>
 <span id="cb120-8"><a href="dynamic-visibility.html#cb120-8"></a>    ),</span>
 <span id="cb120-9"><a href="dynamic-visibility.html#cb120-9"></a>    <span class="kw">mainPanel</span>(</span>
 <span id="cb120-10"><a href="dynamic-visibility.html#cb120-10"></a>      <span class="kw">plotOutput</span>(<span class="st">&quot;hist&quot;</span>)</span>
