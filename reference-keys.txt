@@ -160,6 +160,15 @@ case-studies
 create-infinite-loops
 conclusions-1
 resources-1
+best-practices-general-guidelines
+best-practices-section-of-the-book
+software-engineering
+code-organization
+testing
+dependency-management
+source-code-management
+continuous-integration-continuous-deployment
+code-reviews
 functions
 file-organization
 ui-functions
