@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 10 Bookmarking | Mastering Shiny Book Club</title>
+  <title>17.3 Converting an existing app | Mastering Shiny Book Club</title>
   <meta name="description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 10 Bookmarking | Mastering Shiny Book Club" />
+  <meta property="og:title" content="17.3 Converting an existing app | Mastering Shiny Book Club" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="r4ds/bookclub-mshiny" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 10 Bookmarking | Mastering Shiny Book Club" />
+  <meta name="twitter:title" content="17.3 Converting an existing app | Mastering Shiny Book Club" />
   
   <meta name="twitter:description" content="This is the product of the R4DS Online Learning Community’s Book Club." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="conclusions.html"/>
-<link rel="next" href="introduction-3.html"/>
+<link rel="prev" href="benefits.html"/>
+<link rel="next" href="example-shinysurveys.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -398,31 +398,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bookmarking" class="section level1">
-<h1><span class="header-section-number">Chapter 10</span> Bookmarking</h1>
-<p>In brief, bookmarking addresses the issue of not being able to expose the current state of the app in its URL. Because of this, your Shiny app cannot be bookmarked or share a specific place with others.</p>
-<p><strong>Learning objectives:</strong></p>
-<ul>
-<li><p>Learn how to <strong>add <code>bookmarkButton()</code></strong> to the UI</p></li>
-<li><p>Learn how to <strong>make the <code>ui</code> into a function</strong> and understand why it is necessary</p></li>
-<li><p>Learn how to use <strong><code>enableBookmarking='url'</code></strong> to the <code>shinyApp() call</code></p></li>
-</ul>
-<p>At the end of this chapter, you will be able to enable bookmarking for your app.</p>
-<hr />
-<p>Introduction</p>
-<p>1 - Modifying app to be bookmarkable</p>
-<p>2 - Breaking down generated URLs</p>
-<p>3 - Updating the URL/Storing a richer state</p>
-<p>4 - Bookmarking challenges</p>
-<hr />
+<div id="converting-an-existing-app" class="section level2">
+<h2><span class="header-section-number">17.3</span> Converting an existing app</h2>
+<ol style="list-style-type: decimal">
+<li>Call <a href="https://r-pkgs.org/whole-game.html#create_package"><code>usethis::create_package("pick-a-path")</code></a>. This will create the package directory and skeleton.</li>
+<li>Remove any <code>library()</code> or <code>require()</code> calls, in favor of <code>usethis::use_package("name")</code>.</li>
+<li>If your app uses modules, place related ones in individual <code>.R</code> files with <code>usethis::use_r("module-category")</code>.</li>
+<li>Wrap core app inside a function and place within a <code>.R</code> file, e.g:</li>
+</ol>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="converting-an-existing-app.html#cb181-1"></a>greetingApp &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
+<span id="cb181-2"><a href="converting-an-existing-app.html#cb181-2"></a><span class="co"># define a user-interface with two elements: a text input with an ID, </span></span>
+<span id="cb181-3"><a href="converting-an-existing-app.html#cb181-3"></a><span class="co"># label, and initial value; define a textOutput that </span></span>
+<span id="cb181-4"><a href="converting-an-existing-app.html#cb181-4"></a><span class="co"># returns the input + greeting</span></span>
+<span id="cb181-5"><a href="converting-an-existing-app.html#cb181-5"></a>ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</span>
+<span id="cb181-6"><a href="converting-an-existing-app.html#cb181-6"></a>  <span class="kw">textInput</span>(<span class="dt">inputId =</span> <span class="st">&quot;nameInput&quot;</span>, </span>
+<span id="cb181-7"><a href="converting-an-existing-app.html#cb181-7"></a>            <span class="dt">label =</span> <span class="st">&quot;What is your name?&quot;</span>, </span>
+<span id="cb181-8"><a href="converting-an-existing-app.html#cb181-8"></a>            <span class="dt">value =</span> <span class="st">&quot;World&quot;</span>),</span>
+<span id="cb181-9"><a href="converting-an-existing-app.html#cb181-9"></a>  <span class="kw">textOutput</span>(<span class="st">&quot;name&quot;</span>)</span>
+<span id="cb181-10"><a href="converting-an-existing-app.html#cb181-10"></a>)</span>
+<span id="cb181-11"><a href="converting-an-existing-app.html#cb181-11"></a></span>
+<span id="cb181-12"><a href="converting-an-existing-app.html#cb181-12"></a><span class="co"># define the server side logic to manipulate the inputs</span></span>
+<span id="cb181-13"><a href="converting-an-existing-app.html#cb181-13"></a>server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</span>
+<span id="cb181-14"><a href="converting-an-existing-app.html#cb181-14"></a>  <span class="co"># define the output that concatenates the strings </span></span>
+<span id="cb181-15"><a href="converting-an-existing-app.html#cb181-15"></a>  <span class="co"># &quot;Hello, &quot; + user input + &quot;.&quot;</span></span>
+<span id="cb181-16"><a href="converting-an-existing-app.html#cb181-16"></a>  output<span class="op">$</span>name &lt;-<span class="st"> </span><span class="kw">renderText</span>({<span class="kw">paste0</span>(<span class="st">&quot;Hello, &quot;</span>, input<span class="op">$</span>nameInput, <span class="st">&quot;.&quot;</span>)})</span>
+<span id="cb181-17"><a href="converting-an-existing-app.html#cb181-17"></a>}</span>
+<span id="cb181-18"><a href="converting-an-existing-app.html#cb181-18"></a></span>
+<span id="cb181-19"><a href="converting-an-existing-app.html#cb181-19"></a><span class="co"># run the application</span></span>
+<span id="cb181-20"><a href="converting-an-existing-app.html#cb181-20"></a><span class="kw">shinyApp</span>(ui, server)</span>
+<span id="cb181-21"><a href="converting-an-existing-app.html#cb181-21"></a>}</span></code></pre></div>
+<ol start="5" style="list-style-type: decimal">
+<li>Call <code>devtools::load_all()</code> and your function – <code>greetingApp()</code> to say hello to your package!</li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="conclusions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="introduction-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="benefits.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="example-shinysurveys.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -454,7 +469,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/11-bookmarking.Rmd",
+"link": "https://github.com/r4ds/bookclub-mshiny/edit/main/20-packages.Rmd",
 "text": "Edit"
 },
 "history": {

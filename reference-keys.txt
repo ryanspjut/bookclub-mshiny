@@ -176,3 +176,11 @@ functional-programming
 ui-as-data
 server-functions
 internal-functions
+packages
+package-structure
+benefits
+converting-an-existing-app
+example-shinysurveys
+installation
+demo
+lets-take-a-look
