@@ -85,6 +85,7 @@ multi-page-layouts
 case-study
 the-initial-app-app-01.r
 the-final-app-app.r
+graphics-and-shiny
 user-feedback
 validation
 validating-input
