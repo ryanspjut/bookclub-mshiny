@@ -131,6 +131,9 @@ The first version of the app is a dashboard, where the user can choose a product
 Code of the ui:
 
 ```{r prototype-ui, eval=FALSE}
+# first create the prod_codes object which is used as the value of the choices argument
+prod_codes <- setNames(products$prod_code, products$title
+
 ui <- fluidPage(
   # choose product
   fluidRow(
